@@ -2,7 +2,8 @@ package it.uniroma3.progetto.persistenza;
 
 
 
-import java.util.Date;
+import java.util.Calendar;
+
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente {
-	public Cliente(String nome,String nickname,String password, String cognome, Date dataDiNascita, Date dataDiRegistrazione,
+	public Cliente(String nome,String nickname,String password, String cognome, Calendar dataDiNascita, Calendar dataDiRegistrazione,
 			String indirizzo, String postaElettronica) {
 		this.nickname = nickname;
 		this.password = password;
@@ -45,10 +46,10 @@ public class Cliente {
 	private String nickname;
 
 	@Column(nullable = false)
-	private Date dataDiNascita;
+	private Calendar dataDiNascita;
 
 	@Column(nullable = false)
-	private Date dataDiRegistrazione;
+	private Calendar dataDiRegistrazione;
 
 	@Column(nullable = false)
 	private String indirizzo;
@@ -100,19 +101,19 @@ public class Cliente {
 		this.indirizzo = ind;
 	}
 
-	public Date getDataDiNascita() {
+	public Calendar getDataDiNascita() {
 		return this.dataDiNascita;
 	}
 
-	public void setDataDiNascita(Date data) {
+	public void setDataDiNascita(Calendar data) {
 		this.dataDiNascita = data;
 	}
 
-	public Date getDataDiRegistrazione() {
+	public Calendar getDataDiRegistrazione() {
 		return dataDiRegistrazione;
 	}
 
-	public void setDataDiRegistrazione(Date data) {
+	public void setDataDiRegistrazione(Calendar data) {
 		this.dataDiRegistrazione = data;
 	}
 
