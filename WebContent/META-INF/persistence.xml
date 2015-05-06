@@ -2,15 +2,16 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="products-unit"
+	<persistence-unit name="Progetto-unit"
 		transaction-type="RESOURCE_LOCAL">
 
-		<class>it.uniroma3.db.products.Product</class>
-		<class>it.uniroma3.db.products.Customer</class>
-		<class>it.uniroma3.db.products.Address</class>
-		<class>it.uniroma3.db.products.Order</class>
-		<class>it.uniroma3.db.products.OrderLine</class>
-		<class>it.uniroma3.db.products.Provider</class>
+		<class>it.uniroma3.progetto.persistenza.Prodotto</class>
+		<class>it.uniroma3.progetto.persistenza.Amministratore</class>
+		<class>it.uniroma3.progetto.persistenza.Cliente</class>
+		<class>it.uniroma3.progetto.persistenza.Fornitore</class>
+		<class>it.uniroma3.progetto.persistenza.Ordine</class>
+		<class>it.uniroma3.progetto.persistenza.RigaOrdine</class>
+		<class>it.uniroma3.progetto.persistenza.Indirizzo</class>
 		<properties>
 			
 			<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" />
@@ -18,7 +19,7 @@
 			<property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver" />
 			<property name="openjpa.ConnectionUserName" value="postgres" />
 			<property name="openjpa.ConnectionPassword" value="postgres" />
-			<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost/products" />
+			<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost/Progetto" />
 			<property name="openjpa.jdbc.DBDictionary" value="postgres" />
 			<property name="openjpa.Log"
 				value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE" />

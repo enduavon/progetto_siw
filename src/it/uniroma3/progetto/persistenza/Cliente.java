@@ -5,6 +5,7 @@ package it.uniroma3.progetto.persistenza;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,11 +14,12 @@ import javax.persistence.Column;
 import javax.persistence.OneToMany;
 
 
-
+@Entity
 public class Cliente {
-	public Cliente(String nome, String cognome, Date dataDiNascita, Date dataDiRegistrazione,
+	public Cliente(String nome,String nickname,String password, String cognome, Date dataDiNascita, Date dataDiRegistrazione,
 			String indirizzo, String postaElettronica) {
-
+		this.nickname = nickname;
+		this.password = password;
 		this.cognome = cognome;
 		this.nome = nome;
 		this.dataDiNascita = dataDiNascita;
@@ -29,12 +31,18 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Column(nullable = false, unique = true)
+	private String password;
 
 	@Column(nullable = false)
 	private String nome;
 
 	@Column(nullable = false)
 	private String cognome;
+
+	@Column(nullable = false, unique = true)
+	private String nickname;
 
 	@Column(nullable = false)
 	private Date dataDiNascita;
@@ -47,13 +55,17 @@ public class Cliente {
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
 	private String postaElettronica;
-	
+
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private List<Ordine> ordini;
 
 
 	public Cliente(){
 
+	}
+	
+	public boolean controllaPassword(String pwd) {
+		return this.password.equals(pwd);
 	}
 
 	public Long getId() {
@@ -79,7 +91,7 @@ public class Cliente {
 	public void setPostaElettronica(String email) {
 		this.postaElettronica = email;
 	}
-	
+
 	public String getIndirizzo() {
 		return this.indirizzo;
 	}
@@ -103,11 +115,11 @@ public class Cliente {
 	public void setDataDiRegistrazione(Date data) {
 		this.dataDiRegistrazione = data;
 	}
-	
+
 	public String getCognome() {
 		return this.cognome;
 	}
-	
+
 	public void setCognome(String cogn) {
 		this.cognome = cogn;
 	}
@@ -131,7 +143,7 @@ public class Cliente {
 		sb.append(", email='").append(postaElettronica);
 		sb.append(", Data di registrazione='").append(dataDiRegistrazione); 
 		sb.append(", indirizzo='").append(indirizzo);
-		
+
 		sb.append("}\n");
 		return sb.toString();
 	}

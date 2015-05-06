@@ -4,12 +4,16 @@ package it.uniroma3.progetto.persistenza;
 
 
 
+
+
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
 import javax.persistence.Column;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Prodotto {
@@ -30,6 +34,9 @@ public class Prodotto {
 
 	@Column(nullable = false)
 	private int quantità;
+	
+	@ManyToMany(mappedBy = "prodotti")
+	private List<Fornitore> fornitori;
 
 	public Prodotto(){
 

@@ -97,6 +97,17 @@ public class Ordine {
 		}
 	return ro;
 	}
+	
+	// metodo per trovare una riga d'ordine in base al prodotto
+	public RigaOrdine checkOrderLine(Prodotto product) {
+		RigaOrdine ro = null;
+		for(RigaOrdine r : this.righeOrdine){
+			if(r.getProdottoDellaRigaOrdine().getId().equals
+					(product.getId()))
+				ro = r;
+		}
+		return ro;
+	}
 
 
 	public Long getId() {
@@ -160,16 +171,7 @@ public class Ordine {
 	}
 	
 	
-	// metodo per trovare una riga d'ordine in base al prodotto
-	public RigaOrdine checkOrderLine(Prodotto product) {
-		RigaOrdine ro = null;
-		for(RigaOrdine r : this.righeOrdine){
-			if(r.getProdottoDellaRigaOrdine().getId().equals
-					(product.getId()))
-				ro = r;
-		}
-		return ro;
-	}
+
 
 
 
