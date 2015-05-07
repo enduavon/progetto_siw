@@ -1,26 +1,18 @@
 package it.uniroma3.progetto.persistenza;
 
 
-
-
-
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 
-
-
+@Entity
 public class Fornitore {
-	public Fornitore(String iva, String indirizzo, int telefono, String email) {
-		this.email = email;
-		this.indirizzo = indirizzo;
-		this.telefono = telefono;
-		this.iva = iva;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,6 +26,7 @@ public class Fornitore {
 
 	@Column(nullable = false, length = 10)
 	private int telefono;
+	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
 	private String email;
@@ -43,6 +36,14 @@ public class Fornitore {
 
 	public Fornitore(){
 
+	}
+	
+	public Fornitore(String iva, String indirizzo, int telefono, String email) {
+		this.email = email;
+		this.indirizzo = indirizzo;
+		this.telefono = telefono;
+		this.iva = iva;
+		this.prodotti = new ArrayList<Prodotto>();
 	}
 	
 	public void addProduct(Prodotto p) {
@@ -89,11 +90,17 @@ public class Fornitore {
 	public void setIndirizzo(String ind) {
 		this.indirizzo = ind;
 	}
+	
+	public List<Prodotto> getProdotti() {
+		return this.prodotti;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		Prodotto product = (Prodotto) o;
 		return this.getId().equals(product.getId());
 	}
+	
 	@Override
 	public int hashCode() {
 		return this.id.hashCode();
@@ -111,5 +118,3 @@ public class Fornitore {
 		return sb.toString();
 	}
 }
-
-
