@@ -32,7 +32,6 @@ public class Ordine {
 	private long id;
 
 
-
 	@Column
 	private boolean chiuso; //Stato chiuso dell'ordine
 
@@ -49,21 +48,21 @@ public class Ordine {
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar ordineSpedito;
+	private Calendar ordineEvaso;
 
 
 	/*
-	 * Ë la Owning di customer
+	 * √® la Owning di customer
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
 	/*
 	 * forziamo la creazione della foreign key
-	 * nella tabella della parte propietaria, questo perchË
+	 * nella tabella della parte proprietaria, questo perch√®
 	 * jpa genera (anche in una relazione 1-molti e non solo in quelle
-	 * molti-molti, delle tabelle di join, inutili come ben sappiamo,
-	 * per evitare si crea la foreign key nella owning side specificando
-	 * il nome della colonna di join nella entit‡ della parte inversa
+	 * molti-molti) delle tabelle di join, inutili come ben sappiamo.
+	 * Per evitare si crea la foreign key nella owning side specificando
+	 * il nome della colonna di join nella entit√† della parte inversa
 	 */
 	@OneToMany
 	@JoinColumn(name = "orders_id")
@@ -76,7 +75,7 @@ public class Ordine {
 	public Ordine (Calendar ordineAperto, Cliente cliente) {
 		this.ordineAperto = ordineAperto;
 		this.cliente = cliente;
-		this.chiuso = false; //Alla creazione l'ordine Ë aperto
+		this.chiuso = false; //Alla creazione l'ordine √® aperto
 		this.righeOrdine = new ArrayList<RigaOrdine>();
 	}
 
@@ -98,12 +97,12 @@ public class Ordine {
 	return ro;
 	}
 	
-	// metodo per trovare una riga d'ordine in base al prodotto
-	public RigaOrdine checkOrderLine(Prodotto product) {
+	
+	public RigaOrdine getRigaOrdineByProdotto(Prodotto p) {
 		RigaOrdine ro = null;
 		for(RigaOrdine r : this.righeOrdine){
 			if(r.getProdottoDellaRigaOrdine().getId().equals
-					(product.getId()))
+					(p.getId()))
 				ro = r;
 		}
 		return ro;
@@ -146,12 +145,12 @@ public class Ordine {
 		this.ordineChiuso = oc;
 	}
 
-	public Calendar getDataOrdineSpedito() {
-		return ordineSpedito;
+	public Calendar getDataOrdineEvaso() {
+		return ordineEvaso;
 	}
 
-	public void setDataOrdineSpedito(Calendar os) {
-		this.ordineSpedito = os;
+	public void setDataOrdineEvaso(Calendar oe) {
+		this.ordineEvaso = oe;
 	}
 	
 	public Cliente getCliente() {
