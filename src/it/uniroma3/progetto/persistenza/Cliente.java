@@ -2,8 +2,8 @@ package it.uniroma3.progetto.persistenza;
 
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
-
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -17,17 +17,6 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Cliente {
-	public Cliente(String nome,String nickname,String password, String cognome, Calendar dataDiNascita, Calendar dataDiRegistrazione,
-			String indirizzo, String postaElettronica) {
-		this.nickname = nickname;
-		this.password = password;
-		this.cognome = cognome;
-		this.nome = nome;
-		this.dataDiNascita = dataDiNascita;
-		this.dataDiRegistrazione = dataDiRegistrazione;
-		this.postaElettronica = postaElettronica;
-		this.indirizzo =  indirizzo;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,9 +42,10 @@ public class Cliente {
 
 	@Column(nullable = false)
 	private String indirizzo;
+	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
-	private String postaElettronica;
+	private String email;
 
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private List<Ordine> ordini;
@@ -65,8 +55,26 @@ public class Cliente {
 
 	}
 	
-	public boolean controllaPassword(String pwd) {
+	public Cliente(String nome, String cognome, String nickname, String password, 
+			Calendar dataDiNascita, Calendar dataDiRegistrazione,
+			String indirizzo, String email) {
+		this.nickname = nickname;
+		this.password = password;
+		this.cognome = cognome;
+		this.nome = nome;
+		this.dataDiNascita = dataDiNascita;
+		this.dataDiRegistrazione = dataDiRegistrazione;
+		this.email = email;
+		this.indirizzo =  indirizzo;
+		this.ordini = new ArrayList<Ordine>();
+	}
+	
+	public boolean checkPassword(String pwd) {
 		return this.password.equals(pwd);
+	}
+	
+	public void addOrdine (Ordine o) {
+		this.ordini.add(o);
 	}
 
 	public Long getId() {
@@ -85,12 +93,12 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getPostaElettronica() {
-		return this.postaElettronica;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setPostaElettronica(String email) {
-		this.postaElettronica = email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getIndirizzo() {
@@ -124,6 +132,13 @@ public class Cliente {
 	public void setCognome(String cogn) {
 		this.cognome = cogn;
 	}
+	
+	//fare anche il setOrdini oppure no? a cosa mi potrebbe servire?
+	public List<Ordine> getOrdini() {
+		return this.ordini;
+	}
+	
+	
 	@Override
 	public boolean equals(Object o) {
 		Cliente client = (Cliente) o;
@@ -141,7 +156,7 @@ public class Cliente {
 		sb.append(", nome='").append(nome); 
 		sb.append(", cognome=").append(cognome); 
 		sb.append(", Data di nascita='").append(dataDiNascita); 
-		sb.append(", email='").append(postaElettronica);
+		sb.append(", email='").append(email);
 		sb.append(", Data di registrazione='").append(dataDiRegistrazione); 
 		sb.append(", indirizzo='").append(indirizzo);
 
