@@ -42,7 +42,7 @@ public class OrdineFacade {
 	}
 
 
-	public void creaOrdine(Calendar ordineAperto, Cliente cliente) {
+	public Ordine creaOrdine(Calendar ordineAperto, Cliente cliente) {
 		this.openEM();
 
 		Ordine o = new Ordine(ordineAperto, cliente);
@@ -60,6 +60,8 @@ public class OrdineFacade {
 		} finally {
 			this.closeEM();
 		}
+		
+		return o;
 
 	}
 

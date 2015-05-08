@@ -19,7 +19,7 @@ public class FornitoreFacade {
 	private EntityManagerFactory emf;
 
 	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("Progetto-unit");
+		this.emf = Persistence.createEntityManagerFactory("progetto-unit");
 		this.em = emf.createEntityManager();
 	}
 
@@ -30,7 +30,7 @@ public class FornitoreFacade {
 	}
 
 
-	public void creaFornitore(String iva, String indirizzo, int telefono, String email) {
+	public Fornitore creaFornitore(String iva, String indirizzo, int telefono, String email) {
 		this.openEM();
 
 		Fornitore f = new Fornitore(iva, indirizzo, telefono, email);
@@ -48,10 +48,11 @@ public class FornitoreFacade {
 		} finally {
 			this.closeEM();
 		}
-
+		
+		return f;
 	}
 
-	public List<Fornitore> getTuttiIFornitori() {
+	public List<Fornitore> getAllIFornitori() {
 		this.openEM();
 
 
@@ -63,7 +64,7 @@ public class FornitoreFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "la lista dei fornitori � vuota";
+			String q = "la lista dei fornitori è vuota";
 			System.out.println(q);
 			return null;
 

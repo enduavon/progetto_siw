@@ -1,20 +1,10 @@
 package it.uniroma3.cikmed.facade;
 
 
-
 import it.uniroma3.cikmed.model.Cliente;
 
 import java.util.Calendar;
 import java.util.List;
-
-
-
-
-
-
-
-
-
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -39,14 +29,14 @@ public class ClienteFacade {
 	}
 
 
-	public void creaCliente(String nome,String nickname,String password, String cognome, 
+	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
 			Calendar dataDiNascita, Calendar dataDiRegistrazione,
 			String indirizzo, String email) {
+		
 		this.openEM();
 
-		Cliente c = new Cliente( nome,nickname, password, cognome, dataDiNascita, 
-									dataDiRegistrazione,
-									indirizzo, email);
+		Cliente c = new Cliente(nome, cognome, nickname, password, dataDiNascita, 
+									dataDiRegistrazione, indirizzo, email);
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
@@ -61,6 +51,8 @@ public class ClienteFacade {
 		} finally {
 			this.closeEM();
 		}
+		
+		return c;
 
 	}
 
