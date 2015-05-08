@@ -2,9 +2,11 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="Progetto-unit"
+	<persistence-unit name="progetto-unit"
 		transaction-type="RESOURCE_LOCAL">
-
+		
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		
 		<class>it.uniroma3.progetto.persistenza.Prodotto</class>
 		<class>it.uniroma3.progetto.persistenza.Amministratore</class>
 		<class>it.uniroma3.progetto.persistenza.Cliente</class>
@@ -12,24 +14,22 @@
 		<class>it.uniroma3.progetto.persistenza.Ordine</class>
 		<class>it.uniroma3.progetto.persistenza.RigaOrdine</class>
 		<class>it.uniroma3.progetto.persistenza.Indirizzo</class>
+		
+		
 		<properties>
-			
-			<property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" />
-			<property name="openjpa.RuntimeUnenhancedClasses" value="supported" />
-			<property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver" />
+ 		 <property name="openjpa.jdbc.MappingDefaults" value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" />
+			<property name="openjpa.RuntimeUnenhancedClasses" value="supported" /> 
+			<property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver" /> 
 			<property name="openjpa.ConnectionUserName" value="postgres" />
 			<property name="openjpa.ConnectionPassword" value="postgres" />
-			<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost/Progetto" />
+			<property name="openjpa.ConnectionURL" value="jdbc:postgresql://localhost/progetto" />
 			<property name="openjpa.jdbc.DBDictionary" value="postgres" />
 			<property name="openjpa.Log"
-				value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE" />
-			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(SchemaAction=add,SchemaAction=deleteTableContents,ForeignKeys=true)" />
-
+				value="DefaultLevel=WARN, Runtime=INFO, Tool=INFO, SQL=TRACE" /> 
+			<property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
 			<property name="openjpa.jdbc.MappingDefaults"
-				value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" />
+				value="ForeignKeyDeleteAction=restrict,JoinForeignKeyDeleteAction=restrict" /> 
+				</properties>
 				
-
-
-		</properties>
 	</persistence-unit>
 </persistence>
