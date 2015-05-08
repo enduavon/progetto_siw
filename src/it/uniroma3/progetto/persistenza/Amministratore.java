@@ -25,7 +25,12 @@ public Amministratore(String nickname, String password) {
 	this.password = password;
 }
 
-public boolean controllaPassword(String pwd) {
+public Amministratore() {
+	
+}
+
+//è da mettere qua o in una facade?
+public boolean checkPassword(String pwd) {
 	return this.password.equals(pwd);
 }
 
@@ -67,6 +72,7 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
+
 @Override
 public int hashCode() {
 	final int prime = 31;
