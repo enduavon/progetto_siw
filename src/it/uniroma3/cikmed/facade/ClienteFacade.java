@@ -1,22 +1,34 @@
-package it.uniroma3.progetto.persistenza;
+package it.uniroma3.cikmed.facade;
 
 
 
+import it.uniroma3.cikmed.model.Cliente;
 
+import java.util.Calendar;
 import java.util.List;
+
+
+
+
+
+
+
+
+
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-public class FornitoreFacade {
+public class ClienteFacade {
 
 	private EntityManager em;
 	private EntityManagerFactory emf;
 
 	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("Progetto-unit");
+		this.emf = Persistence.createEntityManagerFactory("progetto-unit");
 		this.em = emf.createEntityManager();
 	}
 
@@ -27,20 +39,24 @@ public class FornitoreFacade {
 	}
 
 
-	public void creaFornitore(String iva, String indirizzo, int telefono, String email) {
+	public void creaCliente(String nome,String nickname,String password, String cognome, 
+			Calendar dataDiNascita, Calendar dataDiRegistrazione,
+			String indirizzo, String email) {
 		this.openEM();
 
-		Fornitore f = new Fornitore(iva, indirizzo, telefono, email);
+		Cliente c = new Cliente( nome,nickname, password, cognome, dataDiNascita, 
+									dataDiRegistrazione,
+									indirizzo, email);
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
 		try {
-			em.persist(f);
+			em.persist(c);
 			tx.commit();
 
 		} catch (Exception e) {
 			tx.rollback();
-			f = null;
+			c = null;
 
 		} finally {
 			this.closeEM();
@@ -48,19 +64,19 @@ public class FornitoreFacade {
 
 	}
 
-	public List<Fornitore> getTuttiIFornitori() {
+	public List<Cliente> getTuttiClienti() {
 		this.openEM();
 
 
 		try {
-			String query = "SELECT f" +
-					"FROM Fornitore f";
-			TypedQuery<Fornitore> q = em.createQuery(query, Fornitore.class);
+			String query = "SELECT c" +
+					"FROM Cliente c";
+			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			return q.getResultList();
 
 		} 
 		catch (Exception e) {
-			String q = "la lista dei fornitori è vuota";
+			String q = "la lista dei clienti Ã¨ vuota";
 			System.out.println(q);
 			return null;
 
@@ -73,21 +89,21 @@ public class FornitoreFacade {
 
 	}
 
-	public Fornitore getFornitoreByID(long id) {
+	public Cliente getClienteByID(long id) {
 		this.openEM();
 
 
 		try {
-			String query = "SELECT f" +
-					"FROM Fornitore f" +
-					"WHERE f.id =: id";
-			TypedQuery<Fornitore> q = em.createQuery(query, Fornitore.class);
+			String query = "SELECT c" +
+					"FROM Cliente c" +
+					"WHERE c.id =: id";
+			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 
 		} 
 		catch (Exception e) {
-			String q = "il fornitore selezionato non esiste";
+			String q = "il cliente selezionato non esiste";
 			System.out.println(q);
 			return null;
 

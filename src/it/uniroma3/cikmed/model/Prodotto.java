@@ -1,10 +1,4 @@
-package it.uniroma3.progetto.persistenza;
-
-
-
-
-
-
+package it.uniroma3.cikmed.model;
 
 import java.util.List;
 
@@ -28,12 +22,13 @@ public class Prodotto {
 
 	@Column(length = 2000)
 	private String descrizione;
+	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
 	private String codice;
 
 	@Column(nullable = false)
-	private int quantit‡;
+	private int quantit√†;
 	
 	@ManyToMany(mappedBy = "prodotti")
 	private List<Fornitore> fornitori;
@@ -43,21 +38,18 @@ public class Prodotto {
 	}
 	
 
-	public Prodotto(String nome, String codice, String descrizione, Float prezzo, int quantit‡) {
+	public Prodotto(String nome, String codice, String descrizione, Float prezzo, int quantit√†) {
 		this.nome = nome;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.prezzo = prezzo;
-		this.quantit‡ = quantit‡;
+		this.quantit√† = quantit√†;
 	}
 
 	public Long getId() {
 		return id;
 	}
-
-
-
-
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -94,12 +86,12 @@ public class Prodotto {
 		this.prezzo = price;
 	}
 	
-	public int getQuantit‡() {
-		return quantit‡;
+	public int getQuantit√†() {
+		return quantit√†;
 	}
 
-	public void setQuantit‡(int q) {
-		this.quantit‡ = q;
+	public void setQuantit√†(int q) {
+		this.quantit√† = q;
 	}
 @Override
 	public boolean equals(Object o) {

@@ -1,12 +1,14 @@
-package it.uniroma3.progetto.persistenza;
+package it.uniroma3.cikmed.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table (name = "riga_ordine")
 public class RigaOrdine {
 
 	@Id

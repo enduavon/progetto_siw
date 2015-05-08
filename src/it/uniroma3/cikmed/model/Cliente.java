@@ -1,4 +1,4 @@
-package it.uniroma3.progetto.persistenza;
+package it.uniroma3.cikmed.model;
 
 
 

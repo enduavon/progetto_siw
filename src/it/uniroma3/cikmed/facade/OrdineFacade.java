@@ -1,8 +1,17 @@
-package it.uniroma3.progetto.persistenza;
+package it.uniroma3.cikmed.facade;
 
 
 
+import it.uniroma3.cikmed.model.Cliente;
+import it.uniroma3.cikmed.model.Ordine;
+
+import java.util.Calendar;
 import java.util.List;
+
+
+
+
+
 
 
 
@@ -16,7 +25,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
-public class ProdottoFacade {
+public class OrdineFacade {
 
 	private EntityManager em;
 	private EntityManagerFactory emf;
@@ -33,20 +42,20 @@ public class ProdottoFacade {
 	}
 
 
-	public void creaProdotto(String nome, String codice, String descrizione, Float prezzo, int quantità) {
+	public void creaOrdine(Calendar ordineAperto, Cliente cliente) {
 		this.openEM();
 
-		Prodotto p = new Prodotto(nome, codice, descrizione, prezzo, quantità);
+		Ordine o = new Ordine(ordineAperto, cliente);
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 
 		try {
-			em.persist(p);
+			em.persist(o);
 			tx.commit();
 
 		} catch (Exception e) {
 			tx.rollback();
-			p = null;
+			o = null;
 
 		} finally {
 			this.closeEM();
@@ -54,19 +63,19 @@ public class ProdottoFacade {
 
 	}
 
-	public List<Prodotto> getCatalogoProdotti() {
+	public List<Ordine> getTuttiGliOrdini() {
 		this.openEM();
 
 
 		try {
-			String query = "SELECT p" +
-					"FROM Prodotto p";
-			TypedQuery<Prodotto> q = em.createQuery(query, Prodotto.class);
+			String query = "SELECT ord" +
+					"FROM Ordine ord";
+			TypedQuery<Ordine> q = em.createQuery(query, Ordine.class);
 			return q.getResultList();
 
 		} 
 		catch (Exception e) {
-			String q = "la lista è vuota";
+			String q = "la lista degli ordini ï¿½ vuota";
 			System.out.println(q);
 			return null;
 
@@ -79,21 +88,21 @@ public class ProdottoFacade {
 
 	}
 
-	public Prodotto getProdottoByID(long id) {
+	public Ordine getClienteByID(long id) {
 		this.openEM();
 
 
 		try {
-			String query = "SELECT p" +
-					"FROM Prodotto p" +
-					"WHERE p.id =: id";
-			TypedQuery<Prodotto> q = em.createQuery(query, Prodotto.class);
+			String query = "SELECT ord" +
+					"FROM Ordine ord" +
+					"WHERE ord.id =: id";
+			TypedQuery<Ordine> q = em.createQuery(query, Ordine.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 
 		} 
 		catch (Exception e) {
-			String q = "il prodotto non è presente";
+			String q = "l'ordine selezionato non esiste";
 			System.out.println(q);
 			return null;
 
