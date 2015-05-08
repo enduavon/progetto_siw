@@ -15,14 +15,18 @@ public class RigaOrdine {
 	@Column
 	private Float prezzo;
 	@Column
-	private int quantit‡;
+	private int quantit√†;
 	@Column
 	private Prodotto prodotto;
 
-	public RigaOrdine(Prodotto prodotto, Float prezzo, int quantit‡) {
+	public RigaOrdine(Prodotto prodotto, Float prezzo, int quantit√†) {
 		this.prodotto = prodotto;
 		this.prezzo = prezzo;
-		this.quantit‡ = quantit‡;
+		this.quantit√† = quantit√†;
+	}
+	
+	public RigaOrdine() {
+		
 	}
 
 	
@@ -50,12 +54,12 @@ public class RigaOrdine {
 		this.prezzo = price;
 	}
 	
-	public int getQuantit‡() {
-		return quantit‡;
+	public int getQuantit√†() {
+		return quantit√†;
 	}
 
-	public void setQuantit‡(int q) {
-		this.quantit‡ = q;
+	public void setQuantit√†(int q) {
+		this.quantit√† = q;
 	}
 
 }
