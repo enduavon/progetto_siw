@@ -7,13 +7,13 @@
 		
 		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
 		
-		<class>it.uniroma3.progetto.persistenza.Prodotto</class>
-		<class>it.uniroma3.progetto.persistenza.Amministratore</class>
-		<class>it.uniroma3.progetto.persistenza.Cliente</class>
-		<class>it.uniroma3.progetto.persistenza.Fornitore</class>
-		<class>it.uniroma3.progetto.persistenza.Ordine</class>
-		<class>it.uniroma3.progetto.persistenza.RigaOrdine</class>
-		<class>it.uniroma3.progetto.persistenza.Indirizzo</class>
+		<class>it.uniroma3.cikmed.model.Prodotto</class>
+		<class>it.uniroma3.cikmed.model.Amministratore</class>
+		<class>it.uniroma3.cikmed.model.Cliente</class>
+		<class>it.uniroma3.cikmed.model.Fornitore</class>
+		<class>it.uniroma3.cikmed.model.Ordine</class>
+		<class>it.uniroma3.cikmed.model.RigaOrdine</class>
+		<class>it.uniroma3.cikmed.model.Indirizzo</class>
 		
 		
 		<properties>
