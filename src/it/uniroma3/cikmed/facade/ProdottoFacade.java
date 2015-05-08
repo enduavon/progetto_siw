@@ -25,7 +25,7 @@ public class ProdottoFacade {
 	private EntityManagerFactory emf;
 
 	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("Progetto-unit");
+		this.emf = Persistence.createEntityManagerFactory("progetto-unit");
 		this.em = emf.createEntityManager();
 	}
 
@@ -36,7 +36,7 @@ public class ProdottoFacade {
 	}
 
 
-	public void creaProdotto(String nome, String codice, String descrizione, Float prezzo, 
+	public Prodotto creaProdotto(String nome, String codice, String descrizione, Float prezzo, 
 			int quantità) {
 		this.openEM();
 
@@ -55,7 +55,8 @@ public class ProdottoFacade {
 		} finally {
 			this.closeEM();
 		}
-
+		
+		return p;
 	}
 
 	public List<Prodotto> getCatalogoProdotti() {
@@ -70,7 +71,7 @@ public class ProdottoFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "la lista � vuota";
+			String q = "la lista è vuota";
 			System.out.println(q);
 			return null;
 
