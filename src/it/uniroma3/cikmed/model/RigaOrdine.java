@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,7 +19,7 @@ public class RigaOrdine {
 	private Float prezzo;
 	@Column
 	private int quantità;
-	@Column
+	@ManyToOne
 	private Prodotto prodotto;
 
 	public RigaOrdine(Prodotto prodotto, Float prezzo, int quantità) {
@@ -27,10 +28,6 @@ public class RigaOrdine {
 		this.quantità = quantità;
 	}
 	
-	public RigaOrdine() {
-		
-	}
-
 	
 	public Long getID() {
 		return id;
