@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 
 @Entity
@@ -39,14 +40,14 @@ public class Cliente {
 
 	@Column(nullable = false)
 	private Calendar dataDiRegistrazione;
-
-	@Column(nullable = false)
-	private String indirizzo;
 	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
 	private String email;
-
+	
+	@OneToOne
+	private Indirizzo indirizzo;
+	
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 	private List<Ordine> ordini;
 
@@ -57,7 +58,7 @@ public class Cliente {
 	
 	public Cliente(String nome, String cognome, String nickname, String password, 
 			Calendar dataDiNascita, Calendar dataDiRegistrazione,
-			String indirizzo, String email) {
+			Indirizzo indirizzo, String email) {
 		this.nickname = nickname;
 		this.password = password;
 		this.cognome = cognome;
@@ -65,7 +66,7 @@ public class Cliente {
 		this.dataDiNascita = dataDiNascita;
 		this.dataDiRegistrazione = dataDiRegistrazione;
 		this.email = email;
-		this.indirizzo =  indirizzo;
+		this.indirizzo = indirizzo;
 		this.ordini = new ArrayList<Ordine>();
 	}
 	
@@ -101,11 +102,11 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public String getIndirizzo() {
+	public Indirizzo getIndirizzo() {
 		return this.indirizzo;
 	}
 
-	public void setIndirizzo(String ind) {
+	public void setIndirizzo(Indirizzo ind) {
 		this.indirizzo = ind;
 	}
 
