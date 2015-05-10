@@ -3,9 +3,10 @@
 
 ad opera di
 
-Andrea 
-Stefano
+- Andrea 
+- Stefano
 
+-----------------------------------
 
 requisiti: https://dl.dropboxusercontent.com/u/20172572/didattica/siw/siw-progetto-1.pptx
 
