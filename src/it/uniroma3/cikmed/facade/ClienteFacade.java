@@ -2,71 +2,47 @@ package it.uniroma3.cikmed.facade;
 
 
 import it.uniroma3.cikmed.model.Cliente;
+import it.uniroma3.cikmed.model.Indirizzo;
 
 import java.util.Calendar;
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+@Stateless (name="cFacade")
 public class ClienteFacade {
-
+	
+	@PersistenceContext (unitName="progetto-unit")
 	private EntityManager em;
-	private EntityManagerFactory emf;
-
-	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("progetto-unit");
-		this.em = emf.createEntityManager();
+	
+	public ClienteFacade() {
+		super();
 	}
 
-	private void closeEM() {
-		this.em.close();
-		this.emf.close();
-
-	}
-
-
+	
 	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
 			Calendar dataDiNascita, Calendar dataDiRegistrazione,
-			String indirizzo, String email) {
+			Indirizzo indirizzo, String email) {
 		
-		this.openEM();
-
 		Cliente c = new Cliente(nome, cognome, nickname, password, dataDiNascita, 
 									dataDiRegistrazione, indirizzo, email);
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-
-		try {
-			em.persist(c);
-			tx.commit();
-
-		} catch (Exception e) {
-			tx.rollback();
-			c = null;
-
-		} finally {
-			this.closeEM();
-		}
-		
+		em.persist(c);		
 		return c;
-
-	}
+		}
+	
 
 	public List<Cliente> getTuttiClienti() {
-		this.openEM();
-
-
+		
 		try {
 			String query = "SELECT c" +
 					"FROM Cliente c";
 			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			return q.getResultList();
-
-		} 
+			} 
+		
 		catch (Exception e) {
 			String q = "la lista dei clienti è vuota";
 			System.out.println(q);
@@ -74,16 +50,10 @@ public class ClienteFacade {
 
 		}
 
-		finally {
-			this.closeEM();
-		}
-
-
 	}
-
+	
+	//è giusto farlo per id o conviene usare un altro parametro?
 	public Cliente getClienteByID(long id) {
-		this.openEM();
-
 
 		try {
 			String query = "SELECT c" +
@@ -92,19 +62,26 @@ public class ClienteFacade {
 			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
-
-		} 
+			} 
+		
 		catch (Exception e) {
 			String q = "il cliente selezionato non esiste";
 			System.out.println(q);
 			return null;
 
 		}
-
-		finally {
-			this.closeEM();
 		}
+	
+	public void updateCliente (Cliente c) {
+		em.merge(c);
+	}
 
+	public void deleteCliente (Cliente c) {
+		em.remove(c);
+	}
 
+	public void deleteClienteById (long id) {
+		Cliente c = em.find(Cliente.class, id);
+		deleteCliente(c);
 	}
 }

@@ -1,68 +1,32 @@
 package it.uniroma3.cikmed.facade;
 
 
-
 import it.uniroma3.cikmed.model.Prodotto;
 
 import java.util.List;
 
-
-
-
-
-
-
-
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+@Stateless (name="pFacade")
 public class ProdottoFacade {
-
+	
+	@PersistenceContext (unitName="progetto-unit")
 	private EntityManager em;
-	private EntityManagerFactory emf;
-
-	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("progetto-unit");
-		this.em = emf.createEntityManager();
-	}
-
-	private void closeEM() {
-		this.em.close();
-		this.emf.close();
-
-	}
-
-
+	
+	
 	public Prodotto creaProdotto(String nome, String codice, String descrizione, Float prezzo, 
 			int quantità) {
-		this.openEM();
 
 		Prodotto p = new Prodotto(nome, codice, descrizione, prezzo, quantità);
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-
-		try {
-			em.persist(p);
-			tx.commit();
-
-		} catch (Exception e) {
-			tx.rollback();
-			p = null;
-
-		} finally {
-			this.closeEM();
-		}
-		
+		em.persist(p);
 		return p;
 	}
 
 	public List<Prodotto> getCatalogoProdotti() {
-		this.openEM();
-
-
+		
 		try {
 			String query = "SELECT p" +
 					"FROM Prodotto p";
@@ -77,17 +41,10 @@ public class ProdottoFacade {
 
 		}
 
-		finally {
-			this.closeEM();
-		}
-
-
 	}
 
 	public Prodotto getProdottoByID(long id) {
-		this.openEM();
-
-
+	
 		try {
 			String query = "SELECT p" +
 					"FROM Prodotto p" +
@@ -98,16 +55,29 @@ public class ProdottoFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "il prodotto non è presente";
+			String q = "il prodotto con id" +id+ "non è presente";
 			System.out.println(q);
 			return null;
 
 		}
-
-		finally {
-			this.closeEM();
-		}
-
-
+		
 	}
+	
+	public void updateProdotto (Prodotto p) {
+	em.merge(p);
+	}
+	
+	public void deleteProdotto (Prodotto p) {
+		em.remove(p);
+	}
+	
+	public void deleteProdottoById (long id) {
+		Prodotto p = em.find(Prodotto.class, id);
+		deleteProdotto(p);
+	}
+	
+//	public void deleteCatalogoProdotti () {
+//		
+//	}
+
 }

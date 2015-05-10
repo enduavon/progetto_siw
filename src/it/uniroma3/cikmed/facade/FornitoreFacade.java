@@ -1,61 +1,31 @@
 package it.uniroma3.cikmed.facade;
 
 
-
-
 import it.uniroma3.cikmed.model.Fornitore;
 
 import java.util.List;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+@Stateless (name="fornFacade")
 public class FornitoreFacade {
-
+	
+	@PersistenceContext (unitName="progetto-unit")
 	private EntityManager em;
-	private EntityManagerFactory emf;
-
-	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("progetto-unit");
-		this.em = emf.createEntityManager();
-	}
-
-	private void closeEM() {
-		this.em.close();
-		this.emf.close();
-
-	}
 
 
 	public Fornitore creaFornitore(String iva, String indirizzo, int telefono, String email) {
-		this.openEM();
-
+	
 		Fornitore f = new Fornitore(iva, indirizzo, telefono, email);
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-
-		try {
-			em.persist(f);
-			tx.commit();
-
-		} catch (Exception e) {
-			tx.rollback();
-			f = null;
-
-		} finally {
-			this.closeEM();
-		}
-		
+		em.persist(f);
 		return f;
 	}
 
-	public List<Fornitore> getAllIFornitori() {
-		this.openEM();
-
-
+	public List<Fornitore> getAllFornitori() {
+		
 		try {
 			String query = "SELECT f" +
 					"FROM Fornitore f";
@@ -70,17 +40,10 @@ public class FornitoreFacade {
 
 		}
 
-		finally {
-			this.closeEM();
-		}
-
-
 	}
 
 	public Fornitore getFornitoreByID(long id) {
-		this.openEM();
-
-
+		
 		try {
 			String query = "SELECT f" +
 					"FROM Fornitore f" +
@@ -97,10 +60,18 @@ public class FornitoreFacade {
 
 		}
 
-		finally {
-			this.closeEM();
-		}
+	}
+	
+	public void updateFornitore (Fornitore f) {
+		em.merge(f);
+	}
 
+	public void deleteFornitore (Fornitore f) {
+		em.remove(f);
+	}
 
+	public void deleteFornitoreById (long id) {
+		Fornitore f = em.find(Fornitore.class, id);
+		deleteFornitore(f);
 	}
 }

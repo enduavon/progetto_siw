@@ -1,74 +1,35 @@
 package it.uniroma3.cikmed.facade;
 
 
-
 import it.uniroma3.cikmed.model.Cliente;
 import it.uniroma3.cikmed.model.Ordine;
+
 
 import java.util.Calendar;
 import java.util.List;
 
-
-
-
-
-
-
-
-
-
-
-
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+@Stateless (name="ordFacade")
 public class OrdineFacade {
-
+	
+	@PersistenceContext (unitName="progetto-unit")
 	private EntityManager em;
-	private EntityManagerFactory emf;
-
-	public void openEM() {
-		this.emf = Persistence.createEntityManagerFactory("Progetto-unit");
-		this.em = emf.createEntityManager();
-	}
-
-	private void closeEM() {
-		this.em.close();
-		this.emf.close();
-
-	}
-
-
+	
+	
 	public Ordine creaOrdine(Calendar ordineAperto, Cliente cliente) {
-		this.openEM();
-
-		Ordine o = new Ordine(ordineAperto, cliente);
-		EntityTransaction tx = em.getTransaction();
-		tx.begin();
-
-		try {
-			em.persist(o);
-			tx.commit();
-
-		} catch (Exception e) {
-			tx.rollback();
-			o = null;
-
-		} finally {
-			this.closeEM();
-		}
 		
+		Ordine o = new Ordine(ordineAperto, cliente);
+		em.persist(o);		
 		return o;
 
 	}
 
-	public List<Ordine> getTuttiGliOrdini() {
-		this.openEM();
-
-
+	public List<Ordine> getListaOrdini() {
+	
 		try {
 			String query = "SELECT ord" +
 					"FROM Ordine ord";
@@ -83,17 +44,10 @@ public class OrdineFacade {
 
 		}
 
-		finally {
-			this.closeEM();
-		}
-
-
 	}
 
-	public Ordine getClienteByID(long id) {
-		this.openEM();
-
-
+	public Ordine getOrdineByID(long id) {
+	
 		try {
 			String query = "SELECT ord" +
 					"FROM Ordine ord" +
@@ -110,10 +64,24 @@ public class OrdineFacade {
 
 		}
 
-		finally {
-			this.closeEM();
-		}
+	}
+	
+	public void updateOrdine (Ordine o) {
+		em.merge(o);
+	}
 
+	public void deleteOrdine (Ordine o) {
+		em.remove(o);
+	}
 
+	public void deleteOrdineById (long id) {
+		Ordine o = em.find(Ordine.class, id);
+		deleteOrdine(o);
+	}
+	
+	public void deleteOrdiniCliente (Cliente cliente) {
+		Cliente c = em.find(Cliente.class, cliente);
+		List<Ordine> listaOrdini= c.getOrdini();
+		em.remove(listaOrdini);
 	}
 }
