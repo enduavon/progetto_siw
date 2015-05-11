@@ -19,11 +19,16 @@ public class Amministratore {
 	@Column(nullable = false, unique = true)
 	private String password;
 	
+	@Column(nullable = false, unique = true)
+	private String email;	
+	
 
-public Amministratore(String nickname, String password) {
+public Amministratore(String nickname, String password, String email) {
 	this.nickname = nickname;
 	this.password = password;
+	this.email = email;
 }
+
 
 public Amministratore() {
 	
@@ -58,6 +63,14 @@ public void setPassword(String password) {
 	this.password = password;
 }
 
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
 
 @Override
 public boolean equals(Object obj) {
