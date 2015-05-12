@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Inserisci nuovo prodotto:</title>
+<title>Inserisci nuovo prodotto fif:</title>
 </head>
 <body>
 	<f:view>

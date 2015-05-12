@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Prodotto</title>
+<title>Prodotto fff</title>
 </head>
 <body>
 	<f:view>
