@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Inserisci nuovo prodotto fif:</title>
+<title>Inserisci nuovo prodotto:</title>
 </head>
 <body>
 	<f:view>
@@ -13,30 +13,30 @@
 			<div>
 				Name:
 				<h:inputText value="#{ProdottoController.nome}" required="true"
-					requiredMessage="Name is mandatory" id="nome" />
+					requiredMessage="Nome obbligatorio" id="nome" />
 				<strong><h:message for="nome" /></strong>
 			</div>
 			<div>
 				Code:
 				<h:inputText value="#{ProdottoController.codice}" required="true"
-					requiredMessage="Code is mandatory" id="codice" />
+					requiredMessage="Codice obbligatorio" id="codice" />
 				<h:message for="codice" />
 			</div>
 			<div>
 				Price:
 				<h:inputText value="#{ProdottoController.prezzo}" required="true"
-					requiredMessage="Price is mandatory"
-					converterMessage="Price must be a number" id="prezzo" />
+					requiredMessage="Prezzo obbligatorio"
+					converterMessage="Il prezzo deve essere un numero!" id="prezzo" />
 				<h:message for="prezzo" />
 			</div>
 			<div>
 				Description:
 				<h:inputTextarea value="#{ProdottoController.descrizione}"
-					required="false" cols="20" rows="5" />
+					required="false" cols="20" rows="5" /> 
 			</div>
 			<div>
 				<h:commandButton value="Submit"
-					action="#{ProdottoController.creaProdotto}" />
+					action="#{prodottoController.creaProdotto}" />
 			</div>
 		</h:form>
 
