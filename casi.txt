@@ -1,0 +1,79 @@
+Progetto Siw: Casi D'Uso
+
+Caso D'Uso UC1: Consulta listino - Attore primario: Un Utente non registrato.
+1. L'utente vuole consultare il catalogo dei prodotti.
+2. L'utente sceglie un prodotto e ne richiede i dettagli.
+3. Il Sistema mostra i dettagli del prodotto scelto.
+L'utente ripete i passi 2-3 finché necessario.
+
+
+Caso D'Uso UC2: Effettua ordine – Attore primario: Un Cliente.
+Scenario principale di successo: 
+1. Il Cliente vuole comprare dei prodotti effettuando un ordine online
+
+2. Il Cliente inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica il Cliente. 
+3. Il Cliente sceglie l'attività “Creazione ordine”. Il Sistema mostra il listino prodotti.
+4. Il Cliente consulta il listino dei prodotti e aggiunge il codice e la quantità del prodotto scelto all'ordine.
+5. Il Sistema imposta il prezzo unitario del prodotto scelto al prezzo corrente di listino.
+Il Cliente ripete i passi 4-5 fino a che non indica che ha terminato.
+6. Il Cliente conferma l'ordine.
+7. Il Sistema registra l'ordine. Da questo momento in poi l'ordine è completato e può essere visualizzato tra gli ordini effettuati del Cliente.
+
+Estensioni: …
+
+Osservazione: per Cliente si intende Utente registrato 
+
+
+Caso D'Uso UC3: Consulta i propri ordini – Attore primario: Un Cliente.
+Scenario principale di successo:
+1. Il Cliente vuole consultare gli ordini da lui effettuati.
+// vedete se vi va bene così o la lasciamo come precondizione
+2. Il Cliente inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica il Cliente.
+3. Il Cliente sceglie l'attività “Consulta ordini”. Il Sistema mostra l'elenco degli ordini effettuati (conclusi) del Cliente.
+4. Il Cliente chiede sceglie un ordine e ne richiede il dettaglio.
+5. Il Sistema mostra il dettaglio dell'ordine.
+Il Cliente ripete i passi 4-5 finché necessario.
+
+Estensioni: …
+
+
+
+// listino o catalogo Caso D'Uso UC4: Inserimento prodotti nel listino – Attore Primario: Un 	Amministratore.
+Scenario principale di successo:
+1. L'Amministratore vuole inserire un nuovo prodotto nel listino.
+
+2. L'Amministratore inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
+3. L'Amministratore sceglie l'attività “Inserisci Nuovo Prodotto".
+4. L'Amministratore specifica i dettagli del nuovo prodotto da inserire nel listino.
+L'Amministratore ripete il passo 4 finché necessario.
+5. Il Sistema mostra i prodotti inseriti.
+6. L'Amministratore conferma l'inserimento dei prodotti. Il Sistema registra le informazioni sui prodotti e li inserisce nel listino. Da questo momento in poi potranno essere consultati da Clienti e da utenti non registrati.
+
+
+Estensioni: …
+
+
+Caso D'Uso UC5: Recupera indirizzo cliente – Attore primario: Un Amministratore.
+Scenario principale di successo:
+1. L'Amministratore vuole recuperare i dati di un cliente a partire da un ordine.
+
+2. L'Amministratore inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
+// va gestito meglio
+3. L'Amministratore fornisce l'identificatore di un ordine.
+4. Il Sistema mostra i dati del Cliente che ha effettuato l'ordine.
+
+Estensioni: …
+
+
+
+Caso D'Uso UC6: Evasione ordine – Attore primario: Amministratore.
+Scenario principale di successo:
+1. L'Amministratore vuole evadere un ordine.
+2. L'Amministratore inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
+3. L'Amministratore sceglie l'attività “Evasione Ordini”.
+4. Il Sistema mostra gli ordini chiusi ma non ancora evasi.
+5. L'Amministratore sceglie un ordine da evadere.
+6. Il Sistema evade l'ordine e aggiorna la quantità di prodotti in magazzino.
+
+Estensioni:
+   1-6a: I prodotti non sono presenti in magazzino nella quantità desiderata. Il 	   Il Sistema non evade l'ordine.
