@@ -57,53 +57,52 @@ public class ProdottoController {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getNome() {
 		return nome;
 	}
 
-	public void setName(String nome) {
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public Float getPrice() {
+	public Float getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrice(Float prezzo) {
+	public void setPrezzo(Float prezzo) {
 		this.prezzo = prezzo;
 	}
 
-	public String getDescription() {
+	public String getDescrizione() {
 		return descrizione;
 	}
 
-	public void setDescription(String description) {
+	public void setDescrizione(String description) {
 		this.descrizione = description;
 	}
 
-	public String getCode() {
+	public String getCodice() {
 		return codice;
 	}
 
-	public void setCode(String codice) {
+	public void setCodice(String codice) {
 		this.codice = codice;
 	}
 
-	public Prodotto getProduct() {
+	public Prodotto getProdotto() {
 		return prodotto;
 	}
 
-	public void setProduct(Prodotto p) {
+	public void setProdotto(Prodotto p) {
 		this.prodotto = p;
 	}
 
-	public List<Prodotto> getProducts() {
+	public List<Prodotto> getProdotti() {
 		return prodotti;
 	}
 
-	public void setProducts(List<Prodotto> products) {
+	public void setProdotti(List<Prodotto> products) {
 		this.prodotti = products;
 	}
 }
-
 

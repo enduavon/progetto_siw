@@ -7,7 +7,8 @@
 .classpath 
 target/
 local.properties 
-.loadpath *.jar 
+.loadpath 
+*.jar 
 *.war
 *.ear
 *.db 

@@ -54,11 +54,11 @@ public class Prodotto {
 		this.id = id;
 	}
 
-	public String getName() {
+	public String getNome() {
 		return this.nome;
 	}
 
-	public void setName(String name) {
+	public void setNome(String name) {
 		this.nome = name;
 	}
 

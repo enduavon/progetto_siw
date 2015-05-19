@@ -5,33 +5,33 @@
 	  xmlns:f="http://java.sun.com/jsf/core">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Inserisci nuovo prodottojjjs:</title>
+<title>Nuovo Prodotto</title>
 </head>
 <body>
 	<f:view> 
 		<h:form>
 			<div>
 				Name:
-				<h:inputText value="#{ProdottoController.nome}" required="true"
+				<h:inputText value="#{prodottoController.nome}" required="true"
 					requiredMessage="Nome obbligatorio" id="nome" />
-				<strong><h:message for="nome" /></strong>
+				<strong><h:message for="nome" style="color:red" /></strong>
 			</div>
 			<div>
 				Code:
-				<h:inputText value="#{ProdottoController.codice}" required="true"
+				<h:inputText value="#{prodottoController.codice}" required="true"
 					requiredMessage="Codice obbligatorio" id="codice" />
-				<h:message for="codice" />
+				<strong><h:message for="codice" style="color:red" /></strong>
 			</div>
 			<div>
 				Price:
-				<h:inputText value="#{ProdottoController.prezzo}" required="true"
+				<h:inputText value="#{prodottoController.prezzo}" required="true"
 					requiredMessage="Prezzo obbligatorio"
 					converterMessage="Il prezzo deve essere un numero!" id="prezzo" />
-				<h:message for="prezzo" />
+				<strong><h:message for="prezzo" style="color:red" /></strong>
 			</div>
 			<div>
 				Description:
-				<h:inputTextarea value="#{ProdottoController.descrizione}"
+				<h:inputTextarea value="#{prodottoController.descrizione}"
 					required="false" cols="20" rows="5" /> 
 			</div>
 			<div>
