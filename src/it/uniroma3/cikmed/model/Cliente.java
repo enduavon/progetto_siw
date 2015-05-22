@@ -134,6 +134,10 @@ public class Cliente {
 		this.cognome = cogn;
 	}
 	
+	public boolean verificaPassword(String password) {
+		return this.password.equals(password);
+	}
+	
 	//fare anche il setOrdini oppure no? a cosa mi potrebbe servire?
 	public List<Ordine> getOrdini() {
 		return this.ordini;

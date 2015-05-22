@@ -14,35 +14,49 @@ import javax.persistence.TypedQuery;
 
 @Stateless (name="cFacade")
 public class ClienteFacade {
-	
-	@PersistenceContext (unitName="progetto-unit")
+
+	@PersistenceContext (unitName="progetto")
 	private EntityManager em;
-	
+
 	public ClienteFacade() {
 		super();
 	}
 
-	
+
 	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
 			Calendar dataDiNascita, Calendar dataDiRegistrazione,
 			Indirizzo indirizzo, String email) {
-		
+
 		Cliente c = new Cliente(nome, cognome, nickname, password, dataDiNascita, 
-									dataDiRegistrazione, indirizzo, email);
+				dataDiRegistrazione, indirizzo, email);
 		em.persist(c);		
 		return c;
-		}
-	
+	}
+
+	public boolean RegistraCliente(String nome,String nickname,String password, String cognome, 
+			Calendar dataDiNascita, Calendar dataDiRegistrazione,
+			Indirizzo indirizzo, String email) {
+		boolean registrato = false;
+		Cliente c = new Cliente(nome, cognome, nickname, password, dataDiNascita, 
+				dataDiRegistrazione, indirizzo, email);
+		em.persist(c);
+		registrato = true;
+		return registrato;
+	}
+
+
+
+
 
 	public List<Cliente> getTuttiClienti() {
-		
+
 		try {
 			String query = "SELECT c" +
 					"FROM Cliente c";
 			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			return q.getResultList();
-			} 
-		
+		} 
+
 		catch (Exception e) {
 			String q = "la lista dei clienti è vuota";
 			System.out.println(q);
@@ -51,8 +65,8 @@ public class ClienteFacade {
 		}
 
 	}
+
 	
-	//è giusto farlo per id o conviene usare un altro parametro?
 	public Cliente getClienteByID(long id) {
 
 		try {
@@ -62,16 +76,35 @@ public class ClienteFacade {
 			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
-			} 
-		
+		} 
+
 		catch (Exception e) {
 			String q = "il cliente selezionato non esiste";
 			System.out.println(q);
 			return null;
 
 		}
+	}
+
+	public Cliente getClienteByEmail(String email) {
+
+		try {
+			String query = "SELECT c" +
+					"FROM Cliente c" +
+					"WHERE c.email =: email";
+			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
+			q.setParameter("email", email);
+			return q.getSingleResult();
+		} 
+
+		catch (Exception e) {
+			String q = "il cliente selezionato non esiste";
+			System.out.println(q);
+			return null;
+
 		}
-	
+	}
+
 	public void updateCliente (Cliente c) {
 		em.merge(c);
 	}

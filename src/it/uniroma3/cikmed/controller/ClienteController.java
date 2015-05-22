@@ -1,42 +1,100 @@
 package it.uniroma3.cikmed.controller;
 
+
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import it.uniroma3.cikmed.facade.ClienteFacade;
 import it.uniroma3.cikmed.model.Cliente;
+import it.uniroma3.cikmed.model.Indirizzo;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.context.FacesContext;
 
 @ManagedBean (name="clienteController")
 public class ClienteController {
-	
+
 	@ManagedProperty(value="#{param.id}")
 	private Long id;
 	private String nome;
+	private String cognome;
 	private String nickname;
 	private String password;
 	private String email;
-	
-	
-	private Cliente cliente;
-	private List<Cliente> clienti;
-	
+	private Calendar dataRegistrazione;
+	private Calendar dataNascita;
+	private Indirizzo indirizzo;
+
+	private Cliente clienteCorrente;
+	private List<Cliente> clientiRegistrati; //tutti gli utenti registrati
+
 	@EJB (beanName="cFacade")
 	private ClienteFacade clienteFacade;
-	
-	
+
+
 	//creare metodi per login e logout cliente
-	
-	
+
+
 	public String listClienti() {
-		this.clienti = clienteFacade.getTuttiClienti();
+		this.clientiRegistrati = clienteFacade.getTuttiClienti();
 		return "showClienti"; 
 	}
+	
+	public String registraCliente() {
+		try{
+			/*Genera automaticamente la data di oggi */
+			this.dataRegistrazione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+			this.clienteCorrente = clienteFacade.creaCliente(nome, nickname, password, cognome, dataNascita, 
+													dataRegistrazione, indirizzo, email);
+			return "registrazioneEffettuata";
+		}catch(Exception e){
+			/*Utente già registrato*/
+			this.resetCliente();
+			FacesContext.getCurrentInstance().addMessage("registrazioneCliente:signinCliente", new FacesMessage("Utente già registrato!"));
+			return "registrazioneCliente";
+		}
+	}
+
+
+	private void resetCliente(){
+		this.nome = null;
+		this.cognome = null;
+		this.password = null;
+		this.email = null;
+		this.nickname = null;
+		this.indirizzo = null;
+		this.dataNascita = null;
+		this.dataRegistrazione = null;
+	}
+
+	public String loginCliente() {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("administratorController");
+		try{
+			Cliente client = clienteFacade.getClienteByEmail(email);
+			if (client.verificaPassword(this.password)) {
+				setCliente(client);
+				return "customerPage";
+			}
+			else{
+				// Password Errata
+				FacesContext.getCurrentInstance().addMessage("loginCliente:accedi", new FacesMessage("Login Errato! Email o password non inseriti correttamente!"));
+				return "login";
+			}
+		}
+		catch (Exception e) {
+			// Cliente non trovato
+			FacesContext.getCurrentInstance().addMessage("loginCustomer:accedi", new FacesMessage("Login Errato! Email o password non inseriti correttamente!"));
+			return "login";
+		}
+	}
+
 
 	public String findCliente(Long id) {
-		this.cliente = clienteFacade.getClienteByID(id);
+		this.clienteCorrente = clienteFacade.getClienteByID(id);
 		return "showCliente";
 	}
 
@@ -81,21 +139,21 @@ public class ClienteController {
 	}
 
 	public Cliente getCliente() {
-		return cliente;
+		return clienteCorrente;
 	}
 
 	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+		this.clienteCorrente = cliente;
 	}
 
 	public List<Cliente> getClienti() {
-		return clienti;
+		return clientiRegistrati;
 	}
 
 	public void setClienti(List<Cliente> clienti) {
-		this.clienti = clienti;
+		this.clientiRegistrati = clienti;
 	}
-	
+
 	public ClienteFacade getClienteFacade() {
 		return clienteFacade;
 	}
@@ -104,5 +162,5 @@ public class ClienteController {
 		this.clienteFacade = clienteFacade;
 	}
 
-	
+
 }
