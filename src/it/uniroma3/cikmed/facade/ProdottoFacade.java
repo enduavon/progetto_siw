@@ -18,9 +18,9 @@ public class ProdottoFacade {
 	
 	
 	public Prodotto creaProdotto(String nome, String codice, String descrizione, Float prezzo, 
-			int quantità) {
+			int quantita) {
 
-		Prodotto p = new Prodotto(nome, codice, descrizione, prezzo, quantità);
+		Prodotto p = new Prodotto(nome, codice, descrizione, prezzo, quantita);
 		em.persist(p);
 		return p;
 	}

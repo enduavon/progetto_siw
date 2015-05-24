@@ -13,10 +13,10 @@ public class Indirizzo {
 
 	}
 
-	public Indirizzo(String via, String città, String nazione, String codicePostale, 
+	public Indirizzo(String via, String citta, String nazione, String codicePostale, 
 			String stato) {
 		this.via = via;
-		this.città = città;
+		this.citta = citta;
 		this.nazione = nazione;
 		this.codicePostale = codicePostale;
 		this.stato = stato;
@@ -29,7 +29,7 @@ public class Indirizzo {
 	private String via;
 
 	@Column(nullable = false)
-	private String città;
+	private String citta;
 	private String nazione;
 
 	@Column(nullable = false)
@@ -53,10 +53,10 @@ public class Indirizzo {
 		this.via = street;
 	}
 	public String getCity() {
-		return città;
+		return citta;
 	}
 	public void setCity(String city) {
-		this.città = city;
+		this.citta = city;
 	}
 	public String getZipCode() {
 		return codicePostale;

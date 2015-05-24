@@ -18,14 +18,14 @@ public class RigaOrdine {
 	@Column
 	private Float prezzo;
 	@Column
-	private int quantità;
+	private int quantita;
 	@ManyToOne
 	private Prodotto prodotto;
 
-	public RigaOrdine(Prodotto prodotto, Float prezzo, int quantità) {
+	public RigaOrdine(Prodotto prodotto, Float prezzo, int quantita) {
 		this.prodotto = prodotto;
 		this.prezzo = prezzo;
-		this.quantità = quantità;
+		this.quantita = quantita;
 	}
 	
 	
@@ -53,12 +53,12 @@ public class RigaOrdine {
 		this.prezzo = price;
 	}
 	
-	public int getQuantità() {
-		return quantità;
+	public int getQuantita() {
+		return quantita;
 	}
 
-	public void setQuantità(int q) {
-		this.quantità = q;
+	public void setQuantita(int q) {
+		this.quantita = q;
 	}
 
 }

@@ -28,7 +28,7 @@ public class Prodotto {
 	private String codice;
 
 	@Column(nullable = false)
-	private int quantità;
+	private int quantita;
 	
 	@ManyToMany(mappedBy = "prodotti")
 	private List<Fornitore> fornitori;
@@ -38,12 +38,12 @@ public class Prodotto {
 	}
 	
 
-	public Prodotto(String nome, String codice, String descrizione, Float prezzo, int quantità) {
+	public Prodotto(String nome, String codice, String descrizione, Float prezzo, int quantita) {
 		this.nome = nome;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.prezzo = prezzo;
-		this.quantità = quantità;
+		this.quantita = quantita;
 	}
 
 	public Long getId() {
@@ -86,12 +86,12 @@ public class Prodotto {
 		this.prezzo = price;
 	}
 	
-	public int getQuantità() {
-		return quantità;
+	public int getQuantita() {
+		return quantita;
 	}
 
-	public void setQuantità(int q) {
-		this.quantità = q;
+	public void setQuantita(int q) {
+		this.quantita = q;
 	}
 @Override
 	public boolean equals(Object o) {

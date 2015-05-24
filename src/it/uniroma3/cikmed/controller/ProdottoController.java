@@ -8,17 +8,20 @@ import it.uniroma3.cikmed.model.Prodotto;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean (name="prodottoController")
+@ViewScoped
 public class ProdottoController {
 	
 	@ManagedProperty(value="#{param.id}")
 	private Long id;
+	
 	private String nome;
 	private Float prezzo;
 	private String descrizione;
 	private String codice;
-	private int quantità;
+	private int quantita;
 	
 	
 	private Prodotto prodotto;
@@ -31,7 +34,7 @@ public class ProdottoController {
 	
 	public String creaProdotto() {
 		try {
-			this.prodotto = pFacade.creaProdotto(nome, codice, descrizione, prezzo, quantità);
+			this.prodotto = pFacade.creaProdotto(nome, codice, descrizione, prezzo, quantita);
 			return "newProdotto"; 
 			}
 		catch (Exception e) {
@@ -44,7 +47,7 @@ public class ProdottoController {
 		return "showProdotti"; 
 	}
 	
-	public String findProduct(Long id) {
+	public String findProduct() {
 		this.prodotto = pFacade.getProdottoByID(id);
 		return "showProdotto";
 	}
