@@ -24,13 +24,12 @@ public class ProdottoFacade {
 		em.persist(p);
 		return p;
 	}
+	
 
 	public List<Prodotto> getCatalogoProdotti() {
 		
 		try {
-			String query = "SELECT p" +
-					"FROM Prodotto p";
-			TypedQuery<Prodotto> q = em.createQuery(query, Prodotto.class);
+			TypedQuery<Prodotto> q = em.createQuery("SELECT p FROM Prodotto p", Prodotto.class);
 			return q.getResultList();
 
 		} 
@@ -38,18 +37,14 @@ public class ProdottoFacade {
 			String q = "la lista è vuota";
 			System.out.println(q);
 			return null;
-
+			}
 		}
-
-	}
+	
 
 	public Prodotto getProdottoByID(long id) {
 	
 		try {
-			String query = "SELECT p" +
-					"FROM Prodotto p" +
-					"WHERE p.id =: id";
-			TypedQuery<Prodotto> q = em.createQuery(query, Prodotto.class);
+			TypedQuery<Prodotto> q = em.createQuery("SELECT p FROM Prodotto p WHERE p.id =: id", Prodotto.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 
@@ -58,10 +53,9 @@ public class ProdottoFacade {
 			String q = "il prodotto con id" +id+ "non è presente";
 			System.out.println(q);
 			return null;
-
+			}
 		}
-		
-	}
+	
 	
 	public void updateProdotto (Prodotto p) {
 	em.merge(p);

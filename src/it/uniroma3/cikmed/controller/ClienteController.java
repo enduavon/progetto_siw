@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
+
 @ManagedBean (name="clienteController")
 public class ClienteController {
 
@@ -28,6 +29,7 @@ public class ClienteController {
 	private Calendar dataRegistrazione;
 	private Calendar dataNascita;
 	private Indirizzo indirizzo;
+	//private boolean isLogged;
 
 	private Cliente clienteCorrente;
 	private List<Cliente> clientiRegistrati; //tutti gli utenti registrati
@@ -36,66 +38,78 @@ public class ClienteController {
 	private ClienteFacade clienteFacade;
 
 
-	//creare metodi per login e logout cliente
+//	public String registraCliente() {
+//		try{
+//			/*Genera automaticamente la data di oggi */
+//			this.dataRegistrazione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
+//			this.clienteCorrente = clienteFacade.creaCliente(nome, nickname, password, cognome, dataNascita, 
+//					dataRegistrazione, indirizzo, email);
+//			return "registrazioneEffettuata";
+//		}catch(Exception e){
+//			/*Utente già registrato*/
+//			this.resetCliente();
+//			FacesContext.getCurrentInstance().addMessage("registrazioneCliente:signin come Cliente", new FacesMessage("Utente già registrato!"));
+//			return "registrazioneCliente";
+//		}
+//	}
+
+
+//	private void resetCliente(){
+//		this.nome = null;
+//		this.cognome = null;
+//		this.password = null;
+//		this.email = null;
+//		this.nickname = null;
+//		this.indirizzo = null;
+//		this.dataNascita = null;
+//		this.dataRegistrazione = null;
+//	}
+
+//	public String loginCliente() {
+//		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("AmministratoreController");
+//		FacesMessage msg = new FacesMessage("Login Errato! Email o password non inseriti correttamente!");
+//		
+//		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+//		
+//		try{
+//			Cliente client = clienteFacade.getClienteByEmail(email);
+//			if (client.verificaPassword(this.password)) {
+//				setCliente(client);
+//				return "paginaCliente";
+//			}
+//
+//			else{
+//				// Password Errata
+//				FacesContext.getCurrentInstance().addMessage("loginCliente:error", msg);
+//				return "login";
+//			}
+//		}
+//		catch (Exception e) {
+//			// Cliente non trovato
+//			FacesContext.getCurrentInstance().addMessage("loginCliente:error", msg);
+//			return "login";
+//		}
+//	}
+
+
+//	public String logoutCliente() {
+// FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+// /*TODO*/return "";
+//	}
+
+	public String findCliente(Long id) {
+		this.clienteCorrente = clienteFacade.getClienteByID(id);
+		return "showCliente";
+	}
+	
+	public String riepilogoCliente() {
+		return "showCliente";
+	}
 
 
 	public String listClienti() {
 		this.clientiRegistrati = clienteFacade.getTuttiClienti();
 		return "showClienti"; 
-	}
-	
-	public String registraCliente() {
-		try{
-			/*Genera automaticamente la data di oggi */
-			this.dataRegistrazione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-			this.clienteCorrente = clienteFacade.creaCliente(nome, nickname, password, cognome, dataNascita, 
-													dataRegistrazione, indirizzo, email);
-			return "registrazioneEffettuata";
-		}catch(Exception e){
-			/*Utente già registrato*/
-			this.resetCliente();
-			FacesContext.getCurrentInstance().addMessage("registrazioneCliente:signinCliente", new FacesMessage("Utente già registrato!"));
-			return "registrazioneCliente";
-		}
-	}
-
-
-	private void resetCliente(){
-		this.nome = null;
-		this.cognome = null;
-		this.password = null;
-		this.email = null;
-		this.nickname = null;
-		this.indirizzo = null;
-		this.dataNascita = null;
-		this.dataRegistrazione = null;
-	}
-
-	public String loginCliente() {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("administratorController");
-		try{
-			Cliente client = clienteFacade.getClienteByEmail(email);
-			if (client.verificaPassword(this.password)) {
-				setCliente(client);
-				return "customerPage";
-			}
-			else{
-				// Password Errata
-				FacesContext.getCurrentInstance().addMessage("loginCliente:accedi", new FacesMessage("Login Errato! Email o password non inseriti correttamente!"));
-				return "login";
-			}
-		}
-		catch (Exception e) {
-			// Cliente non trovato
-			FacesContext.getCurrentInstance().addMessage("loginCustomer:accedi", new FacesMessage("Login Errato! Email o password non inseriti correttamente!"));
-			return "login";
-		}
-	}
-
-
-	public String findCliente(Long id) {
-		this.clienteCorrente = clienteFacade.getClienteByID(id);
-		return "showCliente";
 	}
 
 	public Long getId() {
@@ -162,5 +176,12 @@ public class ClienteController {
 		this.clienteFacade = clienteFacade;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Cliente [id=" + id + ", nome=" + nome + ", cognome="
+				+ cognome + ", nickname=" + nickname + ", password=" + password
+				+ ", email=" + email + ", dataRegistrazione="
+				+ dataRegistrazione + ", dataNascita=" + dataNascita
+				+ ", indirizzo=" + indirizzo + "]";
+	}
 }

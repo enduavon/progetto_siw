@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<faces-config
-    xmlns="http://java.sun.com/xml/ns/javaee"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
-    version="2.1">
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+	<!-- se mi trovo in index -->
+	<navigation-rule>
+		<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>CatalogoProdotti</from-outcome>
+			<to-view-id>/showProdotti.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>Registrati</from-outcome>
+			<to-view-id>/registrazioneCliente.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>loginCliente</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+
+	</navigation-rule>
+	<!-- se mi trovo in registrazioneCliente -->
+	<navigation-rule>
+		<from-view-id>/registrazioneCliente.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>fineRegistrazione</from-outcome>
+			<to-view-id>/showCliente.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>esci</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<managed-bean>
+		<managed-bean-name>clienteController</managed-bean-name>
+		<managed-bean-class>it.uniroma3.cikmed.controller.ClienteController</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 
 </faces-config>

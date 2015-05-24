@@ -70,9 +70,7 @@ public class Cliente {
 		this.ordini = new ArrayList<Ordine>();
 	}
 	
-	public boolean checkPassword(String pwd) {
-		return this.password.equals(pwd);
-	}
+	
 	
 	public void addOrdine (Ordine o) {
 		this.ordini.add(o);

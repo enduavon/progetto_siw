@@ -33,20 +33,6 @@ public class ClienteFacade {
 		return c;
 	}
 
-	public boolean RegistraCliente(String nome,String nickname,String password, String cognome, 
-			Calendar dataDiNascita, Calendar dataDiRegistrazione,
-			Indirizzo indirizzo, String email) {
-		boolean registrato = false;
-		Cliente c = new Cliente(nome, cognome, nickname, password, dataDiNascita, 
-				dataDiRegistrazione, indirizzo, email);
-		em.persist(c);
-		registrato = true;
-		return registrato;
-	}
-
-
-
-
 
 	public List<Cliente> getTuttiClienti() {
 

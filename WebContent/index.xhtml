@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Home</title>
 </head>
 <body>
-	<h1>qui potrai trovare tutti i prodotti che cercavi</h1>
-	<div>
-		<h:commandButton value="mostra catalogo prodotti"
-			action="#{prodottoController.listProducts}" />
-	</div>
+	
+	<h:form>
+		<h1>Benvenuto in Cikmed!</h1>
+		<div>
+			
+			<h:commandButton action="#{clienteController.loginCliente}"
+				value="loginCliente" />
+			<h:commandButton action="#{clienteController.registraCliente}"
+				value="Registrati" />
+			<h:commandLink   action="#{prodottoController.listProducts}" 
+			    value="CatalogoProdotti"/>
+
+		</div>
+		<p>Anche se non sei registrato, puoi tranquillamente visionare il
+			nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi usufruire
+			di tutti gli altri nostri servizi :)</p>
+	</h:form>
 </body>
 </html>
