@@ -35,14 +35,6 @@ public class ClienteController {
 	@EJB (beanName="cFacade")
 	private ClienteFacade clienteFacade;
 
-
-	//creare metodi per login e logout cliente
-
-
-	public String listClienti() {
-		this.clientiRegistrati = clienteFacade.getTuttiClienti();
-		return "showClienti"; 
-	}
 	
 	public String registraCliente() {
 		try{
@@ -93,9 +85,16 @@ public class ClienteController {
 	}
 
 
+	//manca logout utente
+	
 	public String findCliente(Long id) {
 		this.clienteCorrente = clienteFacade.getClienteByID(id);
 		return "showCliente";
+	}
+	
+	public String listClienti() {
+		this.clientiRegistrati = clienteFacade.getTuttiClienti();
+		return "showClienti"; 
 	}
 
 	public Long getId() {

@@ -16,7 +16,7 @@ import javax.persistence.TypedQuery;
 @Stateless (name="ordFacade")
 public class OrdineFacade {
 	
-	@PersistenceContext (unitName="progetto-unit")
+	@PersistenceContext (unitName="progetto")
 	private EntityManager em;
 	
 	

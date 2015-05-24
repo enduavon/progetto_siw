@@ -7,10 +7,15 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>qui potrai trovare tutti i prodotti che cercavi</h1>
-	<div>
-		<h:commandButton value="mostra catalogo prodotti"
-			action="#{prodottoController.listProducts}" />
-	</div>
+	<h:form>
+		<h1>Benvenuto in Cikmed!</h1>
+		<div>
+			<h:commandLink value="Catalogo Prodotti"
+				action="#{prodottoController.listProducts}" />
+		</div>
+		<p>Anche se non sei registrato, puoi tranquillamente visionare il
+			nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi usufruire
+			di tutti gli altri nostri servizi :)</p>
+	</h:form>
 </body>
 </html>

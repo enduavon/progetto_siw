@@ -21,6 +21,10 @@ public class RigaOrdine {
 	private int quantità;
 	@ManyToOne
 	private Prodotto prodotto;
+	
+	public RigaOrdine() {
+		
+	}
 
 	public RigaOrdine(Prodotto prodotto, Float prezzo, int quantità) {
 		this.prodotto = prodotto;

@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:c="http://java.sun.com/jstl/core">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Catalogo prodotti:</title>
+<title>Catalogo</title>
 </head>
 <body>
-	<f:view>
-		<ul>
-			<c:forEach var="prodotto" items="${prodotti}">
-				<li>${prodotti.nome}</li>
-
-				<li><h:commandButton id="submit"
-action="#{ProdottoController.findProduct}" value="Submit" /></li>
-
-			</c:forEach>
-		</ul>
-
-	</f:view>
+<h:form>
+	<table>
+		<tr>
+			<th>Nome</th>
+			<th>Prezzo</th>
+			<th>Codice</th>
+		</tr>
+		<tbody>
+			<ui:repeat var="prodotto" value="#{prodottoController.prodotti}">
+				<tr>
+					<td><h:commandLink action="#{prodottoController.findProduct}"
+							value="#{prodotto.nome}" style="color: orange">
+							<f:param name="id" value="#{prodotto.id}" />
+						</h:commandLink></td>
+					<td>${prodotto.prezzo}</td>
+					<td>${prodotto.codice}</td>
+				</tr>
+			</ui:repeat>
+		</tbody>
+	</table>
+	</h:form>
 </body>
 </html>

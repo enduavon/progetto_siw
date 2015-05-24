@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 @Stateless (name="fornFacade")
 public class FornitoreFacade {
 	
-	@PersistenceContext (unitName="progetto-unit")
+	@PersistenceContext (unitName="progetto")
 	private EntityManager em;
 
 
