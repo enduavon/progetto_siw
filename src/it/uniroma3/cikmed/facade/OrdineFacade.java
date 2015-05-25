@@ -40,7 +40,7 @@ public class OrdineFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "la lista degli ordini � vuota";
+			String q = "la lista degli ordini e vuota";
 			System.out.println(q);
 			return null;
 

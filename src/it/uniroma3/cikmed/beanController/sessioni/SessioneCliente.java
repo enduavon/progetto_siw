@@ -2,30 +2,48 @@ package it.uniroma3.cikmed.beanController.sessioni;
 
 import java.util.List;
 
+import it.uniroma3.cikmed.facade.ClienteFacade;
 import it.uniroma3.cikmed.model.Cliente;
 import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="sessioneCliente")
+
 @SessionScoped
 public class SessioneCliente {
+	@ManagedProperty(value="#{param.id}")
 	
 	private Cliente clienteCorrente;
-	
+	private ClienteFacade clienteFacade;
+
 	private Ordine ordineCorrente;
 	private RigaOrdine rigaOrdineCorrente;
 	private List<Ordine> ordini;
-	
+
 	private List<Prodotto> prodotti;
 	private Prodotto prodottoCorrente;
-	
-	
 
-	
+
+	public String findCliente(Long id) {
+		this.clienteCorrente = clienteFacade.getClienteByID(id);
+		return "showCliente";
+	}
+
+	public String riepilogoCliente() {
+		return "showCliente";
+	}
+
+
+	public String listClienti() {
+		clienteFacade.getTuttiClienti();
+		return "showClienti"; 
+	}
+
 	public Cliente getCliente() {
 		return clienteCorrente;
 	}
@@ -69,7 +87,7 @@ public class SessioneCliente {
 	public List<Ordine> getOrdini() {
 		return ordini;
 	}
-	
+
 	public void setOrdini(List<Ordine> orders) {
 		this.ordini = orders;
 	}
