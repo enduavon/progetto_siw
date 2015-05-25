@@ -21,7 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 
-
 @Entity
 @Table(name = "orders")
 
@@ -32,21 +31,18 @@ public class Ordine {
 	private long id;
 
 
-	@Column
-	private boolean chiuso; //Stato chiuso dell'ordine
-
-	@Column
-	private boolean evaso; //Stato evaso dell'ordine
+	@Column (nullable = false)
+	private String stato;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar ordineAperto;
 
-	@Column(nullable = false)
+	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar ordineChiuso;
 
-	@Column(nullable = false)
+	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar ordineEvaso;
 
@@ -75,7 +71,7 @@ public class Ordine {
 	public Ordine (Calendar ordineAperto, Cliente cliente) {
 		this.ordineAperto = ordineAperto;
 		this.cliente = cliente;
-		this.chiuso = false; //Alla creazione l'ordine è aperto
+		this.stato = "aperto"; //Quando si crea un nuovo ordine, il suo stato corrente è "aperto"
 		this.righeOrdine = new ArrayList<RigaOrdine>();
 	}
 
@@ -101,7 +97,7 @@ public class Ordine {
 	public RigaOrdine getRigaOrdineByProdotto(Prodotto p) {
 		RigaOrdine ro = null;
 		for(RigaOrdine r : this.righeOrdine){
-			if(r.getProdottoDellaRigaOrdine().getId().equals
+			if(r.getProdotto().getId().equals
 					(p.getId()))
 				ro = r;
 		}
@@ -113,22 +109,24 @@ public class Ordine {
 		return id;
 	}
 
-	public boolean isChiuso() {
-		return chiuso;
+	public String getStato() {
+		return stato;
 	}
 
-	public void setChiuso() {
-		this.chiuso = true;
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 	
-	public boolean isEvaso() {
-		return evaso;
+	public void chiudiOrdine() {
+		this.stato = "chiuso";
+		this.ordineChiuso = Calendar.getInstance();
 	}
-
-	public void setEvaso() {
-		this.evaso = true;
+	
+	public void evadiOrdine() {
+		this.stato = "evaso";
+		this.ordineEvaso = Calendar.getInstance();
 	}
-
+	
 	public Calendar getDataAperturaOrdine() {
 		return ordineAperto;
 	}
@@ -168,10 +166,4 @@ public class Ordine {
 	public void setRigaOrdine(List<RigaOrdine> ro) {
 		this.righeOrdine = ro;
 	}
-	
-	
-
-
-
-
 }

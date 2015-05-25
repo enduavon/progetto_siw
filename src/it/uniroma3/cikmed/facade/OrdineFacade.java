@@ -23,7 +23,9 @@ public class OrdineFacade {
 	public Ordine creaOrdine(Calendar ordineAperto, Cliente cliente) {
 		
 		Ordine o = new Ordine(ordineAperto, cliente);
-		em.persist(o);		
+		cliente.addOrdine(o);
+		em.persist(o);	
+		em.merge(cliente);
 		return o;
 
 	}
@@ -49,10 +51,7 @@ public class OrdineFacade {
 	public Ordine getOrdineByID(long id) {
 	
 		try {
-			String query = "SELECT ord" +
-					"FROM Ordine ord" +
-					"WHERE ord.id =: id";
-			TypedQuery<Ordine> q = em.createQuery(query, Ordine.class);
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.id =: id", Ordine.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 

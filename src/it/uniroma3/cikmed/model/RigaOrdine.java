@@ -41,11 +41,11 @@ public class RigaOrdine {
 		this.id = id;
 	}
 	
-	public Prodotto getProdottoDellaRigaOrdine() {
+	public Prodotto getProdotto() {
 		return prodotto;
 	}
 	
-	public void setProdottoDellaRigaOrdine(Prodotto p) {
+	public void setProdotto(Prodotto p) {
 		this.prodotto = p;
 	}
 	
