@@ -2,9 +2,9 @@ package it.uniroma3.cikmed.facade;
 
 
 import it.uniroma3.cikmed.model.Cliente;
-import it.uniroma3.cikmed.model.Indirizzo;
 
-import java.util.Calendar;
+
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-@Stateless (name="cFacade")
+@Stateless (name="clienteFacade")
 public class ClienteFacade {
 
 	@PersistenceContext (unitName="progetto")
@@ -24,12 +24,10 @@ public class ClienteFacade {
 
 
 	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
-			Calendar dataDiNascita, Calendar dataDiRegistrazione,
-			Indirizzo indirizzo, String email) {
+			Date dataDiNascita, String email) {
 
-		Cliente c = new Cliente(nome, cognome, nickname, password, dataDiNascita, 
-				dataDiRegistrazione, indirizzo, email);
-		em.persist(c);		
+		Cliente c = new Cliente(nome, nickname,password,cognome, dataDiNascita, email);
+		this.em.persist(c);		
 		return c;
 	}
 
@@ -51,8 +49,10 @@ public class ClienteFacade {
 		}
 
 	}
-
 	
+	
+
+
 	public Cliente getClienteByID(long id) {
 
 		try {
@@ -90,6 +90,35 @@ public class ClienteFacade {
 
 		}
 	}
+	
+	public boolean esisteEmail(String email) {
+		TypedQuery<Cliente> query = em.createQuery("SELECT c "
+				+ "FROM Cliente c "
+				+ "where c.email =:email", Cliente.class);
+		query.setParameter("email", email);
+		return query.getResultList().size() != 0;
+
+	}
+
+	public Cliente trovaClienteByEmailPwd(String email, String password) {
+		try {
+			String query = "SELECT c" +
+					"FROM Cliente c" +
+					"WHERE c.email =: email" +
+					"AND c.password =: password";
+			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
+			q.setParameter("email", email);
+			q.setParameter("password", password);
+			return q.getSingleResult();
+		} 
+
+		catch (Exception e) {
+			String q = "il cliente selezionato non esiste";
+			System.out.println(q);
+			return null;
+
+		}
+	}
 
 	public void updateCliente (Cliente c) {
 		em.merge(c);
@@ -103,4 +132,10 @@ public class ClienteFacade {
 		Cliente c = em.find(Cliente.class, id);
 		deleteCliente(c);
 	}
+
+
+
+
+
+
 }
