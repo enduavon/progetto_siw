@@ -3,17 +3,19 @@ package it.uniroma3.cikmed.model;
 
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -36,19 +38,21 @@ public class Cliente {
 	private String nickname;
 
 	@Column(nullable = false)
-	private Calendar dataDiNascita;
+	@Temporal(value=TemporalType.DATE)
+	private Date dataDiNascita;
 
 	@Column(nullable = false)
-	private Calendar dataDiRegistrazione;
+	@Temporal(value=TemporalType.TIMESTAMP)
+	private Date dataDiRegistrazione;
 	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
 	private String email;
 	
-	@OneToOne
+	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
 	private Indirizzo indirizzo;
 	
-	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cliente")
 	private List<Ordine> ordini;
 
 
@@ -56,17 +60,15 @@ public class Cliente {
 
 	}
 	
-	public Cliente(String nome, String cognome, String nickname, String password, 
-			Calendar dataDiNascita, Calendar dataDiRegistrazione,
-			Indirizzo indirizzo, String email) {
+	public Cliente(String nome, String nickname, String password, String cognome, 
+			Date dataDiNascita, String email) {
 		this.nickname = nickname;
 		this.password = password;
 		this.cognome = cognome;
 		this.nome = nome;
 		this.dataDiNascita = dataDiNascita;
-		this.dataDiRegistrazione = dataDiRegistrazione;
 		this.email = email;
-		this.indirizzo = indirizzo;
+		
 		this.ordini = new ArrayList<Ordine>();
 	}
 	
@@ -108,19 +110,19 @@ public class Cliente {
 		this.indirizzo = ind;
 	}
 
-	public Calendar getDataDiNascita() {
+	public Date getDataDiNascita() {
 		return this.dataDiNascita;
 	}
 
-	public void setDataDiNascita(Calendar data) {
+	public void setDataDiNascita(Date data) {
 		this.dataDiNascita = data;
 	}
 
-	public Calendar getDataDiRegistrazione() {
+	public Date getDataDiRegistrazione() {
 		return dataDiRegistrazione;
 	}
 
-	public void setDataDiRegistrazione(Calendar data) {
+	public void setDataDiRegistrazione(Date data) {
 		this.dataDiRegistrazione = data;
 	}
 

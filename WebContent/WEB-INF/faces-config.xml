@@ -17,7 +17,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>loginCliente</from-outcome>
-			<to-view-id>/login.xhtml</to-view-id>
+			<to-view-id>/loginCliente.xhtml</to-view-id>
 		</navigation-case>
 
 	</navigation-rule>
@@ -25,19 +25,27 @@
 	<navigation-rule>
 		<from-view-id>/registrazioneCliente.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>fineRegistrazione</from-outcome>
-			<to-view-id>/showCliente.xhtml</to-view-id>
+			<from-outcome>registra</from-outcome>
+			<to-view-id>/mostraCliente.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>esci</from-outcome>
 			<to-view-id>/index.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-
-	<managed-bean>
-		<managed-bean-name>clienteController</managed-bean-name>
-		<managed-bean-class>it.uniroma3.cikmed.controller.ClienteController</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
-	</managed-bean>
+	
+	<!-- se mi trovo in loginCliente -->
+	<navigation-rule>
+		<from-view-id>/loginCliente.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>mostrami</from-outcome>
+			<to-view-id>/mostraCliente.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>esci</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+<!-- settaggio bean -->
 
 </faces-config>

@@ -1,35 +1,78 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Pagina Registrazione</title>
 </head>
 <body>
-  <f:view>
-    <h:form>
-      <h:outputText value="Inserisci il tuo nome:" />
-      <h:inputText value="#{clienteController.nome}" />
-       <h:outputText value="Inserisci il tuo cognome:" />
-      <h:inputText value="#{clienteController.cognome}" />
-       <h:outputText value="Inserisci il tuo nuovo nickname:" />
-      <h:inputText value="#{clienteController.nickname}" />
-       <h:outputText value="Inserisci la tua email:" />
-      <h:inputText value="#{clienteController.email}" />
-       <h:outputText value="Inserisci il tuo indirizzo:" />
-      <h:inputText value="#{clienteController.indirizzo}" />
-       <h:outputText value="Inserisci la tua data di nascita:" />
-      <h:inputText value="#{clienteController.dataNascita}" />
-       <h:outputText value="Inserisci la tua nuova password:" />
-      <h:inputText value="#{clienteController.password}" />
-      
-      <!-- registraCliente è da fare -->
-      
-      <h:commandButton value="fineRegistrazione" action="#{clienteController.registraCliente}" />
-      <h:commandButton value="esci"/>
-    </h:form>
-  </f:view>
+	<f:view>
+		<h1>Registra Cliente</h1>
+		<h:form>
+			<div>
+				Nome:
+				<h:inputText value="#{registraCliente.nome}" required="true"
+					requiredMessage="il nome è obbligatorio" id="nome" />
+				<h:message for="nome" style="color:red" />
+			</div>
+			<div>
+				Nickname:
+				<h:inputText value="#{registraCliente.nickname}" required="true"
+					requiredMessage="il nickname è obbligatorio" id="nickname" />
+				<h:message for="nickname" style="color:red" />
+			</div>
+			<div>
+				Password:
+				<h:inputSecret value="#{registraCliente.password}" required="true"
+					requiredMessage="Password è obbligatoria" id="password" />
+				<h:message for="password" style="color:red" />
+			</div>
+			<div>
+				Cognome:
+				<h:inputText value="#{registraCliente.cognome}" required="true"
+					requiredMessage="cognome è obbligatorio" id="cognome" />
+				<h:message for="cognome" style="color:red" />
+			</div>
+			<div>
+
+				<h:panelGrid columns="3">
+ 
+		  Data di Nascita: 
+		 <h:inputText id="data" value="#{registraCliente.dataDiNascita}"
+						size="20" required="true" label="Data di nascita">
+
+						<f:convertDateTime pattern="d-M-yyyy" />
+					</h:inputText>
+
+					<h:message for="data" style="color:red" />
+
+				</h:panelGrid>
+
+			</div>
+			<div>
+				Email:
+				<h:inputText value="#{registraCliente.email}" required="true"
+					requiredMessage="Email è obbligatoria" id="email"
+					validatorMessage="Email non valida">
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+				</h:inputText>
+				<h:message for="email" style="color:red" />
+			</div>
+
+
+			<div>
+				<h:outputText value="#{registerCliente.registrazioneSbagliata}" />
+			</div>
+			<div>
+				<h:commandButton value="registra"
+					action="#{registraCliente.registraCliente}" />
+			</div>
+			<h:commandButton value="esci" />
+		</h:form>
+	</f:view>
 </body>
 </html>

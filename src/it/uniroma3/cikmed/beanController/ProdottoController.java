@@ -1,5 +1,5 @@
 
-package it.uniroma3.cikmed.controller;
+package it.uniroma3.cikmed.beanController;
 
 import java.util.List;
 
@@ -9,10 +9,11 @@ import it.uniroma3.cikmed.model.Prodotto;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+
 
 @ManagedBean (name="prodottoController")
-@ViewScoped
+@RequestScoped
 public class ProdottoController {
 	
 	@ManagedProperty(value="#{param.id}")

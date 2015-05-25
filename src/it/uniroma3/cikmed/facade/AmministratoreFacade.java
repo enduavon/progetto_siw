@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-@Stateless (name="ammFacade")
+@Stateless (name="amministratoreFacade")
 public class AmministratoreFacade {
 	
 	@PersistenceContext (unitName="progetto")
