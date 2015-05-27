@@ -24,9 +24,9 @@ public class ClienteFacade {
 
 
 	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
-			Date dataDiNascita, String email) {
+			Date dataDiNascita, Date dataDiRegistrazione, String email) {
 
-		Cliente c = new Cliente(nome, nickname,password,cognome, dataDiNascita, email);
+		Cliente c = new Cliente(nome, nickname, password, cognome, dataDiNascita, dataDiRegistrazione, email);
 		this.em.persist(c);		
 		return c;
 	}
@@ -51,8 +51,6 @@ public class ClienteFacade {
 	}
 	
 	
-
-
 	public Cliente getClienteByID(long id) {
 
 		try {
@@ -72,7 +70,7 @@ public class ClienteFacade {
 		}
 	}
 
-	public Cliente getClienteByEmail(String email) {
+	public boolean getClienteByEmail(String email) {
 
 		try {
 			String query = "SELECT c" +
@@ -80,24 +78,15 @@ public class ClienteFacade {
 					"WHERE c.email =: email";
 			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
 			q.setParameter("email", email);
-			return q.getSingleResult();
+			return true;
 		} 
 
 		catch (Exception e) {
-			String q = "il cliente selezionato non esiste";
+			String q = "il cliente con la mail"  +email+  "non esiste";
 			System.out.println(q);
-			return null;
+			return false;
 
 		}
-	}
-	
-	public boolean esisteEmail(String email) {
-		TypedQuery<Cliente> query = em.createQuery("SELECT c "
-				+ "FROM Cliente c "
-				+ "where c.email =:email", Cliente.class);
-		query.setParameter("email", email);
-		return query.getResultList().size() != 0;
-
 	}
 
 	public Cliente trovaClienteByEmailPwd(String email, String password) {

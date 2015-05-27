@@ -14,12 +14,12 @@
 		<h1>Benvenuto in Cikmed!</h1>
 		<div>
 			
-			<h:commandButton action="/loginCliente.xhtml"
-				value="loginCliente" />
+			<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
+				value="Accedi" />
 			<h:commandButton action="/registrazioneCliente.xhtml"
 				value="Registrati" />
 			<h:commandLink   action="#{prodottoController.listProducts}" 
-			    value="CatalogoProdotti"/>
+			    value="Catalogo Prodotti"/>
 
 		</div>
 		<p>Anche se non sei registrato, puoi tranquillamente visionare il

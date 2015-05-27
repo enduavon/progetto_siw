@@ -6,7 +6,7 @@ import it.uniroma3.cikmed.model.Cliente;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+//import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 
@@ -18,7 +18,7 @@ public class LoginClienteController {
 	@EJB (beanName="clienteFacade")
 	private ClienteFacade clienteFacade;
 
-	@ManagedProperty(value="#{sessioneCliente}")
+//	@ManagedProperty(value="#{sessioneCliente}")
 	private SessioneCliente sessione;
 	
 	private String email;
@@ -31,7 +31,7 @@ public class LoginClienteController {
 			sessione.setCliente(cl);
 		} 
 		catch (Exception e) {
-			loginErrore = "email o passowrd non validi";
+			loginErrore = "email o password non validi";
 			return "loginCliente";
 		}
 		return "mostraCliente";

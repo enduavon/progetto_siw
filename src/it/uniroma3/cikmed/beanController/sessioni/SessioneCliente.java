@@ -9,14 +9,14 @@ import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+//import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="sessioneCliente")
-
 @SessionScoped
 public class SessioneCliente {
-	@ManagedProperty(value="#{param.id}")
+	
+//	@ManagedProperty(value="#{param.id}")
 	
 	private Cliente clienteCorrente;
 	private ClienteFacade clienteFacade;

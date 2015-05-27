@@ -61,12 +61,13 @@ public class Cliente {
 	}
 	
 	public Cliente(String nome, String nickname, String password, String cognome, 
-			Date dataDiNascita, String email) {
+			Date dataDiNascita, Date dataDiRegistrazione, String email) {
 		this.nickname = nickname;
 		this.password = password;
 		this.cognome = cognome;
 		this.nome = nome;
 		this.dataDiNascita = dataDiNascita;
+		this.dataDiRegistrazione = dataDiRegistrazione;
 		this.email = email;
 		
 		this.ordini = new ArrayList<Ordine>();

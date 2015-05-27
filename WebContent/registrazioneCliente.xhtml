@@ -6,41 +6,51 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Pagina Registrazione</title>
+<title>Registrazione</title>
 </head>
 <body>
 	<f:view>
-		<h1>Registra Cliente</h1>
+		<h1>Inserisci i seguenti dati per registrarti sul nostro sito:</h1>
 		<h:form>
 			<div>
-				Nome:
+				Nome:*
 				<h:inputText value="#{registraCliente.nome}" required="true"
-					requiredMessage="il nome è obbligatorio" id="nome" />
+					requiredMessage="Nome obbligatorio" id="nome" />
 				<h:message for="nome" style="color:red" />
 			</div>
 			<div>
-				Nickname:
+				Cognome:*
+				<h:inputText value="#{registraCliente.cognome}" required="true"
+					requiredMessage="Cognome obbligatorio" id="cognome" />
+				<h:message for="cognome" style="color:red" />
+			</div>
+			<div>
+				Nickname:*
 				<h:inputText value="#{registraCliente.nickname}" required="true"
-					requiredMessage="il nickname è obbligatorio" id="nickname" />
+					requiredMessage="Nickname obbligatorio" id="nickname" />
 				<h:message for="nickname" style="color:red" />
 			</div>
 			<div>
-				Password:
+				Password:* (minimo 8 caratteri)
 				<h:inputSecret value="#{registraCliente.password}" required="true"
-					requiredMessage="Password è obbligatoria" id="password" />
+					requiredMessage="Password obbligatoria" id="password" >
+				<f:validateLength minimum="8" />
+				</h:inputSecret>
 				<h:message for="password" style="color:red" />
 			</div>
-			<div>
-				Cognome:
-				<h:inputText value="#{registraCliente.cognome}" required="true"
-					requiredMessage="cognome è obbligatorio" id="cognome" />
-				<h:message for="cognome" style="color:red" />
-			</div>
+			<!-- <div>
+				Inserisci di nuovo la password:
+				<h:inputSecret value="#{registraCliente.password}" required="true" label="Conferma password"
+					requiredMessage="Devi inserire di nuovo la password" id="password" >
+				<f:validateRequired />	
+				</h:inputSecret>
+				<h:message for="password" style="color:red" />
+			</div> -->
 			<div>
 
 				<h:panelGrid columns="3">
  
-		  Data di Nascita: 
+		  Data di Nascita:* (es. 27-05-92)
 		 <h:inputText id="data" value="#{registraCliente.dataDiNascita}"
 						size="20" required="true" label="Data di nascita">
 
@@ -53,7 +63,7 @@
 
 			</div>
 			<div>
-				Email:
+				Email:*
 				<h:inputText value="#{registraCliente.email}" required="true"
 					requiredMessage="Email è obbligatoria" id="email"
 					validatorMessage="Email non valida">
@@ -62,16 +72,11 @@
 				</h:inputText>
 				<h:message for="email" style="color:red" />
 			</div>
-
-
 			<div>
-				<h:outputText value="#{registerCliente.registrazioneSbagliata}" />
-			</div>
-			<div>
-				<h:commandButton value="registra"
+				<h:commandButton value="Registrati"
 					action="#{registraCliente.registraCliente}" />
 			</div>
-			<h:commandButton value="esci" />
+			<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 		</h:form>
 	</f:view>
 </body>

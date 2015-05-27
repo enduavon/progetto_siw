@@ -22,26 +22,27 @@ public class RegistraClienteController {
 	private String password;
 	private String nome;
 	private String cognome;
-	private Date dataNascita;
+	private Date dataDiNascita;
+	private Date dataDiRegistrazione;
 
 	private String registrazioneSbagliata;
 /*
- * adesso non mi serve la sessione,in futuro servirà quando ci sarà anche un 
- * admin e il database dovrà avere memoria di chi è chi e di quali ordini
+ * adesso non mi serve la sessione,in futuro servirï¿½ quando ci sarï¿½ anche un 
+ * admin e il database dovrï¿½ avere memoria di chi ï¿½ chi e di quali ordini
  *  esso si associa ecc...
  */
 //	@ManagedProperty(value="#{sessioneCliente}")
 //	private SessioneCliente sessione;
 
 	public String registraCliente() {
-		if(!facade.esisteEmail(email)) {
+		if(facade.getClienteByEmail(email)==false) {
 //			Cliente customer = 
-					facade.creaCliente(nome, nickname, password, cognome, dataNascita, email);
+					facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, dataDiRegistrazione, email);
 			//sessione.setCliente(customer);
 			return "mostraCliente";
 		}
 		else {
-			setRegisterErrore("Email esistente");
+			setRegisterErrore("Email giÃ  esistente");
 			return "registrazioneCliente";
 		}
 	}	
@@ -85,11 +86,11 @@ public class RegistraClienteController {
 	}
 
 	public Date getDataDiNascita() {
-		return dataNascita;
+		return dataDiNascita;
 	}
 
 	public void setDataDiNascita(Date birthDay) {
-		this.dataNascita = birthDay;
+		this.dataDiNascita = birthDay;
 	}
 
 	public String getRegisterErrore() {
