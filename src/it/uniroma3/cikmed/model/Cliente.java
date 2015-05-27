@@ -3,6 +3,7 @@ package it.uniroma3.cikmed.model;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class Cliente {
 
 	@Column(nullable = false)
 	@Temporal(value=TemporalType.TIMESTAMP)
-	private Date dataDiRegistrazione;
+	private Calendar dataDiRegistrazione;
 	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
@@ -61,7 +62,7 @@ public class Cliente {
 	}
 	
 	public Cliente(String nome, String nickname, String password, String cognome, 
-			Date dataDiNascita, Date dataDiRegistrazione, String email) {
+			Date dataDiNascita, Calendar dataDiRegistrazione, String email) {
 		this.nickname = nickname;
 		this.password = password;
 		this.cognome = cognome;
@@ -119,11 +120,11 @@ public class Cliente {
 		this.dataDiNascita = data;
 	}
 
-	public Date getDataDiRegistrazione() {
+	public Calendar getDataDiRegistrazione() {
 		return dataDiRegistrazione;
 	}
 
-	public void setDataDiRegistrazione(Date data) {
+	public void setDataDiRegistrazione(Calendar data) {
 		this.dataDiRegistrazione = data;
 	}
 

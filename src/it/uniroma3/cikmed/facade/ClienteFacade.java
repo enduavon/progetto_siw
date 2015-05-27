@@ -4,6 +4,8 @@ package it.uniroma3.cikmed.facade;
 import it.uniroma3.cikmed.model.Cliente;
 
 
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class ClienteFacade {
 
 
 	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
-			Date dataDiNascita, Date dataDiRegistrazione, String email) {
+			Date dataDiNascita, Calendar dataDiRegistrazione, String email) {
 
 		Cliente c = new Cliente(nome, nickname, password, cognome, dataDiNascita, dataDiRegistrazione, email);
 		this.em.persist(c);		

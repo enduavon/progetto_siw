@@ -4,7 +4,11 @@ package it.uniroma3.cikmed.beanController;
 import it.uniroma3.cikmed.facade.ClienteFacade;
 
 
+
+
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -23,7 +27,7 @@ public class RegistraClienteController {
 	private String nome;
 	private String cognome;
 	private Date dataDiNascita;
-	private Date dataDiRegistrazione;
+	private Calendar dataDiRegistrazione;
 
 	private String registrazioneSbagliata;
 /*
@@ -37,6 +41,7 @@ public class RegistraClienteController {
 	public String registraCliente() {
 		if(facade.getClienteByEmail(email)==false) {
 //			Cliente customer = 
+			this.dataDiRegistrazione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 					facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, dataDiRegistrazione, email);
 			//sessione.setCliente(customer);
 			return "mostraCliente";
