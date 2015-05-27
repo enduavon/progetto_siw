@@ -13,10 +13,10 @@ public class Amministratore {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String nickname;
 	
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false)
 	private String password;
 	
 	@Column(nullable = false, unique = true)
@@ -34,9 +34,11 @@ public Amministratore() {
 	
 }
 
-//è da mettere qua o in una facade?
-public boolean checkPassword(String pwd) {
-	return this.password.equals(pwd);
+public void checkPassword(String password) 
+		throws Exception {
+	if (!this.password.equals(password)) {
+		throw new Exception();
+	}
 }
 
 public long getId() {
@@ -72,25 +74,5 @@ public void setEmail(String email) {
 	this.email = email;
 }
 
-@Override
-public boolean equals(Object obj) {
-	if (this == obj)
-		return true;
-	if (obj == null)
-		return false;
-	if (getClass() != obj.getClass())
-		return false;
-	Amministratore other = (Amministratore) obj;
-	if (id != other.id)
-		return false;
-	return true;
-}
 
-@Override
-public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + (int) (id ^ (id >>> 32));
-	return result;
-}
 }

@@ -16,6 +16,14 @@
 			<to-view-id>/registrazioneCliente.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>RegistratiAdmin</from-outcome>
+			<to-view-id>/registrazioneAdmin.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>loginAdmin</from-outcome>
+			<to-view-id>/loginAdmin.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>loginCliente</from-outcome>
 			<to-view-id>/loginCliente.xhtml</to-view-id>
 		</navigation-case>
@@ -40,6 +48,31 @@
 		<navigation-case>
 			<from-outcome>mostrami</from-outcome>
 			<to-view-id>/mostraCliente.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>esci</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+		<!-- se mi trovo in registrazioneAdmin -->
+	<navigation-rule>
+		<from-view-id>/registrazioneAdmin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>registraAdmin</from-outcome>
+			<to-view-id>/mostraAdmin.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>esci</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- se mi trovo in loginCliente -->
+	<navigation-rule>
+		<from-view-id>/loginAdmin.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>mostraAdmin</from-outcome>
+			<to-view-id>/mostraAdmin.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>esci</from-outcome>

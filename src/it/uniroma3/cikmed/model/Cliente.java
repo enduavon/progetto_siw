@@ -62,16 +62,24 @@ public class Cliente {
 	}
 	
 	public Cliente(String nome, String nickname, String password, String cognome, 
-			Date dataDiNascita, Calendar dataDiRegistrazione, String email) {
+			Date dataDiNascita, String email) {
+		
 		this.nickname = nickname;
 		this.password = password;
 		this.cognome = cognome;
 		this.nome = nome;
 		this.dataDiNascita = dataDiNascita;
-		this.dataDiRegistrazione = dataDiRegistrazione;
+		
 		this.email = email;
 		
 		this.ordini = new ArrayList<Ordine>();
+	}
+	
+	public void checkPassword(String password) throws Exception {
+		if (!this.password.equals(password)) {
+		System.out.println("il cliente non esiste");	
+			throw new Exception();
+		}
 	}
 	
 	
@@ -146,15 +154,7 @@ public class Cliente {
 	}
 	
 	
-	@Override
-	public boolean equals(Object o) {
-		Cliente client = (Cliente) o;
-		return this.getId().equals(client.getId());
-	}
-	@Override
-	public int hashCode() {
-		return this.id.hashCode();
-	}
+	
 
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();

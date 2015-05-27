@@ -5,7 +5,7 @@ import it.uniroma3.cikmed.model.Cliente;
 
 
 
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +26,9 @@ public class ClienteFacade {
 
 
 	public Cliente creaCliente(String nome,String nickname,String password, String cognome, 
-			Date dataDiNascita, Calendar dataDiRegistrazione, String email) {
+								Date dataDiNascita, String email) {
 
-		Cliente c = new Cliente(nome, nickname, password, cognome, dataDiNascita, dataDiRegistrazione, email);
+		Cliente c = new Cliente(nome, nickname, password, cognome, dataDiNascita, email);
 		this.em.persist(c);		
 		return c;
 	}
@@ -91,25 +91,20 @@ public class ClienteFacade {
 		}
 	}
 
-	public Cliente trovaClienteByEmailPwd(String email, String password) {
-		try {
-			String query = "SELECT c" +
-					"FROM Cliente c" +
-					"WHERE c.email =: email" +
-					"AND c.password =: password";
-			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
-			q.setParameter("email", email);
-			q.setParameter("password", password);
-			return q.getSingleResult();
-		} 
-
-		catch (Exception e) {
-			String q = "il cliente selezionato non esiste";
-			System.out.println(q);
-			return null;
-
+	public Cliente trovaClienteByEmailPwd(String email, String password)
+			throws Exception {
+		TypedQuery<Cliente> query = em.createQuery(
+				"SELECT c FROM Cliente c where c.email =:email", Cliente.class);
+		query.setParameter("email", email);
+		Cliente cliente = query.getSingleResult();
+		if (cliente == null) {
+			throw new Exception();
 		}
+		cliente.checkPassword(password);
+		return cliente;	
 	}
+
+	
 
 	public void updateCliente (Cliente c) {
 		em.merge(c);

@@ -1,10 +1,8 @@
 package it.uniroma3.cikmed.beanController.sessioni;
 
-import java.util.List;
 
 import it.uniroma3.cikmed.model.Amministratore;
-import it.uniroma3.cikmed.model.Prodotto;
-
+import it.uniroma3.cikmed.model.Fornitore;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -15,29 +13,50 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class SessioneAdmin {
 
-	private Amministratore amministratore;
-	
-	private List<Prodotto> prodotti; 
-	
-	
-		
+	private Amministratore admin;
+
+	//private List<DescrizioneProdotto> descrizioniProdotto; 
+
+	//private DescrizioneProdotto descrizioneProdotto;
+
+	private Fornitore provider;
+
+
+
 
 	public Amministratore getAdmin() {
-		return amministratore;
+		return admin;
 	}
 
 	public void setAdmin(Amministratore admin) {
-		this.amministratore = admin;
+		this.admin = admin;
 	}
 
-	public List<Prodotto> getProdotti() {
-		return prodotti;
-	}
 
-	public void setProdotti(List<Prodotto> products) {
-		this.prodotti = products;	
-	}
-	
-	
+	//public List<DescrizioneProdotto> getDescrizioneProdotto() {
+	//return descrizioneProdotto;
+//}
+
+//public void setProductDescriptions(List<DescrizioneProdotto> productDescriptions) {
+	//this.descrizioneProdotto = productDescriptions;
+//}
+
+//public ProductDescription getProductDescription() {
+	//return descrizioneProdotto;
+//}
+
+//public void setProductDescription(ProductDescription productDescription) {
+	//this.descrizioneProdotto = productDescription;
+//}
+
+public Fornitore getFornitore() {
+	return provider;
+}
+
+public void setFornitore(Fornitore provider) {
+	this.provider = provider;
+}
+
+
 
 }

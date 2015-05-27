@@ -5,14 +5,12 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Dettagli utente</title>
+<title>Dettagli Admin</title>
 </head>
 <body>
-<h1>Ti sei appena registrato con questi dati:</h1>
-		<div>${sessioneCliente.cliente.nome}</div>
-		<div>${sessioneCliente.cliente.cognome}</div>
-		<div>${sessioneCliente.cliente.email}</div>
-		<div>${sessioneCliente.cliente.dataDiNascita}</div>
-		<div>${sessioneCliente.cliente.dataDiRegistrazione</div>
+	<h1>Ti sei appena registrato come Admin con questi dati:</h1>
+	<div>${sessioneAdmin.cliente.nickname}</div>
+	<div>${sessioneAdmin.cliente.email}</div>
+
 </body>
 </html>

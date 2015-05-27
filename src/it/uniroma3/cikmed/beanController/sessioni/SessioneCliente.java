@@ -9,6 +9,7 @@ import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 //import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
@@ -16,7 +17,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class SessioneCliente {
 	
-//	@ManagedProperty(value="#{param.id}")
+	@ManagedProperty(value="#{param.id}")
 	
 	private Cliente clienteCorrente;
 	private ClienteFacade clienteFacade;
@@ -35,13 +36,13 @@ public class SessioneCliente {
 	}
 
 	public String riepilogoCliente() {
-		return "showCliente";
+		return "mostraCliente";
 	}
 
 
 	public String listClienti() {
 		clienteFacade.getTuttiClienti();
-		return "showClienti"; 
+		return "mostraClienti"; 
 	}
 
 	public Cliente getCliente() {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Login amministratore</title>
+</head>
+<body>
+	<h1>Inserisci i seguenti dati per collegarti a Cikmed:</h1>
+	<h:form>
+		<div>
+			Email:
+			<h:inputText value="#{loginAdmin.email}" required="true"
+				requiredMessage="Email è obbligatoria" id="email"/>
+			<h:message for="email" />
+		</div>
+		<div>
+			Password:
+			<h:inputSecret value="#{loginAdmin.password}" required="true"
+				requiredMessage="Password è obbligatoria" id="password" />
+			<h:message for="password" />
+		</div>
+		<div>
+			<h:outputText value="#{loginAdmin.loginErrore}" />
+		</div>
+		<div>
+			<h:commandButton action="#{loginAdmin.loginAdmin}"
+				value="Effettua l'accesso"></h:commandButton>
+		</div>
+		<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
+	</h:form>
+</body>
+</html>

@@ -1,10 +1,15 @@
 package it.uniroma3.cikmed.beanController;
 
 
+import it.uniroma3.cikmed.beanController.sessioni.SessioneCliente;
 import it.uniroma3.cikmed.facade.ClienteFacade;
 
 
 
+
+
+
+import it.uniroma3.cikmed.model.Cliente;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +17,7 @@ import java.util.TimeZone;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 @ManagedBean(name="registraCliente")
@@ -35,15 +41,15 @@ public class RegistraClienteController {
  * admin e il database dovr� avere memoria di chi � chi e di quali ordini
  *  esso si associa ecc...
  */
-//	@ManagedProperty(value="#{sessioneCliente}")
-//	private SessioneCliente sessione;
+	@ManagedProperty(value="#{sessioneCliente}")
+	private SessioneCliente sessione;
 
 	public String registraCliente() {
 		if(facade.getClienteByEmail(email)==false) {
-//			Cliente customer = 
-			this.dataDiRegistrazione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
-					facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, dataDiRegistrazione, email);
-			//sessione.setCliente(customer);
+			
+			setDataDiRegistrazione(Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome")));
+			Cliente customer = 	facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, email);
+			sessione.setCliente(customer);
 			return "mostraCliente";
 		}
 		else {
@@ -106,13 +112,23 @@ public class RegistraClienteController {
 		this.registrazioneSbagliata = registerError;
 	}
 
-//	public SessioneCliente getSession() {
-//		return sessione;
-//	}
 
-//	public void setSession(SessioneCliente session) {
-//		this.sessione = session;
-//	}
+
+	public Calendar getDataDiRegistrazione() {
+		return dataDiRegistrazione;
+	}
+
+	public void setDataDiRegistrazione(Calendar dataDiRegistrazione) {
+		this.dataDiRegistrazione = dataDiRegistrazione;
+	}
+
+	public SessioneCliente getSession() {
+		return sessione;
+	}
+
+	public void setSession(SessioneCliente session) {
+		this.sessione = session;
+	}
 	
 	
 }
