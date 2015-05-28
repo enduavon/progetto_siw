@@ -8,11 +8,14 @@
 <title>Dettagli utente</title>
 </head>
 <body>
-<h1>Ti sei appena registrato con questi dati:</h1>
-		<div>${sessioneCliente.cliente.nome}</div>
-		<div>${sessioneCliente.cliente.cognome}</div>
-		<div>${sessioneCliente.cliente.email}</div>
-		<div>${sessioneCliente.cliente.dataDiNascita}</div>
-		<div>${sessioneCliente.cliente.dataDiRegistrazione</div>
+<h:form>
+<h1>Benvenuto, ${registraCliente.nome}  ti sei appena registrato con questi dati:</h1>
+		<div>Nome: ${registraCliente.nome}</div>
+		<div>Cognome: ${registraCliente.cognome}</div>
+		<div>Email: ${registraCliente.email}</div>
+		<div>Data di nascita: ${registraCliente.dataDiNascita}</div>
+		<div>Data registrazione: ${registraCliente.dataDiRegistrazione}</div>
+		<h:outputLink value="loginCliente.xhtml?faces-redirect=true">Effettua subito il login!</h:outputLink>
+		</h:form>
 </body>
 </html>

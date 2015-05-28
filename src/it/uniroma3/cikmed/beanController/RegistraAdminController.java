@@ -1,41 +1,44 @@
 package it.uniroma3.cikmed.beanController;
 
-import it.uniroma3.cikmed.beanController.sessioni.SessioneAdmin;
 import it.uniroma3.cikmed.facade.AmministratoreFacade;
 import it.uniroma3.cikmed.model.Amministratore;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
 
 @ManagedBean(name="registraAdmin")
+@RequestScoped
 public class RegistraAdminController {
+	
 	@EJB(beanName="amministratoreFacade")
 	private AmministratoreFacade facade;
 
 	private String email;
 	private String password;
 	private String nickname;
+	private Amministratore adminRegistrato;
 
-
-	private String registrazioneErrata;
-
-	@ManagedProperty(value="#{sessioneAdmin}")
-	private SessioneAdmin sessione;
+	private String errore;
 
 	public String registraAdmin() {
-		if(!facade.esisteEmail(email)) {
-			Amministratore admin = 
-					facade.creaAdmin(nickname, password, email);
-			sessione.setAdmin(admin);
-			return "mostraAdmin";
-		}
-		else {
-			setRegistrazioneErrata("Email gia esistente");
-			return "registrazioneAdmin";
-		}
-	}	
+		try {
+			if(facade.verificaEmail(email)!=true) {
+
+				adminRegistrato = facade.creaAdmin(nickname, password, email);
+				facade.updateAdmin(adminRegistrato);
+				return "mostraAdmin"; } }
+		catch (Exception e) {
+			if(e.getClass().getName().equals("javax.ejb.EJBTransactionRolledbackException")){
+				setErrore("Email già esistente. Utilizza un altro indirizzo email per registrarti.");
+				return "registrazioneAdmin"; }
+			else {
+				setErrore("Impossibile registrarsi");
+				return "registrazioneAdmin";
+			} }
+		return "registrazioneAdmin";
+	}		
 
 
 	public String getEmail() {
@@ -58,19 +61,22 @@ public class RegistraAdminController {
 		this.nickname = nick;
 	}
 
-	public String getRegistrazioneErrata() {
-		return registrazioneErrata;
+	public String getErrore() {
+		return errore;
 	}
 
-	public void setRegistrazioneErrata(String registerError) {
-		this.registrazioneErrata = registerError;
+	public void setErrore(String errore) {
+		this.errore = errore;
 	}
 
-	public SessioneAdmin getSession() {
-		return sessione;
+
+	public Amministratore getAdminRegistrato() {
+		return adminRegistrato;
 	}
 
-	public void setSession(SessioneAdmin session) {
-		this.sessione = session;
+
+	public void setAdminRegistrato(Amministratore adminRegistrato) {
+		this.adminRegistrato = adminRegistrato;
 	}
+	
 }

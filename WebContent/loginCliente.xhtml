@@ -6,28 +6,28 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Login Amministratore</title>
+<title>Login utente</title>
 </head>
 <body>
 	<h1>Inserisci i seguenti dati per collegarti a Cikmed:</h1>
 	<h:form>
 		<div>
 			Email:
-			<h:inputText value="#{loginAdmin.email}" required="true"
+			<h:inputText value="#{loginCliente.email}" required="true"
 				requiredMessage="Email è obbligatoria" id="email"/>
 			<h:message for="email" />
 		</div>
 		<div>
 			Password:
-			<h:inputSecret value="#{loginAdmin.password}" required="true"
+			<h:inputSecret value="#{loginCliente.password}" required="true"
 				requiredMessage="Password è obbligatoria" id="password" />
 			<h:message for="password" />
 		</div>
 		<div>
-			<h:outputText value="#{loginAdmin.messaggio}" />
+			<h:outputText value="#{loginCliente.messaggio}" />
 		</div>
 		<div>
-			<h:commandButton action="#{loginAdmin.loginAdmin}"
+			<h:commandButton action="#{loginCliente.loginCliente}"
 				value="Effettua l'accesso"></h:commandButton>
 		</div>
 		<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>

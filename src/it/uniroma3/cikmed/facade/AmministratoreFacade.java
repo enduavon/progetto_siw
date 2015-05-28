@@ -21,7 +21,7 @@ public class AmministratoreFacade {
 	}
 
 
-	public Amministratore creaAdmin(String nickname,String password, String email) {
+	public Amministratore creaAdmin(String nickname, String password, String email) {
 
 		Amministratore admin = new Amministratore(nickname, password, email);
 		em.persist(admin);		
@@ -39,7 +39,7 @@ public class AmministratoreFacade {
 		} 
 
 		catch (Exception e) {
-			String q = "la lista degli amministratori è vuota";
+			String q = "la lista degli amministratori ï¿½ vuota";
 			System.out.println(q);
 			return null;
 
@@ -79,6 +79,12 @@ public class AmministratoreFacade {
 
 		}
 	}
+	
+	public boolean verificaEmail(String email) {
+		TypedQuery<Amministratore> query = em.createQuery("SELECT a FROM Amministratore a where a.email =:email", Amministratore.class);
+		query.setParameter("email", email);
+		return query.getResultList().size() != 0;
+	}
 
 	public void updateAdmin (Amministratore admin) {
 		em.merge(admin);
@@ -93,11 +99,6 @@ public class AmministratoreFacade {
 		deleteAdmin(admin);
 	}
 
-	public boolean esisteEmail(String email) {
-		TypedQuery<Amministratore> query = em.createQuery("SELECT a FROM Amministratore a where a.email =:email", Amministratore.class);
-		query.setParameter("email", email);
-		return query.getResultList().size() != 0;
-	}
 }
 
 

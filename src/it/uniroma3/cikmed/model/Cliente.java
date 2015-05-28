@@ -1,11 +1,11 @@
 package it.uniroma3.cikmed.model;
 
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Cliente {
 
-	@Id
+	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
@@ -42,12 +42,11 @@ public class Cliente {
 	@Temporal(value=TemporalType.DATE)
 	private Date dataDiNascita;
 
-	@Column(nullable = false)
+	@Column(nullable = true)
 	@Temporal(value=TemporalType.TIMESTAMP)
 	private Calendar dataDiRegistrazione;
 	
-	//unique non accetta doppioni solo su code
-	@Column(unique = true ,nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 	
 	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
@@ -69,9 +68,8 @@ public class Cliente {
 		this.cognome = cognome;
 		this.nome = nome;
 		this.dataDiNascita = dataDiNascita;
-		
 		this.email = email;
-		
+		this.dataDiRegistrazione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 		this.ordini = new ArrayList<Ordine>();
 	}
 	
@@ -152,8 +150,6 @@ public class Cliente {
 	public List<Ordine> getOrdini() {
 		return this.ordini;
 	}
-	
-	
 	
 
 	public String toString() {
