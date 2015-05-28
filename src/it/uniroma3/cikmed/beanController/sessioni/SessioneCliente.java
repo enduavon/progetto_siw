@@ -9,7 +9,6 @@ import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 //import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
