@@ -7,7 +7,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 
-
+/*
+ * controller per Admin
+ * 
+ */
 
 @ManagedBean(name="sessioneAdmin")
 @SessionScoped

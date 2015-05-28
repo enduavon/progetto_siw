@@ -17,7 +17,10 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class SessioneCliente {
 	
-	@ManagedProperty(value="#{param.id}")
+	/*
+	 * controller per cliente
+	 */
+	//@ManagedProperty(value="#{param.id}")
 	
 	private Cliente clienteCorrente;
 	private ClienteFacade clienteFacade;
