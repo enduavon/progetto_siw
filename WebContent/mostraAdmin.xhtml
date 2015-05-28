@@ -8,9 +8,9 @@
 <title>Dettagli Admin</title>
 </head>
 <body>
-	<h1>Ti sei appena registrato come Admin con questi dati:</h1>
-	<div>${sessioneAdmin.cliente.nickname}</div>
-	<div>${sessioneAdmin.cliente.email}</div>
-
+<h:form>
+<h1>${registraAdmin.nickname}, ti sei registrato come amministratore.</h1>
+		<h:outputLink value="loginCliente.xhtml?faces-redirect=true">Effettua subito il login!</h:outputLink>
+		</h:form>
 </body>
 </html>

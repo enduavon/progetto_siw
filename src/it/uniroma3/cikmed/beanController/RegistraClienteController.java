@@ -1,19 +1,10 @@
 package it.uniroma3.cikmed.beanController;
 
-
-import it.uniroma3.cikmed.beanController.sessioni.SessioneCliente;
 import it.uniroma3.cikmed.facade.ClienteFacade;
-
-
-
-
-
-
 import it.uniroma3.cikmed.model.Cliente;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +18,7 @@ public class RegistraClienteController {
 	@EJB(beanName="clienteFacade")
 	private ClienteFacade facade;
 
+	@ManagedProperty(value="#{param.id}")
 	private String email;
 	private String nickname;
 	private String password;
@@ -35,27 +27,32 @@ public class RegistraClienteController {
 	private Date dataDiNascita;
 	private Calendar dataDiRegistrazione;
 
-	private String registrazioneSbagliata;
+	private String errore;
+	private Cliente clienteRegistrato;
 /*
  * adesso non mi serve la sessione,in futuro servir� quando ci sar� anche un 
  * admin e il database dovr� avere memoria di chi � chi e di quali ordini
  *  esso si associa ecc...
  */
-	@ManagedProperty(value="#{sessioneCliente}")
-	private SessioneCliente sessione;
+//	@ManagedProperty(value="#{sessioneCliente}")
+//	private SessioneCliente sessione;
 
 	public String registraCliente() {
-		if(facade.getClienteByEmail(email)==false) {
-			
-			setDataDiRegistrazione(Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome")));
-			Cliente customer = 	facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, email);
-			sessione.setCliente(customer);
-			return "mostraCliente";
-		}
-		else {
-			setRegisterErrore("Email già esistente");
-			return "registrazioneCliente";
-		}
+		try {
+			if(facade.verificaEmail(email)!=true) {
+
+				clienteRegistrato = facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, email);
+				facade.updateCliente(clienteRegistrato);
+				return "mostraCliente"; } }
+		catch (Exception e) {
+			if(e.getClass().getName().equals("javax.ejb.EJBTransactionRolledbackException")){
+				setErrore("Email già esistente. Utilizza un altro indirizzo email per registrarti.");
+				return "registrazioneCliente"; }
+			else {
+				setErrore("Impossibile registrarsi");
+				return "registrazioneCliente";
+			} }
+		return "registrazioneCliente";
 	}	
 
 	
@@ -76,24 +73,24 @@ public class RegistraClienteController {
 		return nome;
 	}
 
-	public void setNome(String firstName) {
-		this.nome = firstName;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 	public String getNickname() {
 		return nickname;
 	}
 
-	public void setNickname(String firstName) {
-		this.nickname = firstName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getCognome() {
 		return cognome;
 	}
 
-	public void setCognome(String lastName) {
-		this.cognome = lastName;
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
 	}
 
 	public Date getDataDiNascita() {
@@ -104,14 +101,13 @@ public class RegistraClienteController {
 		this.dataDiNascita = birthDay;
 	}
 
-	public String getRegisterErrore() {
-		return registrazioneSbagliata;
+	public String getErrore() {
+		return errore;
 	}
 
-	public void setRegisterErrore(String registerError) {
-		this.registrazioneSbagliata = registerError;
+	public void setErrore(String errore) {
+		this.errore = errore;
 	}
-
 
 
 	public Calendar getDataDiRegistrazione() {
@@ -122,13 +118,14 @@ public class RegistraClienteController {
 		this.dataDiRegistrazione = dataDiRegistrazione;
 	}
 
-	public SessioneCliente getSession() {
-		return sessione;
+
+
+	public Cliente getClienteRegistrato() {
+		return clienteRegistrato;
 	}
 
-	public void setSession(SessioneCliente session) {
-		this.sessione = session;
+	public void setClienteRegistrato(Cliente clienteRegistrato) {
+		this.clienteRegistrato = clienteRegistrato;
 	}
-	
 	
 }

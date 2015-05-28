@@ -72,7 +72,7 @@ public class ClienteFacade {
 		}
 	}
 
-	public boolean getClienteByEmail(String email) {
+	public boolean verificaEmail(String email) {
 
 		try {
 			String query = "SELECT c" +
@@ -84,7 +84,7 @@ public class ClienteFacade {
 		} 
 
 		catch (Exception e) {
-			String q = "il cliente con la mail"  +email+  "non esiste";
+			String q = "l'indirizzo " +email+ " non è presente nel database.";
 			System.out.println(q);
 			return false;
 
@@ -93,15 +93,20 @@ public class ClienteFacade {
 
 	public Cliente trovaClienteByEmailPwd(String email, String password)
 			throws Exception {
+
 		TypedQuery<Cliente> query = em.createQuery(
 				"SELECT c FROM Cliente c where c.email =:email", Cliente.class);
 		query.setParameter("email", email);
 		Cliente cliente = query.getSingleResult();
+
 		if (cliente == null) {
 			throw new Exception();
 		}
+		
+		else {
 		cliente.checkPassword(password);
 		return cliente;	
+		}
 	}
 
 	
@@ -118,10 +123,4 @@ public class ClienteFacade {
 		Cliente c = em.find(Cliente.class, id);
 		deleteCliente(c);
 	}
-
-
-
-
-
-
 }

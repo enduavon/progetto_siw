@@ -50,7 +50,7 @@
 
 				<h:panelGrid columns="3">
  
-		  Data di Nascita:* (es. 27-05-92)
+		  Data di Nascita:* (d-m-yyyy)
 		 <h:inputText id="data" value="#{registraCliente.dataDiNascita}"
 						size="20" required="true" label="Data di nascita">
 
@@ -76,6 +76,11 @@
 				<h:commandButton value="Registrati"
 					action="#{registraCliente.registraCliente}" />
 			</div>
+			
+			<div>
+			<h:outputText value="#{registraCliente.errore}" />
+			</div>
+			
 			<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 		</h:form>
 	</f:view>

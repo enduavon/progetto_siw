@@ -1,44 +1,42 @@
 package it.uniroma3.cikmed.beanController;
 
 
-
-import it.uniroma3.cikmed.beanController.sessioni.SessioneAdmin;
 import it.uniroma3.cikmed.facade.AmministratoreFacade;
 import it.uniroma3.cikmed.model.Amministratore;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
 @ManagedBean(name="loginAdmin", eager=true)
+@SessionScoped
 public class LoginAdminController {
 	
 		
 		@EJB(beanName="amministratoreFacade")
 		private AmministratoreFacade facade;
 		
-		@ManagedProperty(value="#{sessioneAdmin}")
-		private SessioneAdmin session;
-		
-		
 		private String email;
 		private String password;
+		private Amministratore admin;
+		private String messaggio;
 		
-		private String loginErrore;
 		
 		public String loginAdmin() {
 			try {
-				Amministratore admin = facade.trovaAdminByEmailPwd(email, password);
-				session.setAdmin(admin);
-				
+				admin = facade.trovaAdminByEmailPwd(email, password);
+				setMessaggio("Perfetto, login effettuato con successo.");
+				return "index"; //anche qui bisogna rimandare ad una pagina apposita	
 			} catch (Exception e) {
-				loginErrore = "Email o password non valida";
+				setMessaggio("Email o password non valida");
 				return "loginAdmin";
 			}
-			return "mostraAdmin";
 		}
-
-	
+		
+		public String logOut() {
+			admin = null;
+			return "index";
+		}
 		
 		
 		public String getEmail() {
@@ -57,23 +55,20 @@ public class LoginAdminController {
 			this.password = password;
 		}
 		
-		public String getLoginError() {
-			return loginErrore;
+		public String getMessaggio() {
+			return messaggio;
 		}
-		public void setLoginError(String loginError) {
-			this.loginErrore = loginError;
-		}
-
-		public SessioneAdmin getSession() {
-			return session;
-		}
-
-		public void setSession(SessioneAdmin session) {
-			this.session = session;
+		public void setMessaggio(String messaggio) {
+			this.messaggio = messaggio;
 		}
 
 
+		public Amministratore getAdmin() {
+			return admin;
+		}
+		
+		public void setAdmin(Amministratore admin) {
+			this.admin = admin;
+		}
 
-
-	
 }
