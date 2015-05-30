@@ -28,6 +28,7 @@ public class RegistraClienteController {
 	private Calendar dataDiRegistrazione;
 
 	private String errore;
+	private String confermaPassword;
 	private Cliente clienteRegistrato;
 /*
  * adesso non mi serve la sessione,in futuro servir� quando ci sar� anche un 
@@ -54,7 +55,6 @@ public class RegistraClienteController {
 			} }
 		return "registrazioneCliente";
 	}	
-
 	
 
 	public String getEmail() {
@@ -126,6 +126,16 @@ public class RegistraClienteController {
 
 	public void setClienteRegistrato(Cliente clienteRegistrato) {
 		this.clienteRegistrato = clienteRegistrato;
+	}
+
+
+	public String getConfermaPassword() {
+		return confermaPassword;
+	}
+
+
+	public void setConfermaPassword(String confermaPassword) {
+		this.confermaPassword = confermaPassword;
 	}
 	
 }
