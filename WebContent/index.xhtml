@@ -8,27 +8,41 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Home</title>
 </head>
-<body>
-
-	<h:form>
+<h:body>
+<h:form>
+       <h:panelGroup rendered="#{empty loginCliente.clienteLoggato.email}">
 		<h1>Benvenuto in Cikmed!</h1>
+		<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
+			value="Accedi come amministratore" />
+		<h:commandButton
+			action="/registrazioneAdmin.xhtml?faces-redirect=true"
+			value="Registrati come amministratore" />
+		<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
+			value="Accedi come cliente" />
+		<h:commandButton
+			action="/registrazioneCliente.xhtml?faces-redirect=true"
+			value="Registrati come cliente" />
+			</h:panelGroup>
+			
+		<h:panelGroup>
 		<div>
-
-			<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
-				value="Accedi come amministratore" />
-			<h:commandButton action="/registrazioneAdmin.xhtml"
-				value="Registrati come amministratore" />
-			<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
-				value="Accedi come cliente" />
-			<h:commandButton action="/registrazioneCliente.xhtml"
-				value="Registrati come cliente" />
 			<h:commandLink action="#{prodottoController.listProducts}"
 				value="Catalogo Prodotti" />
+				</div>
+			<p>Anche se non sei registrato, puoi tranquillamente visionare il
+				nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi usufruire
+				di tutti gli altri nostri servizi :)</p>
+		</h:panelGroup>
+		
+		<h:panelGroup
+			rendered="#{not empty loginCliente.clienteLoggato.email}">
+			<h:commandLink action="areaOrdini.xhtml?faces-redirect=true"
+				value="Gestione ordini" />
+			<div>
+				<h:commandLink action="#{loginCliente.logOut}" value="Logout" />
+			</div>
+		</h:panelGroup>
 
-		</div>
-		<p>Anche se non sei registrato, puoi tranquillamente visionare il
-			nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi usufruire
-			di tutti gli altri nostri servizi :)</p>
 	</h:form>
-</body>
+</h:body>
 </html>

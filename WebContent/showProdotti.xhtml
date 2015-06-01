@@ -29,6 +29,8 @@
 			</ui:repeat>
 		</tbody>
 	</table>
+	<h:outputLink action="formCreaProdotto.xhtml?faces-redirect=true" 
+	  rendered="#{not empty loginAdmin.email}">Aggiungi un prodotto al catalogo</h:outputLink>
 	</h:form>
 </body>
 </html>
