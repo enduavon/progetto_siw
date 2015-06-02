@@ -10,38 +10,47 @@
 </head>
 <h:body>
 <h:form>
-       <h:panelGroup rendered="#{empty loginCliente.clienteLoggato.email}">
-		<h1>Benvenuto in Cikmed!</h1>
-		<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
-			value="Accedi come amministratore" />
-		<h:commandButton
-			action="/registrazioneAdmin.xhtml?faces-redirect=true"
-			value="Registrati come amministratore" />
-		<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
-			value="Accedi come cliente" />
-		<h:commandButton
-			action="/registrazioneCliente.xhtml?faces-redirect=true"
-			value="Registrati come cliente" />
-			</h:panelGroup>
-			
-		<h:panelGroup>
-		<div>
-			<h:commandLink action="#{prodottoController.listProducts}"
-				value="Catalogo Prodotti" />
-				</div>
-			<p>Anche se non sei registrato, puoi tranquillamente visionare il
-				nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi usufruire
-				di tutti gli altri nostri servizi :)</p>
-		</h:panelGroup>
-		
-		<h:panelGroup
-			rendered="#{not empty loginCliente.clienteLoggato.email}">
-			<h:commandLink action="areaOrdini.xhtml?faces-redirect=true"
-				value="Gestione ordini" />
+		<h:panelGroup rendered="#{empty loginCliente.clienteLoggato.email and empty loginAdmin.admin.email}">
+			<h1>Benvenuto in Cikmed!</h1>
+			<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
+				value="Accedi come amministratore" />
+			<h:commandButton
+				action="/registrazioneAdmin.xhtml?faces-redirect=true"
+				value="Registrati come amministratore" />
+			<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
+				value="Accedi come cliente" />
+			<h:commandButton
+				action="/registrazioneCliente.xhtml?faces-redirect=true"
+				value="Registrati come cliente" />
 			<div>
-				<h:commandLink action="#{loginCliente.logOut}" value="Logout" />
+				<p>Anche se non sei registrato, puoi tranquillamente visionare
+					il nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi
+					usufruire di tutti gli altri nostri servizi :)</p>
 			</div>
 		</h:panelGroup>
+
+		<h:panelGroup>
+		<div>
+			<h:commandLink action="#{prodottoController.listProdotti}" 
+				value="Catalogo Prodotti" />
+				</div>
+		</h:panelGroup>
+
+		<h:panelGroup
+			rendered="#{not empty loginCliente.clienteLoggato.email or not empty loginAdmin.admin.email}">
+			<h:commandLink action="areaOrdini.xhtml?faces-redirect=true"
+				value="Gestione ordini" />
+		</h:panelGroup>
+
+		<div>
+			<h:commandLink action="#{loginCliente.logOut}" value="Logout"
+				rendered="#{not empty loginCliente.clienteLoggato.email}" />
+		</div>
+		
+		<div>
+			<h:commandLink action="#{loginAdmin.logOut}" value="Logout"
+				rendered="#{not empty loginAdmin.admin.email}" />
+		</div>
 
 	</h:form>
 </h:body>

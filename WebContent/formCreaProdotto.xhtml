@@ -12,33 +12,41 @@
 	<f:view> 
 		<h:form>
 			<div>
-				Name:
+				Nome:
 				<h:inputText value="#{prodottoController.nome}" required="true"
 					requiredMessage="Nome obbligatorio" id="nome" />
 				<strong><h:message for="nome" style="color:red" /></strong>
 			</div>
 			<div>
-				Code:
+				Codice:
 				<h:inputText value="#{prodottoController.codice}" required="true"
 					requiredMessage="Codice obbligatorio" id="codice" />
 				<strong><h:message for="codice" style="color:red" /></strong>
 			</div>
 			<div>
-				Price:
+				Prezzo per unità:
 				<h:inputText value="#{prodottoController.prezzo}" required="true"
 					requiredMessage="Prezzo obbligatorio"
 					converterMessage="Il prezzo deve essere un numero!" id="prezzo" />
 				<strong><h:message for="prezzo" style="color:red" /></strong>
 			</div>
 			<div>
-				Description:
+				Descrizione:
 				<h:inputTextarea value="#{prodottoController.descrizione}"
 					required="false" cols="20" rows="5" /> 
 			</div>
 			<div>
-				<h:commandButton value="Submit"
+				Quantità: 
+				<h:inputText value="#{prodottoController.quantita}" required="true"
+					requiredMessage="Quantità obbligatoria"
+					converterMessage="La quantità deve essere un numero intero!" id="quantità" />
+				<strong><h:message for="quantità" style="color:red" /></strong>
+			</div>
+			<div>
+				<h:commandButton value="Inserisci"
 					action="#{prodottoController.creaProdotto}" />
 			</div>
+			<strong><h:outputText value="#{prodottoController.errore}" style="color:purple" /></strong>
 		</h:form>
 
 	</f:view>

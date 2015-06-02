@@ -13,23 +13,40 @@
 	<table>
 		<tr>
 			<th>Nome</th>
-			<th>Prezzo</th>
+			<th>Prezzo per unità</th>
 			<th>Codice</th>
+			<th>Quantità in magazzino</th>
 		</tr>
 		<tbody>
 			<ui:repeat var="prodotto" value="#{prodottoController.prodotti}">
-				<tr>
-					<td><h:commandLink action="#{prodottoController.findProduct}"
-							value="#{prodotto.nome}" style="color: orange">
-							<f:param name="id" value="#{prodotto.id}" />
-						</h:commandLink></td>
-					<td>${prodotto.prezzo}</td>
-					<td>${prodotto.codice}</td>
-				</tr>
-			</ui:repeat>
+					<tr>
+						<td><h:commandLink
+								action="#{prodottoController.findProdotto}"
+								value="#{prodotto.nome}" style="color: orange">
+								<f:param name="id" value="#{prodotto.id}" />
+							</h:commandLink></td>
+						<td>${prodotto.prezzo}</td>
+						<td>${prodotto.codice}</td>
+						<td>${prodotto.quantita}</td>
+						<td><h:commandButton
+								action="#{ordineController.aggiungiRigaOrdine}"
+								value="Aggiungi all'ordine"
+								rendered="#{not empty loginCliente.clienteLoggato.email}">
+								<f:setPropertyActionListener
+									target="#{ordineController.prodottoCorrente}"
+									value="#{prodotto}" />
+							</h:commandButton></td>
+						<td><h:commandButton
+								action="#{prodottoController.deleteProdotto}"
+								value="Elimina Prodotto"
+								rendered="#{not empty loginAdmin.email}">
+								<f:param name="id" value="#{prodotto.id}" />
+							</h:commandButton></td>
+					</tr>
+				</ui:repeat>
 		</tbody>
 	</table>
-	<h:outputLink action="formCreaProdotto.xhtml?faces-redirect=true" 
+	<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true" 
 	  rendered="#{not empty loginAdmin.email}">Aggiungi un prodotto al catalogo</h:outputLink>
 	</h:form>
 </body>

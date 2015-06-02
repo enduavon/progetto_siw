@@ -1,4 +1,3 @@
-
 package it.uniroma3.cikmed.beanController;
 
 import java.util.List;
@@ -25,6 +24,7 @@ public class ProdottoController {
 	private String codice;
 	private int quantita;
 	
+	private String errore;
 	
 	private Prodotto prodotto;
 	private List<Prodotto> prodotti;
@@ -40,18 +40,25 @@ public class ProdottoController {
 			return "newProdotto"; 
 			}
 		catch (Exception e) {
-			return "error"; 
+			errore="Prodotto già esistente sul database. Per favore inserisci un prodotto con codice differente";
+			return errore; 
 		}
 	}
 	
-	public String listProducts() {
+	public String listProdotti() {
 		this.prodotti = pFacade.getCatalogoProdotti();
 		return "showProdotti"; 
 	}
 	
-	public String findProduct() {
+	public String findProdotto() {
 		this.prodotto = pFacade.getProdottoByID(id);
 		return "showProdotto";
+	}
+	
+	//da sistemare
+	public String deleteProdotto() {   
+		pFacade.deleteProdottoById(id);
+		return "showProdotti";
 	}
 
 	public Long getId() {
@@ -92,6 +99,22 @@ public class ProdottoController {
 
 	public void setCodice(String codice) {
 		this.codice = codice;
+	}
+
+	public int getQuantita() {
+		return quantita;
+	}
+
+	public void setQuantita(int quantita) {
+		this.quantita = quantita;
+	}
+
+	public String getErrore() {
+		return errore;
+	}
+
+	public void setErrore(String errore) {
+		this.errore = errore;
 	}
 
 	public Prodotto getProdotto() {

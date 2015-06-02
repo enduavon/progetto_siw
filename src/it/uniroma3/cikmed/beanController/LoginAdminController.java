@@ -25,8 +25,7 @@ public class LoginAdminController {
 		public String loginAdmin() {
 			try {
 				admin = facade.trovaAdminByEmailPwd(email, password);
-				setMessaggio("Perfetto, login effettuato con successo.");
-				return "index"; //anche qui bisogna rimandare ad una pagina apposita	
+				return "index"; //qui bisogna rimandare ad una pagina apposita, al contrario del cliente?
 			} catch (Exception e) {
 				setMessaggio("Email o password non valida");
 				return "loginAdmin";

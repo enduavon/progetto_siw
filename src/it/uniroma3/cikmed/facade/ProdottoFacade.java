@@ -66,7 +66,7 @@ public class ProdottoFacade {
 	}
 	
 	public void deleteProdottoById (long id) {
-		Prodotto p = em.find(Prodotto.class, id);
+		Prodotto p = getProdottoByID(id);
 		deleteProdotto(p);
 	}
 	

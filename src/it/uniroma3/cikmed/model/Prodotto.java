@@ -93,12 +93,14 @@ public class Prodotto {
 	public void setQuantita(int q) {
 		this.quantita = q;
 	}
-@Override
+	
+	@Override
 	public boolean equals(Object o) {
 		Prodotto product = (Prodotto) o;
 		return this.getCodice().equals(product.getCodice());
 	}
-@Override
+	
+	@Override
 	public int hashCode() {
 		return this.codice.hashCode();
 	}
