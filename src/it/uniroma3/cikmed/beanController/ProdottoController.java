@@ -47,7 +47,7 @@ public class ProdottoController {
 	
 	public String listProdotti() {
 		this.prodotti = pFacade.getCatalogoProdotti();
-		return "showProdotti"; 
+		return "showProdotti?faces-redirect=true"; 
 	}
 	
 	public String findProdotto() {

@@ -36,7 +36,7 @@ public class LoginClienteController {
 	
 	public String logOut() {
 		clienteLoggato = null;
-		return "index";
+		return "/index?faces-redirect=true";
 	}
 
 	public String getEmail() {

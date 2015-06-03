@@ -19,6 +19,7 @@ public class LoginAdminController {
 		private String email;
 		private String password;
 		private Amministratore admin;
+		
 		private String messaggio;
 		
 		
@@ -34,7 +35,7 @@ public class LoginAdminController {
 		
 		public String logOut() {
 			admin = null;
-			return "index";
+			return "/index?faces-redirect=true";
 		}
 		
 		
