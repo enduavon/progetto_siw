@@ -1,7 +1,6 @@
 package it.uniroma3.cikmed.facade;
 
 
-import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
@@ -17,12 +16,10 @@ public class RigaOrdineFacade {
 	private EntityManager em;
 	
 	
-	public RigaOrdine creaRigaOrdine(Ordine o, Prodotto p, Float prezzo, int quantita) {
+	public RigaOrdine creaRigaOrdine(Prodotto p, Float prezzo, int quantita) {
 
 		RigaOrdine ro = new RigaOrdine(p, p.getPrezzo(), p.getQuantita());
-		o.addRigaOrdine(ro);
 		em.persist(ro);	
-		em.merge(o);
 		return ro;
 	}
 	
@@ -36,6 +33,23 @@ public class RigaOrdineFacade {
 		} 
 		catch (Exception e) {
 			String q = "l'ordine selezionato non esiste";
+			System.out.println(q);
+			return null;
+
+		}
+	}
+	
+	public RigaOrdine getRigaOrdineByProdotto(Prodotto prodotto) {
+
+		try {
+			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.prodotto =: prodotto", 
+					                                        RigaOrdine.class);
+			q.setParameter("prodotto", prodotto);
+			return q.getSingleResult();
+
+		} 
+		catch (Exception e) {
+			String q = "non esiste una riga ordine relativa al prodotto"  +prodotto+  "";
 			System.out.println(q);
 			return null;
 

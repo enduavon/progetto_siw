@@ -7,6 +7,8 @@ import java.util.Calendar;
 
 import java.util.List;
 
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,23 +36,23 @@ public class Ordine {
 	@Column (nullable = false)
 	private String stato;
 
-	@Column(nullable = false)
+	@Column (nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar ordineAperto;
+	private Calendar dataApertura;
 
-	@Column
+	@Column (nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar ordineChiuso;
+	private Calendar dataChiusura;
 
-	@Column
+	@Column (nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
-	private Calendar ordineEvaso;
+	private Calendar dataEvasione;
 
 
 	/*
 	 * è la Owning di customer
 	 */
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade={ CascadeType.PERSIST, CascadeType.REMOVE },fetch=FetchType.LAZY)
 	private Cliente cliente;
 	/*
 	 * forziamo la creazione della foreign key
@@ -64,46 +66,15 @@ public class Ordine {
 	@JoinColumn(name = "orders_id")
 	private List<RigaOrdine> righeOrdine;
 
-	public Ordine() {
 
-	}
-
-	public Ordine (Calendar ordineAperto, Cliente cliente) {
-		this.ordineAperto = ordineAperto;
+	public Ordine (Calendar dataApertura, Cliente cliente) {
+		this.dataApertura = dataApertura;
 		this.cliente = cliente;
 		this.stato = "aperto"; //Quando si crea un nuovo ordine, il suo stato corrente è "aperto"
-		this.righeOrdine = new ArrayList<RigaOrdine>();
+		this.righeOrdine = new ArrayList<RigaOrdine>(); 
 	}
 
-
-	public void addRigaOrdine(RigaOrdine r) {
-		this.righeOrdine.add(r);
-	}
 	
-	public void rimuoviRigaOrdine(RigaOrdine r) {
-		this.righeOrdine.remove(r);
-	}
-	
-	public RigaOrdine getRigaOrdineById(long idRigaOrdine) {
-		RigaOrdine ro = null;
-		for(RigaOrdine r : this.righeOrdine) {
-			if(r.getID().equals(idRigaOrdine))
-				ro = r;
-		}
-	return ro;
-	}
-	
-	
-	public RigaOrdine getRigaOrdineByProdotto(Prodotto p) {
-		RigaOrdine ro = null;
-		for(RigaOrdine r : this.righeOrdine){
-			if(r.getProdotto().getId().equals
-					(p.getId()))
-				ro = r;
-		}
-		return ro;
-	}
-
 
 	public Long getId() {
 		return id;
@@ -119,36 +90,36 @@ public class Ordine {
 	
 	public void chiudiOrdine() {
 		this.stato = "chiuso";
-		this.ordineChiuso = Calendar.getInstance();
+		this.dataChiusura = Calendar.getInstance();
 	}
 	
 	public void evadiOrdine() {
 		this.stato = "evaso";
-		this.ordineEvaso = Calendar.getInstance();
+		this.dataEvasione = Calendar.getInstance();
 	}
 	
-	public Calendar getDataAperturaOrdine() {
-		return ordineAperto;
+	public Calendar getDataApertura() {
+		return dataApertura;
 	}
 
-	public void setDataAperturaOrdine(Calendar oa) {
-		this.ordineAperto = oa;
+	public void setDataApertura(Calendar oa) {
+		this.dataApertura = oa;
 	}
 
-	public Calendar getDataOrdineChiuso() {
-		return ordineChiuso;
+	public Calendar getDataChiusura() {
+		return dataChiusura;
 	}
 
-	public void setDataOrdineChiuso(Calendar oc) {
-		this.ordineChiuso = oc;
+	public void setDataChiusura(Calendar oc) {
+		this.dataChiusura = oc;
 	}
 
-	public Calendar getDataOrdineEvaso() {
-		return ordineEvaso;
+	public Calendar getDataEvasione() {
+		return dataEvasione;
 	}
 
-	public void setDataOrdineEvaso(Calendar oe) {
-		this.ordineEvaso = oe;
+	public void setDataEvasione(Calendar oe) {
+		this.dataEvasione = oe;
 	}
 	
 	public Cliente getCliente() {
@@ -159,11 +130,11 @@ public class Ordine {
 		this.cliente = c;
 	}
 
-	public List<RigaOrdine> getRigaOrdine() {
+	public List<RigaOrdine> getRigheOrdine() {
 		return righeOrdine;
 	}
 
-	public void setRigaOrdine(List<RigaOrdine> ro) {
+	public void setRigheOrdine(List<RigaOrdine> ro) {
 		this.righeOrdine = ro;
 	}
 }

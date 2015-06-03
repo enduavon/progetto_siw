@@ -20,12 +20,10 @@ public class OrdineFacade {
 	private EntityManager em;
 	
 	
-	public Ordine creaOrdine(Calendar ordineAperto, Cliente cliente) {
+	public Ordine creaOrdine(Calendar dataApertura, Cliente cliente) {
 		
-		Ordine o = new Ordine(ordineAperto, cliente);
-		cliente.addOrdine(o);
+		Ordine o = new Ordine(dataApertura, cliente);
 		em.persist(o);	
-		em.merge(cliente);
 		return o;
 
 	}

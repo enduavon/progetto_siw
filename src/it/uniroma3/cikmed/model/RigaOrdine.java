@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table (name = "riga_ordine")
+@Table (name = "righe_ordine")
 public class RigaOrdine {
 
 	@Id

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+	<h:form>
+		<h4>Stai per aggiungere all'ordine corrente il prodotto
+			${ordineController.prodottoCorrente.nome}. Quanto ne desideri comprare?</h4>
+
+		<div>
+			Quantità da comprare:
+			<h:inputText value="#{ordineController.quantita}" required="true"
+				requiredMessage="Quantità obbligatoria"
+				converterMessage="La quantità deve essere un numero intero!"
+				id="quantità" />
+			<strong><h:message for="quantità" style="color:red" /></strong>
+		</div>
+		<h:commandButton action="ordineController.aggiungiRigaOrdine"
+			value="Aggiungi" />
+		<strong><h:outputText value="#{ordineController.errore}"
+				style="color:purple" /></strong>
+	</h:form>
+</body>
+</html>
