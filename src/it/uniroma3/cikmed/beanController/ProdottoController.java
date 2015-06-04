@@ -1,21 +1,25 @@
 package it.uniroma3.cikmed.beanController;
 
+import java.io.Serializable;
 import java.util.List;
 
 import it.uniroma3.cikmed.facade.ProdottoFacade;
 import it.uniroma3.cikmed.model.Prodotto;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+//import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 
 
 @ManagedBean (name="prodottoController")
-@RequestScoped
-public class ProdottoController {
+@ViewScoped
+public class ProdottoController implements Serializable {
 	
-	@ManagedProperty(value="#{param.id}")
+	private static final long serialVersionUID = 1L;
+
+	//	@ManagedProperty(value="#{param.id}")
 	private Long id;
 	
 	private String nome;
@@ -32,7 +36,12 @@ public class ProdottoController {
 	@EJB (beanName="pFacade")
 	private ProdottoFacade pFacade;
 	
-	
+	@PostConstruct
+	public void init() {
+		prodotti = pFacade.getCatalogoProdotti();
+//		prodotto = new Prodotto();
+	} 
+
 	
 	public String creaProdotto() {
 		try {
@@ -47,7 +56,7 @@ public class ProdottoController {
 	
 	public String listProdotti() {
 		this.prodotti = pFacade.getCatalogoProdotti();
-		return "showProdotti?faces-redirect=true"; 
+		return "showProdotti"; 
 	}
 	
 	public String findProdotto() {
@@ -129,8 +138,8 @@ public class ProdottoController {
 		return prodotti;
 	}
 
-	public void setProdotti(List<Prodotto> products) {
-		this.prodotti = products;
+	public void setProdotti(List<Prodotto> prodotti) {
+		this.prodotti = prodotti;
 	}
 }
 

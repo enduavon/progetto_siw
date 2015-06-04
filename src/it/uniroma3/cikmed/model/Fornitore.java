@@ -51,6 +51,12 @@ public class Fornitore {
 		this.prodotti.add(p);
 	}
 
+	
+	
+	/*
+	 * GETTERS & SETTERS
+	 */
+	
 	public Long getId() {
 		return id;
 	}
@@ -95,6 +101,10 @@ public class Fornitore {
 		return this.prodotti;
 	}
 	
+	public void setProdotti(List<Prodotto> prodotti) {
+		this.prodotti = prodotti;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		Prodotto product = (Prodotto) o;

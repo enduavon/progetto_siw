@@ -1,5 +1,7 @@
 package it.uniroma3.cikmed.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,7 +12,12 @@ import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Prodotto {
+public class Prodotto implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,18 +40,24 @@ public class Prodotto {
 	@ManyToMany(mappedBy = "prodotti")
 	private List<Fornitore> fornitori;
 
+	
 	public Prodotto(){
 
 	}
 	
-
 	public Prodotto(String nome, String codice, String descrizione, Float prezzo, int quantita) {
 		this.nome = nome;
 		this.codice = codice;
 		this.descrizione = descrizione;
 		this.prezzo = prezzo;
 		this.quantita = quantita;
+		this.fornitori = new ArrayList<Fornitore>();
 	}
+	
+	
+	/*
+	 * GETTERS & SETTERS
+	 */
 
 	public Long getId() {
 		return id;
@@ -94,6 +107,15 @@ public class Prodotto {
 		this.quantita = q;
 	}
 	
+	public List<Fornitore> getFornitori() {
+		return fornitori;
+	}
+
+	public void setFornitori(List<Fornitore> fornitori) {
+		this.fornitori = fornitori;
+	}
+
+
 	@Override
 	public boolean equals(Object o) {
 		Prodotto product = (Prodotto) o;
