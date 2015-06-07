@@ -73,6 +73,7 @@ public class Cliente {
 		this.ordini = new ArrayList<Ordine>();
 	}
 	
+	
 	public void checkPassword(String password) throws Exception {
 		if (!this.password.equals(password)) {
 		System.out.println("il cliente non esiste");	
@@ -80,11 +81,15 @@ public class Cliente {
 		}
 	}
 	
-	
-	
 	public void addOrdine (Ordine o) {
 		this.ordini.add(o);
 	}
+	
+	
+	/*
+	 * GETTERS & SETTERS
+	 */
+	
 
 	public Long getId() {
 		return id;
@@ -142,15 +147,13 @@ public class Cliente {
 		this.cognome = cogn;
 	}
 	
-	public boolean verificaPassword(String password) {
-		return this.password.equals(password);
-	}
-	
-	//fare anche il setOrdini oppure no? a cosa mi potrebbe servire?
 	public List<Ordine> getOrdini() {
 		return this.ordini;
 	}
 	
+	public void setOrdini(List<Ordine> ordini) {
+		this.ordini = ordini;
+	}
 
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();

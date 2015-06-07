@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -62,8 +61,7 @@ public class Ordine {
 	 * Per evitare si crea la foreign key nella owning side specificando
 	 * il nome della colonna di join nella entità della parte inversa
 	 */
-	@OneToMany
-	@JoinColumn(name = "orders_id")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordine")
 	private List<RigaOrdine> righeOrdine;
 
 
@@ -73,9 +71,36 @@ public class Ordine {
 		this.stato = "aperto"; //Quando si crea un nuovo ordine, il suo stato corrente è "aperto"
 		this.righeOrdine = new ArrayList<RigaOrdine>(); 
 	}
-
 	
-
+	
+	public boolean isAperto() {
+		if (this.stato=="aperto")
+				return true;
+		else
+			return false;
+	}
+	
+	public boolean isChiuso() {
+		if (this.stato=="chiuso")
+				return true;
+		else
+			return false;
+	}
+	
+	public boolean isEvaso() {
+		if (this.stato=="evaso")
+				return true;
+		else
+			return false;
+	}
+	
+	
+	
+	/*
+	 * GETTERS & SETTERS
+	 */
+	
+	
 	public Long getId() {
 		return id;
 	}
