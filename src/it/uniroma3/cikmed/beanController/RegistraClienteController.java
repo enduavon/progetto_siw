@@ -30,14 +30,8 @@ public class RegistraClienteController {
 	private String errore;
 	private String confermaPassword;
 	private Cliente clienteRegistrato;
-/*
- * adesso non mi serve la sessione,in futuro servir� quando ci sar� anche un 
- * admin e il database dovr� avere memoria di chi � chi e di quali ordini
- *  esso si associa ecc...
- */
-//	@ManagedProperty(value="#{sessioneCliente}")
-//	private SessioneCliente sessione;
 
+	
 	public String registraCliente() {
 		try {
 			if(facade.verificaEmail(email)!=true) {

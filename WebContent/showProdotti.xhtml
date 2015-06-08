@@ -6,11 +6,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <!-- <f:metadata>
-	<f:viewParam id="prodotto_id" name="id" value="#{prodottoController.id}"
-		required="true"
-		requiredMessage="Invalid page access. Please use a link from within the system."/>
+	<f:viewParam name="prodottoDet" value="#{prodottoController.prodotto}"/>
 </f:metadata>
-<h:message for="prodotto_id" /> -->
+ -->
 
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -21,9 +19,9 @@
 	<h:form>
 		<h:outputText value="Il catalogo è vuoto."
 			rendered="#{empty prodottoController.prodotti}" />
-		<h:dataTable value="#{prodottoController.prodotti}" var="prodotto"
+		<h:dataTable id="catalogo" value="#{prodottoController.prodotti}" var="prodotto"
 			rendered="#{not empty prodottoController.prodotti}">
-			<h:column>
+			<h:column> 
 				<f:facet name="header">Nome</f:facet>
 				<h:commandLink action="#{prodottoController.findProdotto}"
 					value="#{prodotto.nome}" style="color: orange">
@@ -38,27 +36,34 @@
 			<h:column>
 				<f:facet name="header">Codice</f:facet>
 				<h:outputText value="#{prodotto.codice}" />
-			</h:column>
+			</h:column> 
 			<h:column>
 				<f:facet name="header">Quantità in magazzino</f:facet>
 				<h:outputText value="#{prodotto.quantita}" />
 			</h:column>
 			<h:column>
-				<f:facet name="header"></f:facet>
-				<h:commandButton action="/newRigaOrdine.xhtml?faces-redirect=true"
+				<f:facet name="header">Quantità da comprare</f:facet>
+				<h:inputText value="#{ordineController.quantità}" required="true"
+					requiredMessage="Quantità obbligatoria"
+					converterMessage="La quantità deve essere un numero intero!"
+					id="quantità" />
+				<strong><h:message for="quantità" style="color:red" /></strong>
+				<h:commandButton action="#{ordineController.aggiungiRigaOrdine}"
 					value="Aggiungi all'ordine"
 					rendered="#{not empty loginCliente.clienteLoggato.email 
 								and empty loginAdmin.admin.email}">
-					<!-- <f:setPropertyActionListener
-									target="#{ordineController.prodottoCorrente}"
-									value="#{prodotto}" /> -->
+					<f:setPropertyActionListener
+						target="#{ordineController.prodottoCorrente}" value="#{prodotto}" />
 				</h:commandButton>
+				<strong><h:outputText value="#{ordineController.errore}"
+						style="color:purple" /></strong>
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
 				<h:commandButton action="#{prodottoController.deleteProdotto}"
 					value="Elimina Prodotto"
-					rendered="#{not empty loginAdmin.admin.email and empty loginCliente.clienteLoggato.email}">
+					rendered="#{not empty loginAdmin.admin.email and empty loginCliente.clienteLoggato.email}"
+					onclick="return confirm('Vuoi davvero cancellare il prodotto #{prodotto.nome}?');">
 					<f:setPropertyActionListener target="#{prodottoController.id}"
 						value="#{prodotto.id}" />
 				</h:commandButton>

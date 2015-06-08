@@ -15,7 +15,10 @@
 		<div>Codice: ${prodottoController.prodotto.codice}</div>
 		<div>Prezzo: ${prodottoController.prodotto.prezzo}</div>
 		<div>Descrizione: ${prodottoController.prodotto.descrizione}</div>
-		<div>Quantità: ${prodottoController.prodotto.quantita}</div> 
+		<div>Quantità: ${prodottoController.prodotto.quantita}</div>
+		<div>
+			<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true">Vuoi aggiungere un altro prodotto al catalogo?</h:outputLink>
+		</div>
 		<div>
 			<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
 		</div>

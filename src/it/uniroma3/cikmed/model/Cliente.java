@@ -107,6 +107,14 @@ public class Cliente {
 		this.nome = nome;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	public String getEmail() {
 		return this.email;
 	}

@@ -10,11 +10,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 //import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 
 @ManagedBean (name="prodottoController")
-@ViewScoped
+@SessionScoped
 public class ProdottoController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -64,9 +64,8 @@ public class ProdottoController implements Serializable {
 		return "showProdotto";
 	}
 	
-	//da sistemare
 	public String deleteProdotto() {   
-		pFacade.deleteProdottoById(id);
+		pFacade.deleteProdottoByID(id);
 		return "showProdotti";
 	}
 

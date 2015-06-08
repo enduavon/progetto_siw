@@ -12,67 +12,72 @@ public class Amministratore {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	@Column(nullable = false)
 	private String nickname;
-	
+
 	@Column(nullable = false)
 	private String password;
-	
+
 	@Column(nullable = false, unique = true)
 	private String email;	
-	
-
-public Amministratore(String nickname, String password, String email) {
-	this.nickname = nickname;
-	this.password = password;
-	this.email = email;
-}
 
 
-public Amministratore() {
-	
-}
-
-public void checkPassword(String password) 
-		throws Exception {
-	if (!this.password.equals(password)) {
-		throw new Exception();
+	public Amministratore(String nickname, String password, String email) {
+		this.nickname = nickname;
+		this.password = password;
+		this.email = email;
 	}
-}
-
-public long getId() {
-	return id;
-}
-
-public void setId(long id) {
-	this.id = id;
-}
-
-public String getNickname() {
-	return nickname;
-}
-
-public void setNickname(String nickname) {
-	this.nickname = nickname;
-}
-
-public String getPassword() {
-	return password;
-}
-
-public void setPassword(String password) {
-	this.password = password;
-}
 
 
-public String getEmail() {
-	return email;
-}
+	public Amministratore() {
 
-public void setEmail(String email) {
-	this.email = email;
-}
+	}
+
+	public void checkPassword(String password) 
+			throws Exception {
+		if (!this.password.equals(password)) {
+			throw new Exception();
+		}
+	}
+
+	
+	/*
+	 * GETTERS & SETTERS
+	 */	
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 
 }
