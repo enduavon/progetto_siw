@@ -1,6 +1,9 @@
 package it.uniroma3.cikmed.facade;
 
 
+import java.util.List;
+
+import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
@@ -16,9 +19,9 @@ public class RigaOrdineFacade {
 	private EntityManager em;
 	
 	
-	public RigaOrdine creaRigaOrdine(Prodotto p, Float prezzo, int quantita) {
+	public RigaOrdine creaRigaOrdine(Prodotto p, Float prezzo, int quantita, Ordine ordine) {
 
-		RigaOrdine ro = new RigaOrdine(p, p.getPrezzo(), p.getQuantita());
+		RigaOrdine ro = new RigaOrdine(p, p.getPrezzo(), quantita, ordine);
 		em.persist(ro);	
 		return ro;
 	}
@@ -26,7 +29,7 @@ public class RigaOrdineFacade {
 	public RigaOrdine getRigaOrdineByID(long id) {
 		
 		try {
-			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.id =: id", RigaOrdine.class);
+			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.id = :id", RigaOrdine.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 
@@ -39,17 +42,35 @@ public class RigaOrdineFacade {
 		}
 	}
 	
-	public RigaOrdine getRigaOrdineByProdotto(Prodotto prodotto) {
+	public List<RigaOrdine> getRigheOrdineByProdotto(Prodotto prodotto) {
 
 		try {
-			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.prodotto =: prodotto", 
-					                                        RigaOrdine.class);
+			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.prodotto = :prodotto", RigaOrdine.class);
 			q.setParameter("prodotto", prodotto);
-			return q.getSingleResult();
+			return q.getResultList();
 
 		} 
 		catch (Exception e) {
-			String q = "non esiste una riga ordine relativa al prodotto"  +prodotto+  "";
+			String q = "non esistono righe ordine relative al prodotto "  +prodotto+  "";
+			System.out.println(q);
+			return null;
+
+		}
+	}
+	
+	
+	public RigaOrdine getRigaOrdineProdottoByOrdine(Prodotto prodotto, Ordine ordine) {
+
+		try {
+			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.prodotto = :prodotto AND"
+					+ "ro.ordine.orders_id = :ordine", RigaOrdine.class);
+			q.setParameter("prodotto", prodotto);
+			q.setParameter("ordine", ordine);
+			return q.getSingleResult(); 
+
+		} 
+		catch (Exception e) {
+			String q = "Nell'ordine n° " +ordine+ " non vi sono righe relative al prodotto "  +prodotto+  "";
 			System.out.println(q);
 			return null;
 
@@ -57,6 +78,11 @@ public class RigaOrdineFacade {
 	}
 	
 	public void updateRigaOrdine (RigaOrdine ro) {
+		em.merge(ro);
+	}
+	
+	public void increaseQuantitàRigaOrdine (RigaOrdine ro, int quantità) {
+		ro.setQuantita(ro.getQuantita()-quantità);
 		em.merge(ro);
 	}
 

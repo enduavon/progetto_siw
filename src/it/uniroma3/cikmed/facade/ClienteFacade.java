@@ -95,17 +95,17 @@ public class ClienteFacade {
 			throws Exception {
 
 		TypedQuery<Cliente> query = em.createQuery(
-				"SELECT c FROM Cliente c where c.email =:email", Cliente.class);
+				"SELECT c FROM Cliente c WHERE c.email =:email", Cliente.class);
 		query.setParameter("email", email);
 		Cliente cliente = query.getSingleResult();
 
 		if (cliente == null) {
 			throw new Exception();
 		}
-		
+
 		else {
-		cliente.checkPassword(password);
-		return cliente;	
+			cliente.checkPassword(password);
+			return cliente;	
 		}
 	}
 

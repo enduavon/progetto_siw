@@ -38,7 +38,7 @@ public class OrdineFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "la lista degli ordini e vuota";
+			String q = "la lista degli ordini è vuota";
 			System.out.println(q);
 			return null;
 
@@ -49,7 +49,7 @@ public class OrdineFacade {
 	public Ordine getOrdineByID(long id) {
 	
 		try {
-			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.id =: id", Ordine.class);
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.id = :id", Ordine.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 
@@ -61,7 +61,58 @@ public class OrdineFacade {
 
 		}
 
+	} 
+	
+	public List<Ordine> getOrdiniCliente (Cliente cliente) {
+		
+		try {
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.cliente = :cliente", Ordine.class);
+			q.setParameter("cliente", cliente);
+			return q.getResultList();
+
+		} 
+		catch (Exception e) {
+			String q = "Il cliente " +cliente.getNickname()+ " non ha creato degli ordini";
+			System.out.println(q);
+			return null;
+
+		}
+
 	}
+	
+	
+	public List<Ordine> getStatoOrdineByCliente (String stato, Cliente cliente) {   
+		try {
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato = :stato AND ord.cliente = :cliente", Ordine.class);
+			q.setParameter("stato", stato);
+			q.setParameter("cliente", cliente);
+			return q.getResultList();
+
+		} 
+		catch (Exception e) {
+			String q = "Il cliente al momento non ha un ordine " +stato+ "";
+			System.out.println(q);
+			return null;
+
+		}
+	}
+	
+	public Ordine getOrdineApertoByCliente (String stato, Cliente cliente) {   
+		try {
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato LIKE :aperto AND ord.cliente = :cliente", Ordine.class);
+			q.setParameter("aperto", stato);
+			q.setParameter("cliente", cliente);
+			return q.getSingleResult();
+
+		} 
+		catch (Exception e) {
+			String q = "Il cliente al momento non ha un ordine aperto";
+			System.out.println(q);
+			return null;
+
+		}
+	}
+	
 	
 	public void updateOrdine (Ordine o) {
 		em.merge(o);
@@ -71,7 +122,7 @@ public class OrdineFacade {
 		em.remove(o);
 	}
 
-	public void deleteOrdineById (long id) {
+	public void deleteOrdineByID (long id) {
 		Ordine o = em.find(Ordine.class, id);
 		deleteOrdine(o);
 	}

@@ -61,17 +61,18 @@ public class ProdottoFacade {
 	em.merge(p);
 	}
 	
+	public void decreaseQuantitàProdotto (Prodotto p, int quantità) {
+		p.setQuantita(p.getQuantita()-quantità);
+		em.merge(p);
+	}
+	
 	public void deleteProdotto (Prodotto p) {
 		em.remove(p);
 	}
 	
-	public void deleteProdottoById (long id) {
+	public void deleteProdottoByID (long id) {
 		Prodotto p = getProdottoByID(id);
 		deleteProdotto(p);
 	}
 	
-//	public void deleteCatalogoProdotti () {
-//		
-//	}
-
 }
