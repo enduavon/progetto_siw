@@ -8,21 +8,28 @@ import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name="ordineController")
-@RequestScoped
-public class OrdineController {
+@ViewScoped
+public class OrdineController implements Serializable {
 	
-	@ManagedProperty(value="#{param.id}")
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	//	@ManagedProperty(value="#{param.id}")
 	private Long id;
 	
 	private String stato;
@@ -32,15 +39,16 @@ public class OrdineController {
 	
 	private Ordine ordine;
 	private List<Ordine> ordini;
+	private List<Ordine> ordiniCliente;
 	private RigaOrdine rigaOrdine;
 	private Map<Prodotto,RigaOrdine> righeOrdine;
 	
 	private Prodotto prodottoCorrente;
-	private int quantità;
+	private int quantita;
 	
 	private String errore;
 	
-	@ManagedProperty(value="#{loginCliente.clienteLoggato}") //giusto
+//	@ManagedProperty(value="#{loginCliente.clienteLoggato}") //giusto
 	private Cliente clienteCorrente;
 	
 	@EJB (beanName="ordFacade")
@@ -50,8 +58,14 @@ public class OrdineController {
 	@EJB (beanName="pFacade")
 	private ProdottoFacade pFacade;
 	
+	@PostConstruct
+	public void init() {
+		ordini = oFacade.getListaOrdini();
+		listaOrdiniCliente();
+	} 
 	
-	public String creaOrdine() {
+	
+	public String creaOrdine(Cliente clienteCorrente) {
 		
 		if (oFacade.getOrdineApertoByCliente("aperto", clienteCorrente)!=null)
 			return setErrore("Hai già un ordine attualmente aperto. Appena chiudi e confermi"
@@ -76,7 +90,7 @@ public class OrdineController {
 	}
 	
 	public String listaOrdiniCliente() {
-		this.ordini = oFacade.getOrdiniCliente(clienteCorrente);
+		this.ordiniCliente = oFacade.getOrdiniCliente(clienteCorrente);
 		return "showOrdiniCliente"; 
 	}
 	
@@ -86,17 +100,36 @@ public class OrdineController {
 	}
 	
 	public String deleteOrdine() { 
-		oFacade.deleteOrdineByID(id);
-		return "showOrdiniCliente";
+		
+		if (oFacade.getOrdineByID(id).isAperto()) {
+			oFacade.deleteOrdineByID(id);
+			return "showOrdiniCliente";
+		}
+
+		else {
+			return setErrore("Non puoi più cancellare questo ordine.");
+		}
+	}	
+	
+	public String closeOrdine() { 
+
+		if (oFacade.getOrdineByID(id).isAperto()) {
+			oFacade.closeOrdineByID(id);
+			return "showOrdineCompletato?faces-redirect=true";
+		}
+
+		else {
+			return setErrore("Non puoi chiudere questo ordine.");
+		}
 	}	
 	 
 	
 	public String aggiungiRigaOrdine() {
 		
-		if (quantità>prodottoCorrente.getQuantita()) 
+		if (quantita>prodottoCorrente.getQuantita()) 
 			return setErrore("Devi inserire una quantità di prodotto minore di quella disponibile in magazzino");
 		
-		if (quantità==0)
+		if (quantita==0)
 			return setErrore("Non puoi aggiungere zero prodotti all'ordine.");
 
 		ordine = oFacade.getOrdineApertoByCliente("aperto", clienteCorrente);
@@ -104,14 +137,14 @@ public class OrdineController {
 		//problema da risolvere: dà sempre null come risultato perchè non trova l'ordine della riga ordine
 		if (roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordine)!=null) { //esiste già una riga ordine per quel prodotto	
 			rigaOrdine = roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordine);
-			roFacade.increaseQuantitàRigaOrdine(rigaOrdine, quantità);
-			pFacade.decreaseQuantitàProdotto(prodottoCorrente, quantità);
+			roFacade.increaseQuantitaRigaOrdine(rigaOrdine, quantita);
+			pFacade.decreaseQuantitaProdotto(prodottoCorrente, quantita);
 			return "updateRigaOrdine";//mostro la riga ordine aggiornata o l'ordine aggiornato?
 		}
 
 		else { //se non esiste la riga ordine per quel prodotto e per quell'ordine, allora la creo
-			rigaOrdine = roFacade.creaRigaOrdine(prodottoCorrente, prodottoCorrente.getPrezzo(), quantità, ordine);
-			pFacade.decreaseQuantitàProdotto(prodottoCorrente, quantità);
+			rigaOrdine = roFacade.creaRigaOrdine(prodottoCorrente, prodottoCorrente.getPrezzo(), quantita, ordine);
+			pFacade.decreaseQuantitaProdotto(prodottoCorrente, quantita);
 			return "showRigaOrdine";
 		}  //mostro i dettagli del prodotto che ho aggiunto, con la quantità da me scelta
 	}
@@ -179,6 +212,16 @@ public class OrdineController {
 		this.ordini = ordini;
 	}
 
+	public List<Ordine> getOrdiniCliente() {
+		return ordiniCliente;
+	}
+
+
+	public void setOrdiniCliente(List<Ordine> ordiniCliente) {
+		this.ordiniCliente = ordiniCliente;
+	}
+
+
 	public RigaOrdine getRigaOrdine() {
 		return rigaOrdine;
 	}
@@ -211,12 +254,12 @@ public class OrdineController {
 		this.prodottoCorrente = prodottoCorrente;
 	}
 	
-	public int getQuantità() {
-		return quantità;
+	public int getQuantita() {
+		return quantita;
 	}
 
-	public void setQuantità(int quantità) { 
-		this.quantità = quantità;
+	public void setQuantita(int quantita) { 
+		this.quantita = quantita;
 	}
 
 	public String getErrore() {
