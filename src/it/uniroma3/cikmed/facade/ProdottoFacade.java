@@ -61,8 +61,8 @@ public class ProdottoFacade {
 	em.merge(p);
 	}
 	
-	public void decreaseQuantitàProdotto (Prodotto p, int quantità) {
-		p.setQuantita(p.getQuantita()-quantità);
+	public void decreaseQuantitaProdotto(Prodotto p, int quantita) {
+		p.setQuantita(p.getQuantita()-quantita);
 		em.merge(p);
 	}
 	
