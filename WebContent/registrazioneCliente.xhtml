@@ -4,81 +4,102 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Registrazione</title>
-</head>
-<body>
-	<f:view>
-		<h1>Inserisci i seguenti dati per registrarti sul nostro sito:</h1>
-		<h:form>
-		<h:panelGrid columns="3">
-			
-				Nome:*
-				<h:inputText value="#{registraCliente.nome}" required="true"
-					requiredMessage="Nome obbligatorio" id="nome" />
-				<h:message for="nome" style="color:red" />
-			
-			
-				Cognome:*
-				<h:inputText value="#{registraCliente.cognome}" required="true"
-					requiredMessage="Cognome obbligatorio" id="cognome" />
-				<h:message for="cognome" style="color:red" />
-			
-			
-				Nickname:*
-				<h:inputText value="#{registraCliente.nickname}" required="true"
-					requiredMessage="Nickname obbligatorio" id="nickname" />
-				<h:message for="nickname" style="color:red" />
-			
-			
-				Password:* (min 8 caratteri, di cui almeno una lettera maiuscola e almeno una cifra)
-				<h:inputSecret id="password" binding="#{password}"
-					value="#{registraCliente.password}" required="true"
-					requiredMessage="Password obbligatoria">
-				    <!-- <f:validateRegex
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<title>Registrazione</title>
+</h:head>
+<h:body>
+	<div class="container-fluid">
+		<h:panelGroup class="container">
+			<div class="container-page">
+				<div class="col-md-6">
+					<h3 class="dark-grey">Inserisci i seguenti dati per
+						registrarti:</h3>
+
+					<h:form>
+
+							<div class="form-group col-lg-12">
+								Nome:*
+								<h:inputText value="#{registraCliente.nome}" required="true"
+									requiredMessage="Nome obbligatorio" id="nome"
+									class="form-control" />
+								<h:message for="nome" style="color:red" />
+							</div>
+
+							<div class="form-group col-lg-6">
+								Cognome:*
+								<h:inputText value="#{registraCliente.cognome}" required="true"
+									requiredMessage="Cognome obbligatorio" id="cognome" class="form-control" />
+								<h:message for="cognome" style="color:red" />
+							</div>
+
+							<div class="form-group col-lg-6">
+								Nickname:*
+								<h:inputText value="#{registraCliente.nickname}" required="true"
+									requiredMessage="Nickname obbligatorio" id="nickname" class="form-control" />
+								<h:message for="nickname" style="color:red" />
+							</div>
+
+							<div class="form-group col-lg-6">
+								Password:* (min 8 caratteri, di cui almeno una lettera maiuscola
+								e almeno una cifra)
+								<h:inputSecret id="password" binding="#{password}"
+									value="#{registraCliente.password}" required="true"
+									requiredMessage="Password obbligatoria" class="form-control">
+									<!-- <f:validateRegex
 						pattern="(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)" />    -->
-					<!-- <f:validator validatorId="javax.faces.RegularExpression" pattern="(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)"  
+									<!-- <f:validator validatorId="javax.faces.RegularExpression" pattern="(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)"  
 						message="Password non valida." /> -->
-				</h:inputSecret>
-				<h:message for="password" style="color:red" />
-			
-			
-				Inserisci di nuovo la password:*
-				<h:inputSecret id="confermaPassword" required="true" value="#{registraCliente.confermaPassword}"
-					requiredMessage="Devi inserire di nuovo la password">
-					<f:validator validatorId="passwordValidator" />
-					<f:attribute name="password" value="#{password}" />
-				</h:inputSecret>
-				<h:message for="confermaPassword" style="color:red" />
-			
-			
-				Data di Nascita:* (d-m-yyyy)
-				<h:inputText id="data" value="#{registraCliente.dataDiNascita}"
-					size="20" required="true" >
-					<f:convertDateTime pattern="d-M-yyyy" />
-				</h:inputText>
-				<h:message for="data" style="color:red" />
-			
-			
-				Email:*
-				<h:inputText value="#{registraCliente.email}" required="true"
-					requiredMessage="Email è obbligatoria" id="email"
-					validatorMessage="Email non valida.">
-					<f:validateRegex
-						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-				</h:inputText>
-				<h:message for="email" style="color:red" />
-			
-			<h:panelGroup />
-			
-				<h:commandButton value="Registrati"
-					action="#{registraCliente.registraCliente}" />
-			<h:outputText value="#{registraCliente.errore}" />
-			
-			<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
-			</h:panelGrid>
-		</h:form>
-	</f:view>
-</body>
+								</h:inputSecret>
+								<h:message for="password" style="color:red" />
+							</div>
+
+							<div class="form-group col-lg-6">
+								Inserisci di nuovo la password:*
+								<h:inputSecret id="confermaPassword" required="true"
+									value="#{registraCliente.confermaPassword}"
+									requiredMessage="Devi inserire di nuovo la password" class="form-control">
+									<f:validator validatorId="passwordValidator" />
+									<f:attribute name="password" value="#{password}" />
+								</h:inputSecret>
+								<h:message for="confermaPassword" style="color:red" />
+							</div>
+
+							<div class="form-group col-lg-6">
+								Data di Nascita:* (d-m-yyyy)
+								<h:inputText id="data" value="#{registraCliente.dataDiNascita}"
+									size="20" required="true" class="form-control">
+									<f:convertDateTime pattern="d-M-yyyy" />
+								</h:inputText>
+								<h:message for="data" style="color:red" />
+							</div>
+
+							<div class="form-group col-lg-6">
+								Email:*
+								<h:inputText value="#{registraCliente.email}" required="true"
+									requiredMessage="Email è obbligatoria" id="email"
+									validatorMessage="Email non valida." class="form-control">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+								</h:inputText>
+								<h:message for="email" style="color:red" />
+							</div>
+							
+							<div class="col-md-6">
+							<h:commandButton value="Registrati"
+								action="#{registraCliente.registraCliente}"
+								class="btn btn-primary" />
+							<h:outputText value="#{registraCliente.errore}" />
+							</div>
+
+							<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
+					</h:form>
+				</div>
+			</div>
+		</h:panelGroup>
+	</div>
+</h:body>
 </html>
