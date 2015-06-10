@@ -36,7 +36,7 @@ public class OrdineController {
 	private Map<Prodotto,RigaOrdine> righeOrdine;
 	
 	private Prodotto prodottoCorrente;
-	private int quantità;
+	private int quantita;
 	
 	private String errore;
 	
@@ -60,7 +60,7 @@ public class OrdineController {
 			try {
 				this.ordine = oFacade.creaOrdine(Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome")), clienteCorrente);
 				//			ordine.setRigheOrdine((new ArrayList<RigaOrdine>(righeOrdine.values())));
-				oFacade.updateOrdine(ordine);;
+				oFacade.updateOrdine(ordine);
 				return "newOrdine"; 
 			}
 
@@ -93,10 +93,10 @@ public class OrdineController {
 	
 	public String aggiungiRigaOrdine() {
 		
-		if (quantità>prodottoCorrente.getQuantita()) 
+		if (quantita>prodottoCorrente.getQuantita()) 
 			return setErrore("Devi inserire una quantità di prodotto minore di quella disponibile in magazzino");
 		
-		if (quantità==0)
+		if (quantita==0)
 			return setErrore("Non puoi aggiungere zero prodotti all'ordine.");
 
 		ordine = oFacade.getOrdineApertoByCliente("aperto", clienteCorrente);
@@ -104,14 +104,14 @@ public class OrdineController {
 		//problema da risolvere: dà sempre null come risultato perchè non trova l'ordine della riga ordine
 		if (roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordine)!=null) { //esiste già una riga ordine per quel prodotto	
 			rigaOrdine = roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordine);
-			roFacade.increaseQuantitàRigaOrdine(rigaOrdine, quantità);
-			pFacade.decreaseQuantitàProdotto(prodottoCorrente, quantità);
+			roFacade.increaseQuantitaRigaOrdine(rigaOrdine, quantita);
+			pFacade.decreaseQuantitaProdotto(prodottoCorrente, quantita);
 			return "updateRigaOrdine";//mostro la riga ordine aggiornata o l'ordine aggiornato?
 		}
 
 		else { //se non esiste la riga ordine per quel prodotto e per quell'ordine, allora la creo
-			rigaOrdine = roFacade.creaRigaOrdine(prodottoCorrente, prodottoCorrente.getPrezzo(), quantità, ordine);
-			pFacade.decreaseQuantitàProdotto(prodottoCorrente, quantità);
+			rigaOrdine = roFacade.creaRigaOrdine(prodottoCorrente, prodottoCorrente.getPrezzo(), quantita, ordine);
+			pFacade.decreaseQuantitaProdotto(prodottoCorrente, quantita);
 			return "showRigaOrdine";
 		}  //mostro i dettagli del prodotto che ho aggiunto, con la quantità da me scelta
 	}
@@ -211,12 +211,12 @@ public class OrdineController {
 		this.prodottoCorrente = prodottoCorrente;
 	}
 	
-	public int getQuantità() {
-		return quantità;
+	public int getQuantita() {
+		return quantita;
 	}
 
-	public void setQuantità(int quantità) { 
-		this.quantità = quantità;
+	public void setQuantita(int quantita) { 
+		this.quantita = quantita;
 	}
 
 	public String getErrore() {
