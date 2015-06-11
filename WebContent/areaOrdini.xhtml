@@ -9,16 +9,20 @@
 </head>
 <h:body>
 <h2>Qui puoi gestire i tuoi ordini:</h2>
-	<h:form>
+	<h:form> 
 		<h:commandLink action="#{ordineController.listaOrdini}"
 			value="Consulta gli ordini esistenti" rendered="#{not empty loginAdmin.admin.email}"/>
 		<div>
-			<h:commandLink action="#{ordineController.listaOrdiniCliente}"
+			<h:commandLink
+				action="#{ordineController.listaOrdiniCliente}"
 				value="Controlla i tuoi ordini"
-				rendered="#{not empty loginCliente.clienteLoggato.email}" />
+				rendered="#{not empty loginCliente.clienteLoggato.email}">
+				<f:setPropertyActionListener target="#{ordineController.clienteCorrente}"
+					value="#{loginCliente.clienteLoggato}" />
+			</h:commandLink>
 		</div>
 		<div>
-			<h:commandLink action="#{ordineController.creaOrdine}"
+			<h:commandLink action="#{ordineController.creaOrdine(loginCliente.clienteLoggato)}"
 				value="Crea un nuovo ordine"
 				rendered="#{not empty loginCliente.clienteLoggato.email}" />
 			<strong><h:outputText value="#{ordineController.errore}"

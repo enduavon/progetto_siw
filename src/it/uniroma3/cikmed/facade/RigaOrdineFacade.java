@@ -83,6 +83,8 @@ public class RigaOrdineFacade {
 	
 	public void increaseQuantitaRigaOrdine (RigaOrdine ro, int quantita) {
 		ro.setQuantita(ro.getQuantita()-quantita);
+	public void increaseQuantitaRigaOrdine(RigaOrdine ro, int quantita) {
+		ro.setQuantita(ro.getQuantita()-quantita);
 		em.merge(ro);
 	}
 
