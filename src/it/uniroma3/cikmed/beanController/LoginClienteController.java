@@ -23,13 +23,14 @@ public class LoginClienteController {
 
 
 	public String loginCliente() {
-		try {
+		
+		if (clienteFacade.trovaClienteByEmailPwd(email, password)!=null) {
 			clienteLoggato = clienteFacade.trovaClienteByEmailPwd(email, password);
-			setMessaggio("Perfetto, login effettuato con successo.");
-			return "index"; //bisogna fare una pagina apposita senza pulsanti di login
-		} 
-		catch (Exception e) {
-			setMessaggio("email o password non validi");
+			return "index"; 
+		}
+
+		else {
+			setMessaggio("email o password non validi. Ritenta di nuovo");
 			return "loginCliente";
 		}
 	}
@@ -39,6 +40,8 @@ public class LoginClienteController {
 		return "/index?faces-redirect=true";
 	}
 
+	
+	
 	public String getEmail() {
 		return email;
 	}

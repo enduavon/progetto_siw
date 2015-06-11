@@ -37,9 +37,7 @@ public class ClienteFacade {
 	public List<Cliente> getTuttiClienti() {
 
 		try {
-			String query = "SELECT c" +
-					"FROM Cliente c";
-			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
+			TypedQuery<Cliente> q = em.createQuery("SELECT c FROM Cliente c", Cliente.class);
 			return q.getResultList();
 		} 
 
@@ -56,10 +54,8 @@ public class ClienteFacade {
 	public Cliente getClienteByID(long id) {
 
 		try {
-			String query = "SELECT c" +
-					"FROM Cliente c" +
-					"WHERE c.id =: id";
-			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
+			TypedQuery<Cliente> q = em.createQuery("SELECT c FROM Cliente c" +
+					"WHERE c.id = :id", Cliente.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 		} 
@@ -75,10 +71,8 @@ public class ClienteFacade {
 	public boolean verificaEmail(String email) {
 
 		try {
-			String query = "SELECT c" +
-					"FROM Cliente c" +
-					"WHERE c.email =: email";
-			TypedQuery<Cliente> q = em.createQuery(query, Cliente.class);
+			TypedQuery<Cliente> q = em.createQuery("SELECT c FROM Cliente c" +
+					"WHERE c.email = :email", Cliente.class);
 			q.setParameter("email", email);
 			return true;
 		} 
@@ -91,23 +85,23 @@ public class ClienteFacade {
 		}
 	}
 
-	public Cliente trovaClienteByEmailPwd(String email, String password)
-			throws Exception {
-
-		TypedQuery<Cliente> query = em.createQuery(
-				"SELECT c FROM Cliente c WHERE c.email =:email", Cliente.class);
-		query.setParameter("email", email);
-		Cliente cliente = query.getSingleResult();
-
-		if (cliente == null) {
-			throw new Exception();
+	public Cliente trovaClienteByEmailPwd(String email, String password) {
+		
+		try {
+			TypedQuery<Cliente> query = em.createQuery(
+					"SELECT c FROM Cliente c WHERE c.email = :email AND c.password = :password", Cliente.class);
+			query.setParameter("email", email);
+			query.setParameter("password", password);
+			return query.getSingleResult();
 		}
+		
+		catch (Exception e) {
+				String q = "Il cliente con mail " +email+ " non è presente nel database.";
+				System.out.println(q);
+				return null;
 
-		else {
-			cliente.checkPassword(password);
-			return cliente;	
+			}
 		}
-	}
 
 	
 

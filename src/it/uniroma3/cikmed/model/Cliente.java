@@ -9,6 +9,7 @@ import java.util.TimeZone;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Cliente {
 	@Column(nullable = false, unique = true)
 	private String email;
 	
-	@OneToOne(cascade={CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE})
+	@OneToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private Indirizzo indirizzo;
 	
 	@OneToMany(mappedBy = "cliente")
@@ -73,18 +74,7 @@ public class Cliente {
 		this.ordini = new ArrayList<Ordine>();
 	}
 	
-	
-	public void checkPassword(String password) throws Exception {
-		if (!this.password.equals(password)) {
-		System.out.println("il cliente non esiste");	
-			throw new Exception();
-		}
-	}
-	
-	public void addOrdine (Ordine o) {
-		this.ordini.add(o);
-	}
-	
+
 	
 	/*
 	 * GETTERS & SETTERS
