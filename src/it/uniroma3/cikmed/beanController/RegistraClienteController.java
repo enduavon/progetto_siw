@@ -31,6 +31,7 @@ public class RegistraClienteController {
 	private String confermaPassword;
 	private Cliente clienteRegistrato;
 
+	private Long id;
 	
 	public String registraCliente() {
 		try {
