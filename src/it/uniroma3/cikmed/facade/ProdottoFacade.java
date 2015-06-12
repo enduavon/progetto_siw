@@ -67,6 +67,7 @@ public class ProdottoFacade {
 	}
 	
 	public void deleteProdotto (Prodotto p) {
+		p = em.find(Prodotto.class, p.getId());
 		em.remove(p);
 	}
 	

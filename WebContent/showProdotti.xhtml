@@ -3,16 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-
-<!-- <f:metadata>
-	<f:viewParam name="prodottoDet" value="#{prodottoController.prodotto}"/>
-</f:metadata>
- -->
-
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Catalogo</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+	<title>Catalogo</title>
 </h:head>
 <h:body>
 	<h2>Catalogo Prodotti</h2>
@@ -20,38 +16,41 @@
 		<h:outputText value="Il catalogo è vuoto."
 			rendered="#{empty prodottoController.prodotti}" />
 		<h:dataTable id="catalogo" value="#{prodottoController.prodotti}" var="prodotto"
-			rendered="#{not empty prodottoController.prodotti}">
-			<h:column> 
-				<f:facet name="header">Nome</f:facet>
-				<h:commandLink action="#{prodottoController.findProdotto}"
-					value="#{prodotto.nome}" style="color: orange">
-					<f:setPropertyActionListener target="#{prodottoController.id}"
-						value="#{prodotto.id}" />
-				</h:commandLink>
-			</h:column>
-			<h:column>
-				<f:facet name="header">Prezzo per unità</f:facet>
-				<h:outputText value="#{prodotto.prezzo}" />
-			</h:column>
+			rendered="#{not empty prodottoController.prodotti}" styleClass="table table-striped">
 			<h:column>
 				<f:facet name="header">Codice</f:facet>
 				<h:outputText value="#{prodotto.codice}" />
 			</h:column> 
 			<h:column>
-				<f:facet name="header">Quantità in magazzino</f:facet>
-				<h:outputText value="#{prodotto.quantita}" />
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{prodotto.nome}" />
 			</h:column>
 			<h:column>
+				<f:facet name="header">Prezzo per unità</f:facet>
+				<h:outputText value="#{prodotto.prezzo}€" />
+			</h:column>
+			<p:column>
+				<f:facet name="header">Quantità in magazzino</f:facet>
+				<h:outputText value="#{prodotto.quantita}" />
+			</p:column>
+			<h:column>
+				<p:commandButton value="mostra dettagli" update=":dettaglioProdotto" icon="ui-icon-search"
+					oncomplete="PF('prodottoDialog').show();">
+					<f:setPropertyActionListener value="#{prodotto}"
+						target="#{prodottoController.prodottoSelezionato}" />
+				</p:commandButton> 
+			</h:column>
+			<h:column
+				rendered="#{not empty loginCliente.clienteLoggato.email 
+								and empty loginAdmin.admin.email}">
 				<f:facet name="header">Quantità da comprare</f:facet>
-				<h:inputText value="#{ordineController.quantità}" required="true"
+				<h:inputText value="#{ordineController.quantita}" required="true"
 					requiredMessage="Quantità obbligatoria"
 					converterMessage="La quantità deve essere un numero intero!"
 					id="quantità" />
 				<strong><h:message for="quantità" style="color:red" /></strong>
 				<h:commandButton action="#{ordineController.aggiungiRigaOrdine}"
-					value="Aggiungi all'ordine"
-					rendered="#{not empty loginCliente.clienteLoggato.email 
-								and empty loginAdmin.admin.email}">
+					value="Aggiungi all'ordine">
 					<f:setPropertyActionListener
 						target="#{ordineController.prodottoCorrente}" value="#{prodotto}" />
 				</h:commandButton>
@@ -60,17 +59,41 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
-				<h:commandButton action="#{prodottoController.deleteProdotto}"
+				<p:commandButton actionListener="#{prodottoController.deleteProdotto(prodotto)}"
 					value="Elimina Prodotto"
+					icon="ui-icon-close"
 					rendered="#{not empty loginAdmin.admin.email and empty loginCliente.clienteLoggato.email}"
-					onclick="return confirm('Vuoi davvero cancellare il prodotto #{prodotto.nome}?');">
-					<f:setPropertyActionListener target="#{prodottoController.id}"
-						value="#{prodotto.id}" />
-				</h:commandButton>
+					onclick="return confirm('Vuoi davvero cancellare il prodotto #{prodotto.nome}?');"
+					update="catalogo" ajax="true">
+				</p:commandButton>
 			</h:column>
 		</h:dataTable>
 		<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true"
 			rendered="#{not empty loginAdmin.admin.email and empty loginCliente.clienteLoggato.email}">Aggiungi un prodotto al catalogo</h:outputLink>
 	</h:form>
+	
+	<p:dialog header="Info prodotto" widgetVar="prodottoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+        <p:outputPanel id="dettaglioProdotto" style="text-align:center;">
+			<p:panelGrid columns="2">
+				<f:facet name="header">
+				</f:facet>
+
+				<h:outputText value="Codice:" />
+				<h:outputText value="#{prodottoController.prodottoSelezionato.codice}" />
+
+				<h:outputText value="Nome" />
+				<h:outputText value="#{prodottoController.prodottoSelezionato.nome}" />
+
+				<h:outputText value="Prezzo:" />
+				<h:outputText value="#{prodottoController.prodottoSelezionato.prezzo}€" />
+
+				<h:outputText value="Quantita" />
+				<h:outputText value="#{prodottoController.prodottoSelezionato.quantita}" />
+
+				<h:outputText value="Descrizione" />
+				<h:outputText value="#{prodottoController.prodottoSelezionato.descrizione}" />
+			</p:panelGrid>
+		</p:outputPanel>
+    </p:dialog>
 </h:body>
 </html>

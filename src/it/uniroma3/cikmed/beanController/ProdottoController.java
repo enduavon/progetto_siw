@@ -10,27 +10,20 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 //import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 
 @ManagedBean (name="prodottoController")
-@SessionScoped
+@ViewScoped
 public class ProdottoController implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	//	@ManagedProperty(value="#{param.id}")
 	private Long id;
-	
-	private String nome;
-	private Float prezzo;
-	private String descrizione;
-	private String codice;
-	private int quantita;
-	
 	private String errore;
 	
 	private Prodotto prodotto;
+	private Prodotto prodottoSelezionato;
 	private List<Prodotto> prodotti;
 	
 	@EJB (beanName="pFacade")
@@ -39,20 +32,8 @@ public class ProdottoController implements Serializable {
 	@PostConstruct
 	public void init() {
 		prodotti = pFacade.getCatalogoProdotti();
-//		prodotto = new Prodotto();
 	} 
 
-	
-	public String creaProdotto() {
-		try {
-			this.prodotto = pFacade.creaProdotto(nome, codice, descrizione, prezzo, quantita);
-			return "newProdotto"; 
-			}
-		catch (Exception e) {
-			errore="Prodotto già esistente sul database. Per favore inserisci un prodotto con codice differente";
-			return errore; 
-		}
-	}
 	
 	public String listProdotti() {
 		this.prodotti = pFacade.getCatalogoProdotti();
@@ -64,57 +45,22 @@ public class ProdottoController implements Serializable {
 		return "showProdotto";
 	}
 	
-	public String deleteProdotto() {   
-		pFacade.deleteProdottoByID(id);
+	public String deleteProdotto(Prodotto p) {   
+		pFacade.deleteProdotto(p);
+		listProdotti();
 		return "showProdotti";
 	}
 
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public Float getPrezzo() {
-		return prezzo;
-	}
-
-	public void setPrezzo(Float prezzo) {
-		this.prezzo = prezzo;
-	}
-
-	public String getDescrizione() {
-		return descrizione;
-	}
-
-	public void setDescrizione(String description) {
-		this.descrizione = description;
-	}
-
-	public String getCodice() {
-		return codice;
-	}
-
-	public void setCodice(String codice) {
-		this.codice = codice;
-	}
-
-	public int getQuantita() {
-		return quantita;
-	}
-
-	public void setQuantita(int quantita) {
-		this.quantita = quantita;
 	}
 
 	public String getErrore() {
@@ -132,6 +78,16 @@ public class ProdottoController implements Serializable {
 	public void setProdotto(Prodotto p) {
 		this.prodotto = p;
 	}
+
+	public Prodotto getProdottoSelezionato() {
+		return prodottoSelezionato;
+	}
+
+
+	public void setProdottoSelezionato(Prodotto prodottoSelezionato) {
+		this.prodottoSelezionato = prodottoSelezionato;
+	}
+
 
 	public List<Prodotto> getProdotti() {
 		return prodotti;

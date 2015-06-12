@@ -10,17 +10,20 @@
 <body>
 	<f:view>
 		<h1>Perfetto, hai inserito il prodotto
-			"${prodottoController.prodotto.nome}" nel catalogo prodotti.</h1>
+			"${richiesta.prodotto.nome}" nel catalogo prodotti.</h1>
 		<h2>Dettagli:</h2>
-		<div>Codice: ${prodottoController.prodotto.codice}</div>
-		<div>Prezzo: ${prodottoController.prodotto.prezzo}</div>
-		<div>Descrizione: ${prodottoController.prodotto.descrizione}</div>
-		<div>Quantità: ${prodottoController.prodotto.quantita}</div>
+		<div>Codice: ${richiesta.prodotto.codice}</div>
+		<div>Prezzo: ${richiesta.prodotto.prezzo}</div>
+		<div>Descrizione: ${richiesta.prodotto.descrizione}</div>
+		<div>Quantità: ${richiesta.prodotto.quantita}</div>
 		<div>
 			<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true">Vuoi aggiungere un altro prodotto al catalogo?</h:outputLink>
 		</div>
 		<div>
 			<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
+		</div>
+		<div>
+			<h:outputLink value="showProdotti.xhtml?faces-redirect=true">Visualizza il catalogo</h:outputLink>
 		</div>
 	</f:view>
 </body>
