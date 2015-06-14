@@ -1,11 +1,14 @@
 package it.uniroma3.cikmed.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 
 import java.util.List;
+
+
 
 
 
@@ -16,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,7 +30,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "orders")
 
-public class Ordine {
+public class Ordine implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,7 +62,8 @@ public class Ordine {
 	/*
 	 * è la Owning di customer
 	 */
-	@ManyToOne(cascade={ CascadeType.PERSIST, CascadeType.REMOVE },fetch=FetchType.LAZY)
+	@ManyToOne(cascade={CascadeType.PERSIST})
+	@JoinColumn(name = "cliente_id") 
 	private Cliente cliente;
 	/*
 	 * forziamo la creazione della foreign key

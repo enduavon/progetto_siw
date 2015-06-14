@@ -61,29 +61,32 @@ public class ClienteFacade {
 		} 
 
 		catch (Exception e) {
-			String q = "il cliente selezionato non esiste";
+			String q = "il cliente selezionato con " +id+ " non esiste";
 			System.out.println(q);
 			return null;
 
 		}
 	}
 
-	public boolean verificaEmail(String email) {
+	
+	public Cliente getClienteByEmail(String email) {
 
 		try {
-			TypedQuery<Cliente> q = em.createQuery("SELECT c FROM Cliente c" +
-					"WHERE c.email = :email", Cliente.class);
+			TypedQuery<Cliente> q = em.createQuery("SELECT cliente FROM Cliente cliente "
+					+ "WHERE cliente.email = :email", Cliente.class);
 			q.setParameter("email", email);
-			return true;
-		} 
+			return q.getSingleResult();
+		}
 
 		catch (Exception e) {
-			String q = "l'indirizzo " +email+ " non è presente nel database.";
+			String q = "il cliente selezionato con " +email+ " non esiste";
 			System.out.println(q);
-			return false;
+			return null;
 
 		}
 	}
+
+	
 
 	public Cliente trovaClienteByEmailPwd(String email, String password) {
 		

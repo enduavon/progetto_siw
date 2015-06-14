@@ -15,10 +15,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class RegistraClienteController {
 
-	@EJB(beanName="clienteFacade")
-	private ClienteFacade facade;
-
-	@ManagedProperty(value="#{param.id}")
+	@ManagedProperty(value="#{param.mail}")
 	private String email;
 	private String nickname;
 	private String password;
@@ -31,15 +28,17 @@ public class RegistraClienteController {
 	private String confermaPassword;
 	private Cliente clienteRegistrato;
 
-	private Long id;
+	
+	@EJB(beanName="clienteFacade")
+	private ClienteFacade facade;
+
+	
 	
 	public String registraCliente() {
 		try {
-			if(facade.verificaEmail(email)!=true) {
-
 				clienteRegistrato = facade.creaCliente(nome, nickname, password, cognome, dataDiNascita, email);
 				facade.updateCliente(clienteRegistrato);
-				return "mostraCliente"; } }
+				return "mostraCliente"; } 
 		catch (Exception e) {
 			if(e.getClass().getName().equals("javax.ejb.EJBTransactionRolledbackException")){
 				setErrore("Email già esistente. Utilizza un altro indirizzo email per registrarti.");
@@ -48,8 +47,12 @@ public class RegistraClienteController {
 				setErrore("Impossibile registrarsi");
 				return "registrazioneCliente";
 			} }
-		return "registrazioneCliente";
 	}	
+	
+	public String dettagliCliente() {
+		clienteRegistrato = facade.getClienteByEmail(email);
+		return "dettagliCliente";
+	}
 	
 
 	public String getEmail() {
@@ -132,14 +135,4 @@ public class RegistraClienteController {
 	public void setConfermaPassword(String confermaPassword) {
 		this.confermaPassword = confermaPassword;
 	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-	
-	
 }

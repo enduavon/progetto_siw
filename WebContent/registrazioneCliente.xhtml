@@ -51,7 +51,7 @@
 							<h:inputSecret id="password" binding="#{password}"
 								value="#{registraCliente.password}" required="true"
 								requiredMessage="Password obbligatoria" class="form-control">
-								<f:validator validatorId="passwordValidator" />
+								<!-- <f:validator validatorId="passwordValidator" /> -->
 								<p:watermark for="password"
 									value="min 8 caratteri, almeno una maiuscola e una cifra"
 									id="watermark" />
@@ -96,7 +96,7 @@
 							<h:commandButton value="Registrati"
 								action="#{registraCliente.registraCliente}"
 								class="btn btn-primary" />
-							<h:outputText value="#{registraCliente.errore}" />
+							<h:outputText value="#{registraCliente.errore}" style="color:purple" />
 						</div>
 
 						<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>

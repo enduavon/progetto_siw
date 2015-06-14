@@ -5,43 +5,42 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Dettagli utente</title>
+<title>Dettagli utente n°#{registraCliente.clienteRegistrato.id}</title>
 </head>
 <body>
 	<h:form>
-		<h1>Benvenuto, ${registraCliente.nome} ti sei appena registrato
-			con questi dati:</h1>
+		<h3>Dati dell'utente selezionato:</h3>
 		<div>
 			Nome:
-			<h:outputText value="#{registraCliente.nome}" />
+			<h:outputText value="#{registraCliente.clienteRegistrato.nome}" />
 		</div>
 		<div>
 			Cognome:
-			<h:outputText value="#{registraCliente.cognome}" />
+			<h:outputText value="#{registraCliente.clienteRegistrato.cognome}" />
 		</div>
 		<div>
 			Nickname:
-			<h:outputText value="#{registraCliente.nickname}" />
+			<h:outputText value="#{registraCliente.clienteRegistrato.nickname}" />
 		</div>
 		<div>
 			Email:
-			<h:outputText value="#{registraCliente.email}" />
+			<h:outputText value="#{registraCliente.clienteRegistrato.email}" />
 		</div>
 		<div>
 			Data di nascita:
-			<h:outputText value="#{registraCliente.dataDiNascita.time}">
+			<h:outputText
+				value="#{registraCliente.clienteRegistrato.dataDiNascita.time}">
 				<f:convertDateTime datestyle="full" type="date" />
 			</h:outputText>
 		</div>
-
-		<h3>Data di registrazione:</h3>
 		<div>
-			<h:outputText value="#{registraCliente.dataDiRegistrazione.time}">
+			Data registrazione:
+			<h:outputText
+				value="#{registraCliente.clienteRegistrato.dataDiRegistrazione.time}">
 				<f:convertDateTime datestyle="full" type="both" />
 			</h:outputText>
 		</div>
-
-		<h:outputLink value="loginCliente.xhtml?faces-redirect=true">Effettua subito il login!</h:outputLink>
+		<h:outputLink value="showOrdini.xhtml?faces-redirect=true">Torna indietro alla lista ordini</h:outputLink>
 	</h:form>
 </body>
 </html>

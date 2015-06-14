@@ -1,6 +1,7 @@
 package it.uniroma3.cikmed.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +22,12 @@ import javax.persistence.TemporalType;
 
 
 @Entity
-public class Cliente {
+public class Cliente implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,7 +59,7 @@ public class Cliente {
 	@OneToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	private Indirizzo indirizzo;
 	
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "cliente", fetch=FetchType.EAGER)
 	private List<Ordine> ordini;
 
 
@@ -153,19 +159,13 @@ public class Cliente {
 		this.ordini = ordini;
 	}
 
+	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
-		sb.append("Cliente"); 
-		sb.append("{id=").append(id); 
-		sb.append(", nome='").append(nome); 
-		sb.append(", cognome=").append(cognome); 
-		sb.append(", Data di nascita='").append(dataDiNascita); 
-		sb.append(", email='").append(email);
-		sb.append(", Data di registrazione='").append(dataDiRegistrazione); 
-		sb.append(", indirizzo='").append(indirizzo);
-
-		sb.append("}\n");
-		return sb.toString();
+		return "Cliente [id=" + id + ", password=" + password + ", nome="
+				+ nome + ", cognome=" + cognome + ", nickname=" + nickname
+				+ ", dataDiNascita=" + dataDiNascita + ", dataDiRegistrazione="
+				+ dataDiRegistrazione + ", email=" + email + ", indirizzo="
+				+ indirizzo + ", ordini=" + ordini + "]";
 	}
 }
 
