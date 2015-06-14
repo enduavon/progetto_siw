@@ -12,14 +12,19 @@ Scenario principale di successo:
 1. Il Cliente vuole comprare dei prodotti effettuando un ordine online
 
 2. Il Cliente inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica il Cliente. 
-3. Il Cliente sceglie l'attività "Creazione ordine". Il Sistema mostra il listino prodotti.
-4. Il Cliente consulta il listino dei prodotti e aggiunge il codice e la quantità del prodotto scelto all'ordine.
+3. Il Cliente sceglie l'attività "Creazione ordine". Il Sistema mostra il catalogo prodotti.
+4. Il Cliente consulta il catalogo dei prodotti e aggiunge il codice e la quantità del prodotto scelto all'ordine.
 5. Il Sistema imposta il prezzo unitario del prodotto scelto al prezzo corrente di listino.
-Il Cliente ripete i passi 4-5 fino a che non indica che ha terminato.
-6. Il Cliente conferma l'ordine.
-7. Il Sistema registra l'ordine. Da questo momento in poi l'ordine è completato e può essere visualizzato tra gli ordini effettuati del Cliente.
+6. Il sistema registra la riga ordine relativa all'ordine attualmente aperto.
+Il Cliente ripete i passi precedenti finchè è necessario.
+7. Il Cliente chiude l'ordine.
+8. Il Sistema registra l'ordine. Da questo momento in poi l'ordine è completato e può essere visualizzato tra gli ordini effettuati del Cliente.
 
-Estensioni: -
+Estensioni:
+   2a: Il Cliente ha già creato un ordine, ma che ancora non è stato chiuso. Il Sistema non permette la creazione
+   dell'ordine, mostrando un messaggio d'errore.
+   4a: I prodotti non sono presenti in magazzino nella quantità che si desidera ordinare. Il Sistema non permette
+   l'aggiunta del prodotto all'ordine, mostrando un messaggio d'errore.
 
 Osservazione: per Cliente si intende Utente registrato 
 
@@ -27,9 +32,8 @@ Osservazione: per Cliente si intende Utente registrato
 Caso D'Uso UC3: Consulta i propri ordini - Attore primario: Un Cliente.
 Scenario principale di successo:
 1. Il Cliente vuole consultare gli ordini da lui effettuati.
-// vedete se vi va bene così o la lasciamo come precondizione
 2. Il Cliente inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica il Cliente.
-3. Il Cliente sceglie l'attività "Consulta ordini". Il Sistema mostra l'elenco degli ordini effettuati (conclusi) del Cliente.
+3. Il Cliente sceglie l'attività "Consulta ordini". Il Sistema mostra l'elenco di tutti gli ordini relativi al Cliente.
 4. Il Cliente chiede sceglie un ordine e ne richiede il dettaglio.
 5. Il Sistema mostra il dettaglio dell'ordine.
 Il Cliente ripete i passi 4-5 finchè necessario.
@@ -45,7 +49,7 @@ Scenario principale di successo:
 2. L'Amministratore inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
 3. L'Amministratore sceglie l'attività "Inserisci Nuovo Prodotto".
 4. L'Amministratore specifica i dettagli del nuovo prodotto da inserire nel catalogo.
-L'Amministratore ripete il passo 4 finchè necessario.
+L'Amministratore ripete i passi 3-4 finchè necessario.
 5. Il Sistema mostra i prodotti inseriti.
 6. L'Amministratore conferma l'inserimento dei prodotti. Il Sistema registra le informazioni sui prodotti e li inserisce nel catalogo. 
 Da questo momento in poi potranno essere consultati da Clienti e da utenti non registrati (nonchè dagli amministratori).
@@ -56,14 +60,14 @@ Estensioni: -
 
 Caso D'Uso UC5: Recupera indirizzo cliente - Attore primario: Un Amministratore.
 Scenario principale di successo:
-1. L'Amministratore vuole recuperare i dati di un cliente a partire da un ordine.
+1. L'Amministratore vuole recuperare i dati di un Cliente a partire da un ordine.
 
 2. L'Amministratore inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
-// va gestito meglio
-3. L'Amministratore fornisce l'identificatore di un ordine.
-4. Il Sistema mostra i dati del Cliente che ha effettuato l'ordine.
+3. L'Amministratore consulta la lista degli ordini chiusi dai Clienti.
+4. L'Amministratore sceglie l'id del Cliente relativo ad un determinato ordine.
+5. Il Sistema mostra i dati del Cliente che ha effettuato l'ordine.
 
-Estensioni: -
+Estensioni: - 
 
 
 
@@ -74,10 +78,8 @@ Scenario principale di successo:
 3. L'Amministratore sceglie l'attività "Evasione Ordini".
 4. Il Sistema mostra gli ordini chiusi ma non ancora evasi.
 5. L'Amministratore sceglie un ordine da evadere.
-6. Il Sistema evade l'ordine e aggiorna la quantità di prodotti in magazzino.
-
-Estensioni:
-   1-6a: I prodotti non sono presenti in magazzino nella quantità desiderata. Il Sistema non evade l'ordine.
+6. Il Sistema evade l'ordine e aggiorna la quantità dei prodotti in magazzino (sottraendo la quantità dei prodotti
+presenti nell'ordine).
    
    
 Caso D'Uso UC7: Registrazione cliente - Attore primario: un Utente non registrato.
@@ -88,5 +90,18 @@ Il Sistema verifica la correttezza dei dati immessi.
 3. L'Utente conferma la registrazione.
 4. Il Sistema mostra i dati immessi, e registra il cliente. Da questo momento in poi, l'Utente fa parte dei Clienti
 del sistema, e può effettuare l'accesso a quest'ultimo.
+
+Estensioni: -
+
+
+Caso D'Uso UC8: Cancellazione prodotti dal catalogo - Attore Primario: Un Amministratore.
+Scenario principale di successo:
+1. L'Amministratore vuole cancellare un prodotto dal catalogo.
+
+2. L'Amministratore inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
+3. L'Amministratore consulta il catalogo prodotti.
+4. L'Amministratore sceglie il prodotto da eliminare. 
+L'Amministratore ripete i passi 3-4 finchè necessario.
+5. Il Sistema aggiorna il catalogo.
 
 Estensioni: -
