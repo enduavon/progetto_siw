@@ -20,42 +20,29 @@
 
 				<div class="caption">
 					<h1>Accedi Come Amministratore</h1>
-					<p>accedere come amministratore non è per tutti, bisogna avere
+					<p>Accedere come amministratore non è per tutti, bisogna avere
 						dei permessi speciali; se non li possiedi accedi nel nostro
-						e-commerce come cliente per acquistare i nostri prodotti</p>
+						e-commerce come cliente per acquistare i nostri prodotti!</p>
 					<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
 						class="btn btn-primary btn-lg" value="Accedi come amministratore" />
 				</div>
 
 				<div class="caption">
-					<h1>registrati come Admin</h1>
-					<p>ti piacerebbe essere un nostro admin? invia il tuo cv alla
-						seguente email cicco.meddi@gmail.com, se sarai idoneo saremo lieti
-						di aggiungerti al nostro team,inviarti un email di conferma con le
-						tue nuove credenziali. in bocca al lupo.</p>
-					<h:commandButton
-						action="/registrazioneAdmin.xhtml?faces-redirect=true"
-						class="btn btn-primary btn-lg"
-						value="Registrati come amministratore" />
-				</div>
-
-				<div class="caption">
-					<h1>logga come cliente</h1>
-					<p>effettua il login cliente, per gestire tutti i tuoi ordini o
-						effetuarne dei nuovi</p>
+					<h1>Login Cliente</h1>
+					<p>Effettua il login cliente, per sfruttare tutti i nostri servizi!</p>
 					<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
 						class="btn btn-primary btn-lg" value="Accedi come cliente" />
 				</div>
 
 				<div class="caption">
-					<h1>registrati!</h1>
-					<p>sei nuovo da queste parti? sei stufo di uscire di casa per
-						comprare l'articolo che cercavi? niente più di tutto ciò.
+					<h1>Registrati!</h1>
+					<p>Sei nuovo da queste parti? Sei stufo di uscire di casa per
+						comprare l'articolo che cercavi? Niente più di tutto ciò.
 						Iscrivendoti ad Cikmed puoi acquistare i tuoi prodotti
-						direttamente restando seduto in casa tua! niente più stancati file
-						nei negozi, con Cikmed, puoi!</p>
+						direttamente restando seduto in casa tua! Niente più stancanti file
+						nei negozi...con Cikmed, puoi!</p>
 					<h:commandButton
-						action="/registrazioneCliente.xhtml?faces-redirect=true"
+						action="registrazioneCliente.xhtml?faces-redirect=true"
 						class="btn btn-primary btn-lg" value="Registrati come cliente" />
 				</div>
 				<div class="caption">
@@ -75,6 +62,12 @@
 			rendered="#{not empty loginCliente.clienteLoggato.email or not empty loginAdmin.admin.email}">
 			<h:commandLink action="areaOrdini.xhtml?faces-redirect=true"
 				value="Gestione ordini" />
+		</h:panelGroup>
+		
+		<h:panelGroup
+			rendered="#{not empty loginCliente.clienteLoggato.email}">
+			<h:commandLink action="formCreaIndirizzo.xhtml?faces-redirect=true"
+				value="Aggiungi indirizzo di residenza" />
 		</h:panelGroup>
 
 		<div>

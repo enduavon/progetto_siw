@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<title>Creazione indirizzo</title>
+</h:head>
+<h:body>
+	<div class="container-fluid">
+		<h:panelGroup class="container">
+			<div class="container-page">
+				<div class="col-md-6">
+					<h3 class="dark-grey">Inserisci i dati del tuo indirizzo di residenza:</h3>
+
+					<h:form>
+
+						<div class="form-group col-lg-12">
+							Via:*
+							<h:inputText value="#{acme.via}" required="true"
+								requiredMessage="Via obbligatoria" id="via"
+								class="form-control" />
+							<h:message for="via" style="color:red" />
+						</div>
+
+						<div class="form-group col-lg-6">
+							Città:*
+							<h:inputText value="#{acme.citta}" required="true"
+								requiredMessage="Città obbligatoria" id="città"
+								class="form-control" />
+							<h:message for="città" style="color:red" />
+						</div>
+
+						<div class="form-group col-lg-6">
+							Nazione:*
+							<h:inputText value="#{acme.nazione}" required="true"
+								requiredMessage="Nazione obbligatoria" id="nazione"
+								class="form-control" />
+							<h:message for="nazione" style="color:red" />
+						</div>
+						
+						<div class="form-group col-lg-6">
+							Codice Postale (CAP / ZipCode):*
+							<h:inputText value="#{acme.codicePostale}" required="true"
+								requiredMessage="Codice Postale obbligatorio" id="codicePostale"
+								class="form-control" />
+							<h:message for="codicePostale" style="color:red" />
+						</div>
+						
+						<div class="form-group col-lg-6">
+							Stato (se vivi negli US o in un paese diviso in Stati):
+							<h:inputText value="#{acme.stato}" id="stato"
+								class="form-control" />
+						</div>
+
+
+						<div class="col-md-6">
+							<h:commandButton value="Crea indirizzo"
+								action="#{acme.creaIndirizzo(loginCliente.clienteLoggato)}"
+								class="btn btn-success" />
+							<h:outputText value="#{acme.errore}" style="color:purple" />
+						</div>
+
+						<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
+					</h:form>
+				</div>
+			</div>
+		</h:panelGroup>
+	</div>
+</h:body>
+</html>

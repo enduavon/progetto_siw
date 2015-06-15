@@ -2,10 +2,13 @@ package it.uniroma3.cikmed.beanController;
 
 import java.util.List;
 
+import it.uniroma3.cikmed.facade.ClienteFacade;
+import it.uniroma3.cikmed.facade.IndirizzoFacade;
 import it.uniroma3.cikmed.facade.OrdineFacade;
 import it.uniroma3.cikmed.facade.ProdottoFacade;
 import it.uniroma3.cikmed.facade.RigaOrdineFacade;
 import it.uniroma3.cikmed.model.Cliente;
+import it.uniroma3.cikmed.model.Indirizzo;
 import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
@@ -37,14 +40,26 @@ public class AcmeController {
 	
 	Cliente clienteCorrente;
 	
+	private Indirizzo indirizzo;
+	private String via;
+	private String citta;
+	private String nazione;
+	private String codicePostale;
+	private String stato;
+	
 	private String errore;
 	
+	@EJB (beanName="clienteFacade")
+	private ClienteFacade cFacade;
 	@EJB (beanName="pFacade")
 	private ProdottoFacade pFacade;	
 	@EJB (beanName="rigaordFacade") 
 	private RigaOrdineFacade roFacade;
 	@EJB (beanName="ordFacade")
 	private OrdineFacade oFacade;
+	@EJB (beanName="indFacade")
+	private IndirizzoFacade indFacade;
+	
 	
 	
 	public String creaProdotto() {
@@ -55,6 +70,27 @@ public class AcmeController {
 		catch (Exception e) {
 			errore="Prodotto già esistente sul database. Per favore inserisci un prodotto con codice differente";
 			return errore; 
+		}
+	}
+	
+	
+	public String creaIndirizzo(Cliente clienteCorrente) {
+
+		if (cFacade.getClienteByID(clienteCorrente.getId()).getIndirizzo()!=null)
+			return setErrore("Hai già inserito il tuo indirizzo precedentemente. In caso, puoi modificarlo"
+					+ "seguendo le istruzioni sotto.");
+
+		else {
+			try {
+				this.indirizzo = indFacade.creaIndirizzo(via, citta, nazione, codicePostale, stato);
+				indFacade.updateIndirizzo(indirizzo);
+				cFacade.addIndirizzo(clienteCorrente, indirizzo);	
+				return "newIndirizzo"; 
+			}
+
+			catch (Exception e) {
+				return setErrore("Non è stato possibile inserire l'indirizzo."); 
+			}
 		}
 	}
 	
@@ -186,6 +222,54 @@ public class AcmeController {
 	}
 
 
+	public Indirizzo getIndirizzo() {
+		return indirizzo;
+	}
+
+	public void setIndirizzo(Indirizzo indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+	
+	public String getVia() {
+		return via;
+	}
+
+	public void setVia(String via) {
+		this.via = via;
+	}
+	
+	public String getCitta() {
+		return citta;
+	}
+	
+	public void setCitta(String citta) {
+		this.citta = citta;
+	}
+	
+	public String getNazione() {
+		return nazione;
+	}
+	
+	public void setNazione(String nazione) {
+		this.nazione = nazione;
+	}
+	
+	public String getCodicePostale() {
+		return codicePostale;
+	}
+	
+	public void setCodicePostale(String codicePostale) {
+		this.codicePostale = codicePostale;
+	}
+	
+	public String getStato() {
+		return stato;
+	}
+	
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+	
 	public String getErrore() {
 		return errore;
 	}

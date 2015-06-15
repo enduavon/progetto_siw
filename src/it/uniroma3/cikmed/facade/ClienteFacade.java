@@ -6,6 +6,8 @@ import it.uniroma3.cikmed.model.Cliente;
 
 
 
+import it.uniroma3.cikmed.model.Indirizzo;
+
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +56,7 @@ public class ClienteFacade {
 	public Cliente getClienteByID(long id) {
 
 		try {
-			TypedQuery<Cliente> q = em.createQuery("SELECT c FROM Cliente c" +
-					"WHERE c.id = :id", Cliente.class);
+			TypedQuery<Cliente> q = em.createQuery("SELECT c FROM Cliente c WHERE c.id = :id", Cliente.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 		} 
@@ -110,6 +111,11 @@ public class ClienteFacade {
 
 	public void updateCliente (Cliente c) {
 		em.merge(c);
+	}
+	
+	public void addIndirizzo (Cliente c, Indirizzo ind) {
+		c.setIndirizzo(ind);
+		updateCliente(c);
 	}
 
 	public void deleteCliente (Cliente c) {

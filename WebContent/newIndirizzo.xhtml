@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<title>Indirizzo</title>
+</h:head>
+<h:body>
+	<f:view>
+		<h1>Perfetto #{loginCliente.clienteLoggato.nome}, hai inserito il
+			tuo indirizzo di residenza!</h1>
+		<h2>Dettagli:</h2>
+		<div>Via: ${acme.indirizzo.via}</div>
+		<div>Città: ${acme.indirizzo.citta}</div>
+		<div>Nazione: ${acme.indirizzo.nazione}</div>
+		<div>Codice Postale: ${acme.indirizzo.codicePostale}</div>
+		<div>Stato: ${acme.indirizzo.stato}</div>
+		<div>
+			<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
+		</div>
+		<div class="col-md-6">
+			<h:commandButton value="Vai al tuo profilo"
+				action="#{registraCliente.dettagliCliente}" class="btn btn-primary">
+				<f:setPropertyActionListener value="#{loginCliente.clienteLoggato}"
+					target="#{registraCliente.clienteRegistrato}"></f:setPropertyActionListener>
+			</h:commandButton>
+		</div>
+	</f:view>
+</h:body>
+</html>
