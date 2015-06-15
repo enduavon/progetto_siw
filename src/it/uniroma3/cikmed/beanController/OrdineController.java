@@ -11,13 +11,11 @@ import it.uniroma3.cikmed.model.RigaOrdine;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name="ordineController")
@@ -39,9 +37,10 @@ public class OrdineController implements Serializable {
 	
 	private Ordine ordine;
 	private List<Ordine> ordini;
+	private List<Ordine> ordiniEvasi;
 	private List<Ordine> ordiniCliente;
 	private RigaOrdine rigaOrdine;
-	private Map<Prodotto,RigaOrdine> righeOrdine;
+	List<RigaOrdine> righeOrdine;
 	
 	private Prodotto prodottoCorrente;
 	private int quantita;
@@ -60,8 +59,9 @@ public class OrdineController implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		ordini = oFacade.getListaOrdini();
-		listaOrdiniCliente();
+		ordini = oFacade.getListaOrdiniByStato("chiuso");
+    	ordiniCliente = oFacade.getOrdiniCliente(clienteCorrente);
+		ordiniEvasi = oFacade.getListaOrdiniByStato("evaso");
 	} 
 	
 	
@@ -70,11 +70,12 @@ public class OrdineController implements Serializable {
 		if (oFacade.getOrdineApertoByCliente("aperto", clienteCorrente)!=null)
 			return setErrore("Hai già un ordine attualmente aperto. Appena chiudi e confermi"
 					+ " l'ordine attuale, allora potrai fare un altro ordine.");
+		
 		else {
 			try {
 				this.ordine = oFacade.creaOrdine(Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome")), clienteCorrente);
-				//			ordine.setRigheOrdine((new ArrayList<RigaOrdine>(righeOrdine.values())));
-				oFacade.updateOrdine(ordine);;
+				oFacade.updateOrdine(ordine);
+				System.out.println("" +ordine.getCliente().getId()+ "");				
 				return "newOrdine"; 
 			}
 
@@ -84,25 +85,32 @@ public class OrdineController implements Serializable {
 		}
 	}
 	
-	public String listaOrdini() {
-		this.ordini = oFacade.getListaOrdini();
+	public String listaOrdiniChiusi() {
+		this.ordini = oFacade.getListaOrdiniByStato("chiuso");
 		return "showOrdini"; 
 	}
 	
+	public String listaOrdiniEvasi() {
+		this.setOrdiniEvasi(oFacade.getListaOrdiniByStato("evaso"));
+		return "showOrdiniEvasi"; 
+	}
+	
 	public String listaOrdiniCliente() {
-		this.ordiniCliente = oFacade.getOrdiniCliente(clienteCorrente);
+		this.setOrdiniCliente(oFacade.getOrdiniCliente(clienteCorrente));
 		return "showOrdiniCliente"; 
 	}
 	
+	//mettere dettagli sulle righe ordine (carrello?)
 	public String findOrdine() {
 		this.ordine = oFacade.getOrdineByID(id);
 		return "showOrdine";
 	}
 	
-	public String deleteOrdine() { 
+	public String deleteOrdine(Ordine o) {  
 		
 		if (oFacade.getOrdineByID(id).isAperto()) {
-			oFacade.deleteOrdineByID(id);
+			oFacade.deleteOrdine(o);
+			listaOrdiniCliente();
 			return "showOrdiniCliente";
 		}
 
@@ -123,35 +131,7 @@ public class OrdineController implements Serializable {
 		}
 	}	
 	 
-	
-	public String aggiungiRigaOrdine() {
 		
-		if (quantita>prodottoCorrente.getQuantita()) 
-			return setErrore("Devi inserire una quantità di prodotto minore di quella disponibile in magazzino");
-		
-		if (quantita==0)
-			return setErrore("Non puoi aggiungere zero prodotti all'ordine.");
-
-		ordine = oFacade.getOrdineApertoByCliente("aperto", clienteCorrente);
-		
-		//problema da risolvere: dà sempre null come risultato perchè non trova l'ordine della riga ordine
-		if (roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordine)!=null) { //esiste già una riga ordine per quel prodotto	
-			rigaOrdine = roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordine);
-			roFacade.increaseQuantitaRigaOrdine(rigaOrdine, quantita);
-			pFacade.decreaseQuantitaProdotto(prodottoCorrente, quantita);
-			return "updateRigaOrdine";//mostro la riga ordine aggiornata o l'ordine aggiornato?
-		}
-
-		else { //se non esiste la riga ordine per quel prodotto e per quell'ordine, allora la creo
-			rigaOrdine = roFacade.creaRigaOrdine(prodottoCorrente, prodottoCorrente.getPrezzo(), quantita, ordine);
-			pFacade.decreaseQuantitaProdotto(prodottoCorrente, quantita);
-			return "showRigaOrdine";
-		}  //mostro i dettagli del prodotto che ho aggiunto, con la quantità da me scelta
-	}
-				
-	
-	
-	
 	/*
 	 * GETTERS & SETTERS
 	 */
@@ -212,6 +192,16 @@ public class OrdineController implements Serializable {
 		this.ordini = ordini;
 	}
 
+	public List<Ordine> getOrdiniEvasi() {
+		return ordiniEvasi;
+	}
+
+
+	public void setOrdiniEvasi(List<Ordine> ordiniEvasi) {
+		this.ordiniEvasi = ordiniEvasi;
+	}
+
+
 	public List<Ordine> getOrdiniCliente() {
 		return ordiniCliente;
 	}
@@ -229,14 +219,18 @@ public class OrdineController implements Serializable {
 	public void setRigaOrdine(RigaOrdine rigaOrdine) {
 		this.rigaOrdine = rigaOrdine;
 	}
+	
+	
 
-	public Map<Prodotto,RigaOrdine> getRigheOrdine() {
+	public List<RigaOrdine> getRigheOrdine() {
 		return righeOrdine;
 	}
 
-	public void setRigheOrdine(Map<Prodotto,RigaOrdine> righeOrdine) {
+
+	public void setRigheOrdine(List<RigaOrdine> righeOrdine) {
 		this.righeOrdine = righeOrdine;
 	}
+
 
 	public Cliente getClienteCorrente() {
 		return clienteCorrente;

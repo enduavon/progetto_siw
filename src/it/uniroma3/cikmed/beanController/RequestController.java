@@ -5,6 +5,7 @@ import java.util.List;
 import it.uniroma3.cikmed.facade.OrdineFacade;
 import it.uniroma3.cikmed.facade.ProdottoFacade;
 import it.uniroma3.cikmed.facade.RigaOrdineFacade;
+import it.uniroma3.cikmed.model.Cliente;
 import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
 import it.uniroma3.cikmed.model.RigaOrdine;
@@ -22,10 +23,15 @@ public class RequestController {
 	private String codice;
 	private String nome;
 	private Float prezzo;
+	
 	private int quantita;
+	
 	private String descrizione;
 	
+	RigaOrdine rigaOrdine;
 	List<RigaOrdine> righeOrdine;
+	
+	Cliente clienteCorrente;
 	
 	private String errore;
 	
@@ -49,6 +55,35 @@ public class RequestController {
 	}
 	
 	
+	public String aggiungiRigaOrdine() {
+
+		Prodotto prodottoCorrente = pFacade.getProdottoByCodice(codice);
+		
+		if (quantita>prodottoCorrente.getQuantita()) 
+			return setErrore("Devi inserire una quantità di prodotto minore di quella disponibile in magazzino");
+
+		if (quantita==0)
+		    return setErrore("Non puoi aggiungere zero prodotti all'ordine.");
+
+		Ordine ordineCorrente = oFacade.getOrdineApertoByCliente("aperto", clienteCorrente);
+
+		//problema da risolvere: dà sempre null come risultato perchè non trova l'ordine della riga ordine
+		if (roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordineCorrente)!=null) { //cioè esiste già una riga ordine per quel prodotto	
+			rigaOrdine = roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordineCorrente);
+			roFacade.increaseQuantitaRigaOrdine(rigaOrdine, quantita);
+			oFacade.increasePrezzoTotale(ordineCorrente, rigaOrdine.costoRigaOrdine());
+			return "updateRigaOrdine";//mostro la riga ordine aggiornata o l'ordine aggiornato?
+		}
+
+		else { //se non esiste la riga ordine per quel prodotto e per quell'ordine, allora la creo
+			rigaOrdine = roFacade.creaRigaOrdine(prodottoCorrente, prodottoCorrente.getPrezzo(), quantita, ordineCorrente);
+			oFacade.increasePrezzoTotale(ordineCorrente, rigaOrdine.costoRigaOrdine());
+			return "showRigaOrdine";
+		}  //mostro i dettagli del prodotto che ho aggiunto, con la quantità da me scelta
+	}
+	
+	
+	
 	public String evadeOrdine(Ordine o) { 
 
 		righeOrdine = roFacade.getRigheOrdineByOrdine(o);
@@ -60,10 +95,10 @@ public class RequestController {
 		oFacade.evadeOrdine(o); 
 
 		return "showOrdineEvaso";
-	}	//4901  2015-06-14 02:01:52.052 aperto 851
-	    //4950  2015-06-14 05:50:30.059 chiuso 851
+	}	
 
-
+	
+	
 	/*
 	 * GETTERS & SETTERS
 	 */	
@@ -118,7 +153,15 @@ public class RequestController {
 	}
 	
 	
+	public RigaOrdine getRigaOrdine() {
+		return rigaOrdine;
+	}
 	
+	public void setRigaOrdine(RigaOrdine rigaOrdine) {
+		this.rigaOrdine = rigaOrdine;
+	}
+
+
 	public List<RigaOrdine> getRigheOrdine() {
 		return righeOrdine;
 	}
@@ -126,6 +169,16 @@ public class RequestController {
 
 	public void setRigheOrdine(List<RigaOrdine> righeOrdine) {
 		this.righeOrdine = righeOrdine;
+	}
+	
+	
+	public Cliente getClienteCorrente() {
+		return clienteCorrente;
+	}
+
+
+	public void setClienteCorrente(Cliente clienteCorrente) {
+		this.clienteCorrente = clienteCorrente;
 	}
 
 

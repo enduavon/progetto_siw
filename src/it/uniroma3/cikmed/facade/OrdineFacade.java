@@ -89,7 +89,7 @@ public class OrdineFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "Il cliente al momento non ha un ordine " +stato+ "";
+			String q = "Il cliente " +cliente.getId()+ " al momento non ha ordini nello stato " +stato+ "";
 			System.out.println(q);
 			return null;
 
@@ -98,14 +98,14 @@ public class OrdineFacade {
 	
 	public Ordine getOrdineApertoByCliente (String stato, Cliente cliente) {   
 		try {
-			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato LIKE :aperto AND ord.cliente = :cliente", Ordine.class);
-			q.setParameter("aperto", stato);
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato = :stato AND ord.cliente = :cliente", Ordine.class);
+			q.setParameter("stato", stato);
 			q.setParameter("cliente", cliente);
 			return q.getSingleResult();
 
 		} 
 		catch (Exception e) {
-			String q = "Il cliente al momento non ha un ordine aperto";
+			String q = "Il cliente " +cliente.getId()+ " al momento non ha un ordine aperto";
 			System.out.println(q);
 			return null;
 

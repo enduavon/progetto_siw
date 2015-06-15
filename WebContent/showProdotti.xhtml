@@ -12,15 +12,16 @@
 </h:head>
 <h:body>
 	<h2>Catalogo Prodotti</h2>
+	<h:outputText value="Il catalogo è vuoto."
+		rendered="#{empty prodottoController.prodotti}" />
 	<h:form>
-		<h:outputText value="Il catalogo è vuoto."
-			rendered="#{empty prodottoController.prodotti}" />
-		<h:dataTable id="catalogo" value="#{prodottoController.prodotti}" var="prodotto"
-			rendered="#{not empty prodottoController.prodotti}" styleClass="table table-striped">
+		<h:dataTable id="catalogo" value="#{prodottoController.prodotti}"
+			var="prodotto" rendered="#{not empty prodottoController.prodotti}"
+			styleClass="table table-striped">
 			<h:column>
 				<f:facet name="header">Codice</f:facet>
 				<h:outputText value="#{prodotto.codice}" />
-			</h:column> 
+			</h:column>
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{prodotto.nome}" />
@@ -34,34 +35,17 @@
 				<h:outputText value="#{prodotto.quantita}" />
 			</p:column>
 			<h:column>
-				<p:commandButton value="mostra dettagli" update=":dettaglioProdotto" icon="ui-icon-search"
-					oncomplete="PF('prodottoDialog').show();">
+				<p:commandButton value="mostra dettagli" update=":dettaglioProdotto"
+					icon="ui-icon-search" oncomplete="PF('prodottoDialog').show();">
 					<f:setPropertyActionListener value="#{prodotto}"
 						target="#{prodottoController.prodottoSelezionato}" />
-				</p:commandButton> 
-			</h:column>
-			<h:column
-				rendered="#{not empty loginCliente.clienteLoggato.email 
-								and empty loginAdmin.admin.email}">
-				<f:facet name="header">Quantità da comprare</f:facet>
-				<h:inputText value="#{ordineController.quantita}" required="true"
-					requiredMessage="Quantità obbligatoria"
-					converterMessage="La quantità deve essere un numero intero!"
-					id="quantità" />
-				<strong><h:message for="quantità" style="color:red" /></strong>
-				<h:commandButton action="#{ordineController.aggiungiRigaOrdine}"
-					value="Aggiungi all'ordine">
-					<f:setPropertyActionListener
-						target="#{ordineController.prodottoCorrente}" value="#{prodotto}" />
-				</h:commandButton>
-				<strong><h:outputText value="#{ordineController.errore}"
-						style="color:purple" /></strong>
+				</p:commandButton>
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
-				<p:commandButton actionListener="#{prodottoController.deleteProdotto(prodotto)}"
-					value="Elimina Prodotto"
-					icon="ui-icon-close"
+				<p:commandButton
+					actionListener="#{prodottoController.deleteProdotto(prodotto)}"
+					value="Elimina Prodotto" icon="ui-icon-close"
 					rendered="#{not empty loginAdmin.admin.email and empty loginCliente.clienteLoggato.email}"
 					onclick="return confirm('Vuoi davvero cancellare il prodotto #{prodotto.nome}?');"
 					update="catalogo" ajax="true">
@@ -71,29 +55,69 @@
 		<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true"
 			rendered="#{not empty loginAdmin.admin.email and empty loginCliente.clienteLoggato.email}">Aggiungi un prodotto al catalogo</h:outputLink>
 	</h:form>
-	
-	<p:dialog header="Info prodotto" widgetVar="prodottoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-        <p:outputPanel id="dettaglioProdotto" style="text-align:center;">
+
+
+	<h:outputText
+		value="Inserisci il codice del prodotto da aggiungere all'ordine, con la quantità che vuoi acquistare." />
+	<h:form
+		rendered="#{not empty loginCliente.clienteLoggato.email 
+								and empty loginAdmin.admin.email}">
+		<div class="form-group col-lg-6">
+			Codice:*
+			<h:inputText value="#{richiesta.codice}" required="true"
+				requiredMessage="Codice prodotto obbligatorio" id="codiceProdotto" />
+			<strong><h:message for="codiceProdotto" style="color:red" /></strong>
+		</div>
+
+		<div class="form-group col-lg-6">
+			Quantità da acquistare:*
+			<h:inputText value="#{richiesta.quantita}" required="true"
+				requiredMessage="Quantità obbligatoria"
+				converterMessage="La quantità deve essere un numero intero!"
+				id="quantità" />
+			<strong><h:message for="quantità" style="color:red" /></strong>
+		</div>
+		
+		<div class="col-md-6">
+		<h:commandButton action="#{richiesta.aggiungiRigaOrdine}"
+			value="Aggiungi all'ordine" class="btn btn-success">
+			<f:setPropertyActionListener target="#{richiesta.clienteCorrente}"
+				value="#{loginCliente.clienteLoggato}" />
+		</h:commandButton>
+		</div>
+		<strong><h:outputText value="#{richiesta.errore}"
+				style="color:purple" /></strong>
+	</h:form>
+
+
+	<!-- Finestra di dialogo per i dettagli del prodotto -->
+	<p:dialog header="Info prodotto" widgetVar="prodottoDialog"
+		modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		<p:outputPanel id="dettaglioProdotto" style="text-align:center;">
 			<p:panelGrid columns="2">
 				<f:facet name="header">
 				</f:facet>
 
 				<h:outputText value="Codice:" />
-				<h:outputText value="#{prodottoController.prodottoSelezionato.codice}" />
+				<h:outputText
+					value="#{prodottoController.prodottoSelezionato.codice}" />
 
 				<h:outputText value="Nome" />
 				<h:outputText value="#{prodottoController.prodottoSelezionato.nome}" />
 
 				<h:outputText value="Prezzo:" />
-				<h:outputText value="#{prodottoController.prodottoSelezionato.prezzo}€" />
+				<h:outputText
+					value="#{prodottoController.prodottoSelezionato.prezzo}€" />
 
 				<h:outputText value="Quantita" />
-				<h:outputText value="#{prodottoController.prodottoSelezionato.quantita}" />
+				<h:outputText
+					value="#{prodottoController.prodottoSelezionato.quantita}" />
 
 				<h:outputText value="Descrizione" />
-				<h:outputText value="#{prodottoController.prodottoSelezionato.descrizione}" />
+				<h:outputText
+					value="#{prodottoController.prodottoSelezionato.descrizione}" />
 			</p:panelGrid>
 		</p:outputPanel>
-    </p:dialog>
+	</p:dialog>
 </h:body>
 </html>

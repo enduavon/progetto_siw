@@ -44,13 +44,29 @@ public class ProdottoFacade {
 	public Prodotto getProdottoByID(long id) {
 	
 		try {
-			TypedQuery<Prodotto> q = em.createQuery("SELECT p FROM Prodotto p WHERE p.id =: id", Prodotto.class);
+			TypedQuery<Prodotto> q = em.createQuery("SELECT p FROM Prodotto p WHERE p.id = :id", Prodotto.class);
 			q.setParameter("id", id);
 			return q.getSingleResult();
 
 		} 
 		catch (Exception e) {
 			String q = "il prodotto con id" +id+ "non è presente";
+			System.out.println(q);
+			return null;
+			}
+		}
+	
+	
+	public Prodotto getProdottoByCodice(String codice) {
+		
+		try {
+			TypedQuery<Prodotto> q = em.createQuery("SELECT p FROM Prodotto p WHERE p.codice = :codice", Prodotto.class);
+			q.setParameter("codice", codice);
+			return q.getSingleResult();
+
+		} 
+		catch (Exception e) {
+			String q = "il prodotto con codice" +codice+ "non è presente";
 			System.out.println(q);
 			return null;
 			}

@@ -12,6 +12,7 @@ import java.util.List;
 
 
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -57,6 +58,9 @@ public class Ordine implements Serializable{
 	@Column (nullable = true)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar dataEvasione;
+	
+	@Column (nullable = false)
+	private float prezzoTotale;
 
 
 	/*
@@ -82,6 +86,7 @@ public class Ordine implements Serializable{
 		this.cliente = cliente;
 		this.stato = "aperto"; //Quando si crea un nuovo ordine, il suo stato corrente è "aperto"
 		this.righeOrdine = new ArrayList<RigaOrdine>(); 
+		this.prezzoTotale = 0;
 	}
 	
 	
@@ -115,6 +120,10 @@ public class Ordine implements Serializable{
 	
 	public Long getId() {
 		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getStato() {
@@ -159,6 +168,16 @@ public class Ordine implements Serializable{
 		this.dataEvasione = oe;
 	}
 	
+		
+	public float getPrezzoTotale() {
+		return prezzoTotale;
+	}
+
+	public void setPrezzoTotale(float prezzoTotale) {
+		this.prezzoTotale = prezzoTotale;
+	}
+
+
 	public Cliente getCliente() {
 		return cliente;
 	}

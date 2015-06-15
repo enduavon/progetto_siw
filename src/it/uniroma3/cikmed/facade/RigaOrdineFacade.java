@@ -58,19 +58,35 @@ public class RigaOrdineFacade {
 		}
 	}
 	
+	public List<RigaOrdine> getRigheOrdineByOrdine(Ordine ordine) {
+
+		try {
+			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.ordine = :ordine", RigaOrdine.class);
+			q.setParameter("ordine", ordine);
+			return q.getResultList();
+
+		} 
+		catch (Exception e) {
+			String q = "non esistono righe ordine relative all'ordine n° "  +ordine.getId()+  "";
+			System.out.println(q);
+			return null;
+
+		}
+	}
+	
 	
 	public RigaOrdine getRigaOrdineProdottoByOrdine(Prodotto prodotto, Ordine ordine) {
 
 		try {
 			TypedQuery<RigaOrdine> q = em.createQuery("SELECT ro FROM RigaOrdine ro WHERE ro.prodotto = :prodotto AND"
-					+ "ro.ordine.orders_id = :ordine", RigaOrdine.class);
+					+ " ro.ordine = :ordine", RigaOrdine.class);
 			q.setParameter("prodotto", prodotto);
 			q.setParameter("ordine", ordine);
 			return q.getSingleResult(); 
 
 		} 
 		catch (Exception e) {
-			String q = "Nell'ordine n° " +ordine+ " non vi sono righe relative al prodotto "  +prodotto+  "";
+			String q = "Nell'ordine n° " +ordine.getId()+ " non vi sono righe relative al prodotto "  +prodotto+  "";
 			System.out.println(q);
 			return null;
 
@@ -82,7 +98,7 @@ public class RigaOrdineFacade {
 	}
 	
 	public void increaseQuantitaRigaOrdine(RigaOrdine ro, int quantita) {
-		ro.setQuantita(ro.getQuantita()-quantita);
+		ro.setQuantita(ro.getQuantita()+quantita);
 		em.merge(ro);
 	}
 

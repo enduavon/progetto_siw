@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Prodotto ordine</title>
+</h:head>
+<h:body> 
+<h1>Dettagli prodotto aggiunto all'ordine n°#{richiesta.rigaOrdine.ordine.id}:</h1>
+		<div>Codice:  <h:outputText value="#{richiesta.codice}"/> </div>
+		<div>Prezzo:  <h:outputText value="#{richiesta.rigaOrdine.prodotto.prezzo}"/>  </div>
+		<div>Quantità da comprare: <h:outputText value="#{richiesta.quantita}" /></div> 
+		<div>Descrizione: <h:outputText value="#{richiesta.rigaOrdine.prodotto.descrizione}"/></div>
+		<div>
+			<h:outputLink value="showProdotti.xhtml?faces-redirect=true">Torna indietro al catalogo</h:outputLink>
+		</div>
+</h:body>
+</html>
