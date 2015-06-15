@@ -9,11 +9,11 @@
 <title>Prodotto ordine</title>
 </h:head>
 <h:body> 
-<h1>Dettagli prodotto aggiunto all'ordine n°#{richiesta.rigaOrdine.ordine.id}:</h1>
-		<div>Codice:  <h:outputText value="#{richiesta.codice}"/> </div>
-		<div>Prezzo:  <h:outputText value="#{richiesta.rigaOrdine.prodotto.prezzo}"/>  </div>
-		<div>Quantità da comprare: <h:outputText value="#{richiesta.quantita}" /></div> 
-		<div>Descrizione: <h:outputText value="#{richiesta.rigaOrdine.prodotto.descrizione}"/></div>
+<h1>Dettagli prodotto aggiunto all'ordine n°#{acme.rigaOrdine.ordine.id}:</h1>
+		<div>Codice:  <h:outputText value="#{acme.codice}"/> </div>
+		<div>Prezzo:  <h:outputText value="#{acme.rigaOrdine.prodotto.prezzo}"/>  </div>
+		<div>Quantità da comprare: <h:outputText value="#{acme.quantita}" /></div> 
+		<div>Descrizione: <h:outputText value="#{acme.rigaOrdine.prodotto.descrizione}"/></div>
 		<div>
 			<h:outputLink value="showProdotti.xhtml?faces-redirect=true">Torna indietro al catalogo</h:outputLink>
 		</div>
