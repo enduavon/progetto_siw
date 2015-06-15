@@ -15,9 +15,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
 
-@ManagedBean(name="richiesta")
+/* Questo controller ha la responsabilità di eseguire numerosi metodi per classi diverse tra loro, e per questo
+ * motivo è stato definito "Acme", che in questo caso sta per "A Controller that makes everything": è un riadattamento
+ * del più celebre motivo "A company that makes everything".
+ */
+@ManagedBean(name="acme")
 @RequestScoped
-public class RequestController {
+public class AcmeController {
 	
 	private Prodotto prodotto;
 	private String codice;

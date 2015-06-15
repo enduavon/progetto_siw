@@ -10,12 +10,12 @@
 <body>
 	<f:view>
 		<h1>Perfetto, hai inserito il prodotto
-			"${richiesta.prodotto.nome}" nel catalogo prodotti.</h1>
+			"${acme.prodotto.nome}" nel catalogo prodotti.</h1>
 		<h2>Dettagli:</h2>
-		<div>Codice: ${richiesta.prodotto.codice}</div>
-		<div>Prezzo: ${richiesta.prodotto.prezzo}</div>
-		<div>Descrizione: ${richiesta.prodotto.descrizione}</div>
-		<div>Quantità: ${richiesta.prodotto.quantita}</div>
+		<div>Codice: ${acme.prodotto.codice}</div>
+		<div>Prezzo: ${acme.prodotto.prezzo}</div>
+		<div>Descrizione: ${acme.prodotto.descrizione}</div>
+		<div>Quantità: ${acme.prodotto.quantita}</div>
 		<div>
 			<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true">Vuoi aggiungere un altro prodotto al catalogo?</h:outputLink>
 		</div>

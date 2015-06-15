@@ -64,14 +64,14 @@
 								and empty loginAdmin.admin.email}">
 		<div class="form-group col-lg-6">
 			Codice:*
-			<h:inputText value="#{richiesta.codice}" required="true"
+			<h:inputText value="#{acme.codice}" required="true"
 				requiredMessage="Codice prodotto obbligatorio" id="codiceProdotto" />
 			<strong><h:message for="codiceProdotto" style="color:red" /></strong>
 		</div>
 
 		<div class="form-group col-lg-6">
 			Quantità da acquistare:*
-			<h:inputText value="#{richiesta.quantita}" required="true"
+			<h:inputText value="#{acme.quantita}" required="true"
 				requiredMessage="Quantità obbligatoria"
 				converterMessage="La quantità deve essere un numero intero!"
 				id="quantità" />
@@ -79,13 +79,13 @@
 		</div>
 		
 		<div class="col-md-6">
-		<h:commandButton action="#{richiesta.aggiungiRigaOrdine}"
+		<h:commandButton action="#{acme.aggiungiRigaOrdine}"
 			value="Aggiungi all'ordine" class="btn btn-success">
-			<f:setPropertyActionListener target="#{richiesta.clienteCorrente}"
+			<f:setPropertyActionListener target="#{acme.clienteCorrente}"
 				value="#{loginCliente.clienteLoggato}" />
 		</h:commandButton>
 		</div>
-		<strong><h:outputText value="#{richiesta.errore}"
+		<strong><h:outputText value="#{acme.errore}"
 				style="color:purple" /></strong>
 	</h:form>
 

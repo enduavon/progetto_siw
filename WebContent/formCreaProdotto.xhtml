@@ -13,40 +13,40 @@
 		<h:form>
 			<div>
 				Nome:
-				<h:inputText value="#{richiesta.nome}" required="true"
+				<h:inputText value="#{acme.nome}" required="true"
 					requiredMessage="Nome obbligatorio" id="nome" />
 				<strong><h:message for="nome" style="color:red" /></strong>
 			</div>
 			<div>
 				Codice:
-				<h:inputText value="#{richiesta.codice}" required="true"
+				<h:inputText value="#{acme.codice}" required="true"
 					requiredMessage="Codice obbligatorio" id="codice" />
 				<strong><h:message for="codice" style="color:red" /></strong>
 			</div>
 			<div>
 				Prezzo per unità:
-				<h:inputText value="#{richiesta.prezzo}" required="true"
+				<h:inputText value="#{acme.prezzo}" required="true"
 					requiredMessage="Prezzo obbligatorio"
 					converterMessage="Il prezzo deve essere un numero!" id="prezzo" />
 				<strong><h:message for="prezzo" style="color:red" /></strong>
 			</div>
 			<div>
 				Descrizione:
-				<h:inputTextarea value="#{richiesta.descrizione}"
+				<h:inputTextarea value="#{acme.descrizione}"
 					required="false" cols="20" rows="5" /> 
 			</div>
 			<div>
 				Quantità: 
-				<h:inputText value="#{richiesta.quantita}" required="true"
+				<h:inputText value="#{acme.quantita}" required="true"
 					requiredMessage="Quantità obbligatoria"
 					converterMessage="La quantità deve essere un numero intero!" id="quantità" />
 				<strong><h:message for="quantità" style="color:red" /></strong>
 			</div>
 			<div>
 				<h:commandButton value="Inserisci"
-					action="#{richiesta.creaProdotto}" />
+					action="#{acme.creaProdotto}" />
 			</div>
-			<strong><h:outputText value="#{richiesta.errore}" style="color:purple" /></strong>
+			<strong><h:outputText value="#{acme.errore}" style="color:purple" /></strong>
 		</h:form>
 
 	</f:view>
