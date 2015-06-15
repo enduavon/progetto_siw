@@ -9,9 +9,15 @@
 </head>
 <h:body>
 <h2>Area Ordini</h2>
-	<h:form> 
-		<h:commandLink action="#{ordineController.listaOrdini}"
-			value="Consulta gli ordini esistenti" rendered="#{not empty loginAdmin.admin.email}"/>
+	<h:form>
+		<h:commandLink action="#{ordineController.listaOrdiniChiusi}"
+			value="Consulta gli ordini confermati dai clienti"
+			rendered="#{not empty loginAdmin.admin.email}" />
+		<div>
+			<h:commandLink action="#{ordineController.listaOrdiniEvasi}"
+				value="Controlla gli ordini evasi"
+				rendered="#{not empty loginAdmin.admin.email}" />
+		</div>
 		<div>
 			<h:commandLink
 				action="#{ordineController.listaOrdiniCliente}"

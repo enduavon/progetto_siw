@@ -1,7 +1,13 @@
 package it.uniroma3.cikmed.beanController;
 
+import java.util.List;
+
+import it.uniroma3.cikmed.facade.OrdineFacade;
 import it.uniroma3.cikmed.facade.ProdottoFacade;
+import it.uniroma3.cikmed.facade.RigaOrdineFacade;
+import it.uniroma3.cikmed.model.Ordine;
 import it.uniroma3.cikmed.model.Prodotto;
+import it.uniroma3.cikmed.model.RigaOrdine;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -19,10 +25,16 @@ public class RequestController {
 	private int quantita;
 	private String descrizione;
 	
+	List<RigaOrdine> righeOrdine;
+	
 	private String errore;
 	
 	@EJB (beanName="pFacade")
 	private ProdottoFacade pFacade;	
+	@EJB (beanName="rigaordFacade") 
+	private RigaOrdineFacade roFacade;
+	@EJB (beanName="ordFacade")
+	private OrdineFacade oFacade;
 	
 	
 	public String creaProdotto() {
@@ -35,6 +47,21 @@ public class RequestController {
 			return errore; 
 		}
 	}
+	
+	
+	public String evadeOrdine(Ordine o) { 
+
+		righeOrdine = roFacade.getRigheOrdineByOrdine(o);
+
+		for (RigaOrdine ro: righeOrdine) {
+			pFacade.decreaseQuantitaProdotto(ro.getProdotto(), ro.getQuantita());
+		}
+
+		oFacade.evadeOrdine(o); 
+
+		return "showOrdineEvaso";
+	}	//4901  2015-06-14 02:01:52.052 aperto 851
+	    //4950  2015-06-14 05:50:30.059 chiuso 851
 
 
 	/*
@@ -90,6 +117,18 @@ public class RequestController {
 		this.quantita = quantita;
 	}
 	
+	
+	
+	public List<RigaOrdine> getRigheOrdine() {
+		return righeOrdine;
+	}
+
+
+	public void setRigheOrdine(List<RigaOrdine> righeOrdine) {
+		this.righeOrdine = righeOrdine;
+	}
+
+
 	public String getErrore() {
 		return errore;
 	}

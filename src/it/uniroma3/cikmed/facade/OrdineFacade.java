@@ -4,7 +4,6 @@ package it.uniroma3.cikmed.facade;
 import it.uniroma3.cikmed.model.Cliente;
 import it.uniroma3.cikmed.model.Ordine;
 
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -28,17 +27,16 @@ public class OrdineFacade {
 
 	}
 
-	public List<Ordine> getListaOrdini() {
-	
+	public List<Ordine> getListaOrdiniByStato(String stato) {
+
 		try {
-			String query = "SELECT ord" +
-					"FROM Ordine ord";
-			TypedQuery<Ordine> q = em.createQuery(query, Ordine.class);
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato = :stato", Ordine.class);
+			q.setParameter("stato", stato);
 			return q.getResultList();
 
 		} 
 		catch (Exception e) {
-			String q = "la lista degli ordini è vuota";
+			String q = "la lista degli ordini chiusi è vuota";
 			System.out.println(q);
 			return null;
 
@@ -63,6 +61,7 @@ public class OrdineFacade {
 
 	} 
 	
+	//non funziona questo o il passaggio di parametri di #loginCliente.clienteLoggato?
 	public List<Ordine> getOrdiniCliente (Cliente cliente) {
 		
 		try {
@@ -113,17 +112,58 @@ public class OrdineFacade {
 		}
 	}
 	
+	public boolean checkOrdineChiuso (Ordine ordine, String stato) {
+		
+		try {
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato = :stato", Ordine.class);
+			q.setParameter("stato", stato);
+			if (q.getResultList().contains(ordine)) { 
+				return true;
+			}
+
+			return false;
+
+		} 
+		catch (Exception e) {
+			String q = "L'ordine non è ancora chiuso";
+			System.out.println(q);
+			return false;
+		}
+	}
+	
 	
 	public void updateOrdine (Ordine o) {
 		em.merge(o);
 	}
+	
+	public void closeOrdineByID(Long id) {
+		Ordine o = em.find(Ordine.class, id);
+		o.chiudiOrdine();
+		updateOrdine(o);
+	}
+	
+	public void evadeOrdine(Ordine o) {
+		o.evadiOrdine();
+		updateOrdine(o);
+	}
+	
+	public void increasePrezzoTotale(Ordine o, float prezzo) {
+		o.setPrezzoTotale(o.getPrezzoTotale()+prezzo);
+		updateOrdine(o);
+	}
+	
+	public void decreasePrezzoTotale(Ordine o, float prezzo) {
+		o.setPrezzoTotale(o.getPrezzoTotale()-prezzo);
+		updateOrdine(o);
+	}
 
 	public void deleteOrdine (Ordine o) {
+		o = em.find(Ordine.class, o.getId());
 		em.remove(o);
 	}
 
 	public void deleteOrdineByID (long id) {
-		Ordine o = em.find(Ordine.class, id);
+		Ordine o = getOrdineByID(id);
 		deleteOrdine(o);
 	}
 	

@@ -3,18 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Ordini chiusi</title>
+<title>Ordini evasi</title>
 </h:head>
 <h:body>
-	<h2>Ordini di tutti i clienti</h2>
-	<h:outputText value="Non c'è nessun ordine."
-		rendered="#{empty ordineController.ordini}" />
-	<h:form rendered="#{not empty ordineController.ordini}">
-		<h:dataTable id="listaChiusi" value="#{ordineController.ordini}"
+	<h2>Ordini evasi di tutti i clienti</h2>
+	<h:outputText value="Non c'è nessun ordine evaso."
+		rendered="#{empty ordineController.ordiniEvasi}" />
+	<h:form rendered="#{not empty ordineController.ordiniEvasi}">
+		<h:dataTable id="listaEvasi" value="#{ordineController.ordiniEvasi}"
 			var="ordine">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
@@ -31,13 +30,19 @@
 			<h:column>
 				<f:facet name="header">Data Apertura</f:facet>
 				<h:outputText value="#{ordine.dataApertura.time}">
-					<f:convertDateTime datestyle="full" type="both" />
+					<f:convertDateTime datestyle="full" type="date" />
 				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Data Chiusura</f:facet>
 				<h:outputText value="#{ordine.dataChiusura.time}">
-					<f:convertDateTime datestyle="full" type="both" />
+					<f:convertDateTime datestyle="full" type="date" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Data Evasione</f:facet>
+				<h:outputText value="#{ordine.dataEvasione.time}">
+					<f:convertDateTime datestyle="full" type="date" />
 				</h:outputText>
 			</h:column>
 			<h:column>
@@ -47,15 +52,8 @@
 					<f:param name="mail" value="#{ordine.cliente.email}" />
 				</h:commandLink>
 			</h:column>
-			<h:column>
-				<f:facet name="header"></f:facet>
-				<h:commandButton action="#{richiesta.evadeOrdine(ordine)}"
-					value="Evadi ordine">		
-				</h:commandButton>
-			</h:column>
 		</h:dataTable>
-		<strong><h:outputText value="#{ordineController.errore}"
-				style="color:purple" /></strong>
 	</h:form>
+<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 </h:body>
 </html>

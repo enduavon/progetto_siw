@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+	<title>Evasione Ordine</title>
+</h:head>
+<h:body>
+	<h2>Hai effettuato con successo l'evasione dell'ordine!</h2>
+	<h:form>
+		<h:dataTable id="righeOrdineEvaso" value="#{richiesta.righeOrdine}"
+			var="rigaOrdine"
+			styleClass="table table-striped table-bordered table-condensed">
+			<h:column>
+				<f:facet name="header">ID Prodotto</f:facet>
+				<h:outputText value="#{rigaOrdine.prodotto.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prodotto</f:facet>
+				<h:outputText value="#{rigaOrdine.prodotto.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText value="#{rigaOrdine.prodotto.prezzo}€" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Quantità ordinata</f:facet>
+				<h:outputText value="#{rigaOrdine.quantita}" /> 
+			</h:column>
+		</h:dataTable>
+		<h:outputText
+				value="L'ordine è relativo al cliente #{rigaOrdine.ordine.cliente.id}, il quale ha acquistato tutti i precedenti
+		prodotti per un totale di #{rigaOrdine.ordine.prezzoTotale}" />
+		<div>
+			<h:outputLink value="areaOrdini.xhtml?faces-redirect=true">Torna all'area Ordini</h:outputLink>
+		</div>
+	</h:form>
+</h:body>
+</html>
