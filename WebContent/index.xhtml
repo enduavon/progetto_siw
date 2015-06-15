@@ -4,37 +4,72 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Home</title>
-</head>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"></h:outputStylesheet>
+	<title>Home</title>
+</h:head>
 <h:body>
-<h:form>
-		<h:panelGroup rendered="#{empty loginCliente.clienteLoggato.email and empty loginAdmin.admin.email}">
-			<h1>Benvenuto in Cikmed!</h1>
-			<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
-				value="Accedi come amministratore" />
-			<h:commandButton
-				action="/registrazioneAdmin.xhtml?faces-redirect=true"
-				value="Registrati come amministratore" />
-			<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
-				value="Accedi come cliente" />
-			<h:commandButton
-				action="/registrazioneCliente.xhtml?faces-redirect=true"
-				value="Registrati come cliente" />
-			<div>
-				<p>Anche se non sei registrato, puoi tranquillamente visionare
-					il nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi
-					usufruire di tutti gli altri nostri servizi :)</p>
+	<h:form>
+		<h:panelGroup class="row"
+			rendered="#{empty loginCliente.clienteLoggato.email and empty loginAdmin.admin.email}">
+			<div class="col-sm-6 col-md-4">
+
+
+				<div class="caption">
+					<h1>Accedi Come Amministratore</h1>
+					<p>accedere come amministratore non è per tutti, bisogna avere
+						dei permessi speciali; se non li possiedi accedi nel nostro
+						e-commerce come cliente per acquistare i nostri prodotti</p>
+					<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
+						class="btn btn-primary btn-lg" value="Accedi come amministratore" />
+				</div>
+
+				<div class="caption">
+					<h1>registrati come Admin</h1>
+					<p>ti piacerebbe essere un nostro admin? invia il tuo cv alla
+						seguente email cicco.meddi@gmail.com, se sarai idoneo saremo lieti
+						di aggiungerti al nostro team,inviarti un email di conferma con le
+						tue nuove credenziali. in bocca al lupo.</p>
+					<h:commandButton
+						action="/registrazioneAdmin.xhtml?faces-redirect=true"
+						class="btn btn-primary btn-lg"
+						value="Registrati come amministratore" />
+				</div>
+
+				<div class="caption">
+					<h1>logga come cliente</h1>
+					<p>effettua il login cliente, per gestire tutti i tuoi ordini o
+						effetuarne dei nuovi</p>
+					<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
+						class="btn btn-primary btn-lg" value="Accedi come cliente" />
+				</div>
+
+				<div class="caption">
+					<h1>registrati!</h1>
+					<p>sei nuovo da queste parti? sei stufo di uscire di casa per
+						comprare l'articolo che cercavi? niente più di tutto ciò.
+						Iscrivendoti ad Cikmed puoi acquistare i tuoi prodotti
+						direttamente restando seduto in casa tua! niente più stancati file
+						nei negozi, con Cikmed, puoi!</p>
+					<h:commandButton
+						action="/registrazioneCliente.xhtml?faces-redirect=true"
+						class="btn btn-primary btn-lg" value="Registrati come cliente" />
+				</div>
+				<div class="caption">
+					<h1>Catalogo Prodotti</h1>
+					<p>Anche se non sei registrato, puoi tranquillamente visionare
+						il nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi
+						usufruire di tutti gli altri nostri servizi :)</p>
+					<h:commandButton action="#{prodottoController.listProdotti}"
+						class="btn btn-primary btn-lg" value="Catalogo Prodotti" />
+				</div>
 			</div>
+
 		</h:panelGroup>
 
-		<h:panelGroup>
-		<div>
-			<h:commandLink action="#{prodottoController.listProdotti}" 
-				value="Catalogo Prodotti" />
-				</div>
-		</h:panelGroup>
 
 		<h:panelGroup
 			rendered="#{not empty loginCliente.clienteLoggato.email or not empty loginAdmin.admin.email}">
@@ -46,7 +81,7 @@
 			<h:commandLink action="#{loginCliente.logOut}" value="Logout"
 				rendered="#{not empty loginCliente.clienteLoggato.email}" />
 		</div>
-		
+
 		<div>
 			<h:commandLink action="#{loginAdmin.logOut}" value="Logout"
 				rendered="#{not empty loginAdmin.admin.email}" />
