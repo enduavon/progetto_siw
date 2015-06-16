@@ -13,6 +13,8 @@ import java.util.List;
 
 
 
+import java.util.TimeZone;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -90,29 +92,6 @@ public class Ordine implements Serializable{
 	}
 	
 	
-	public boolean isAperto() {
-		if (this.stato=="aperto")
-				return true;
-		else
-			return false;
-	}
-	
-	public boolean isChiuso() {
-		if (this.stato=="chiuso")
-				return true;
-		else
-			return false;
-	}
-	
-	public boolean isEvaso() {
-		if (this.stato=="evaso")
-				return true;
-		else
-			return false;
-	}
-	
-	
-	
 	/*
 	 * GETTERS & SETTERS
 	 */
@@ -136,12 +115,12 @@ public class Ordine implements Serializable{
 	
 	public void chiudiOrdine() {
 		this.stato = "chiuso";
-		this.dataChiusura = Calendar.getInstance();
+		this.dataChiusura = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 	}
 	
 	public void evadiOrdine() {
 		this.stato = "evaso";
-		this.dataEvasione = Calendar.getInstance();
+		this.dataEvasione = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"));
 	}
 	
 	public Calendar getDataApertura() {

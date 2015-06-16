@@ -1,5 +1,6 @@
 package it.uniroma3.cikmed.beanController;
 
+import it.uniroma3.cikmed.facade.ClienteFacade;
 import it.uniroma3.cikmed.facade.OrdineFacade;
 import it.uniroma3.cikmed.facade.ProdottoFacade;
 import it.uniroma3.cikmed.facade.RigaOrdineFacade;
@@ -39,7 +40,7 @@ public class OrdineController implements Serializable {
 	private List<Ordine> ordini;
 	private List<Ordine> ordiniEvasi;
 	private List<Ordine> ordiniCliente;
-	private RigaOrdine rigaOrdine;
+	
 	List<RigaOrdine> righeOrdine;
 	
 	private Prodotto prodottoCorrente;
@@ -56,6 +57,8 @@ public class OrdineController implements Serializable {
 	private RigaOrdineFacade roFacade;
 	@EJB (beanName="pFacade")
 	private ProdottoFacade pFacade;
+	@EJB (beanName="clienteFacade")
+	private ClienteFacade cFacade;
 	
 	@PostConstruct
 	public void init() {
@@ -95,9 +98,10 @@ public class OrdineController implements Serializable {
 		return "showOrdiniEvasi"; 
 	}
 	
-	public String listaOrdiniCliente() {
+	public void listaOrdiniCliente() {
+		clienteCorrente = cFacade.getClienteByID(id);
 		this.setOrdiniCliente(oFacade.getOrdiniCliente(clienteCorrente));
-		return "showOrdiniCliente"; 
+//		return "showOrdiniCliente"; 
 	}
 	
 	//mettere dettagli sulle righe ordine (carrello?)
@@ -108,9 +112,9 @@ public class OrdineController implements Serializable {
 	
 	public String deleteOrdine(Ordine o) {  
 		
-		if (oFacade.getOrdineByID(id).isAperto()) {
-			oFacade.deleteOrdine(o);
-			listaOrdiniCliente();
+		if (oFacade.checkStatoOrdine(o.getId(), "aperto")!=null) { 
+		    roFacade.deleteRigheOrdine(o);
+			oFacade.deleteOrdine(o); 
 			return "showOrdiniCliente";
 		}
 
@@ -119,15 +123,14 @@ public class OrdineController implements Serializable {
 		}
 	}	
 	
-	public String closeOrdine() { 
+	public void closeOrdine() { 
 
-		if (oFacade.getOrdineByID(id).isAperto()) {
+		if (oFacade.checkStatoOrdine(id, "aperto")!=null) {
 			oFacade.closeOrdineByID(id);
-			return "showOrdineCompletato?faces-redirect=true";
 		}
 
 		else {
-			return setErrore("Non puoi chiudere questo ordine.");
+			setErrore("Hai già confermato l'ordine!");
 		}
 	}	
 	 
@@ -209,26 +212,6 @@ public class OrdineController implements Serializable {
 
 	public void setOrdiniCliente(List<Ordine> ordiniCliente) {
 		this.ordiniCliente = ordiniCliente;
-	}
-
-
-	public RigaOrdine getRigaOrdine() {
-		return rigaOrdine;
-	}
-
-	public void setRigaOrdine(RigaOrdine rigaOrdine) {
-		this.rigaOrdine = rigaOrdine;
-	}
-	
-	
-
-	public List<RigaOrdine> getRigheOrdine() {
-		return righeOrdine;
-	}
-
-
-	public void setRigheOrdine(List<RigaOrdine> righeOrdine) {
-		this.righeOrdine = righeOrdine;
 	}
 
 

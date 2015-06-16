@@ -3,18 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:viewParam id="cliente" name="id_clienteLoggato"
+		value="#{ordineController.id}" required="true"
+		requiredMessage="Invalid page access. Please use a link from within the system." />
+	<f:event type="preRenderView" listener="#{ordineController.listaOrdiniCliente}" />
+</f:metadata>
+<h:message for="cliente" />
+
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Ordini</title>
 </h:head>
 <h:body>
 	<h2>I tuoi ordini</h2>
-	<h:form>
-		<h:outputText value="Non c'è nessun ordine."
-			rendered="#{empty ordineController.ordiniCliente}" />
+	<h:outputText
+		value="Non c'è nessun ordine per il cliente #{ordineController.clienteCorrente}."
+		rendered="#{empty ordineController.ordiniCliente}" />
+	<h:form rendered="#{not empty ordineController.ordiniCliente}">
 		<h:dataTable id="lista" value="#{ordineController.ordiniCliente}"
-			var="ordine" rendered="#{not empty ordineController.ordiniCliente}">
+			var="ordine">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				<h:commandLink action="#{ordineController.findOrdine}"
@@ -30,28 +41,27 @@
 			<h:column>
 				<f:facet name="header">Data Apertura</f:facet>
 				<h:outputText value="#{ordine.dataApertura.time}">
-					<f:convertDateTime datestyle="full" type="date" />
+					<f:convertDateTime datestyle="full" type="both" />
 				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Data Chiusura</f:facet>
 				<h:outputText value="#{ordine.dataChiusura.time}">
-					<f:convertDateTime datestyle="full" type="date" />
+					<f:convertDateTime datestyle="full" type="both" />
 				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Data Evasione</f:facet>
 				<h:outputText value="#{ordine.dataEvasione.time}">
-					<f:convertDateTime datestyle="full" type="date" />
+					<f:convertDateTime datestyle="full" type="both" />
 				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
-				<h:commandButton action="#{ordineController.deleteOrdine}"
-					value="Elimina ordine">
-					<f:setPropertyActionListener target="#{ordineController.id}"
-						value="#{ordine.id}" />
-				</h:commandButton>
+				<p:commandButton
+					actionListener="#{ordineController.deleteOrdine(ordine)}"
+					value="Elimina ordine" icon="ui-icon-close"
+					onclick="return confirm('Vuoi davvero cancellare l'ordine n°#{ordine.id}?');" />
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>

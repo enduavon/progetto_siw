@@ -64,11 +64,13 @@
 				value="Gestione ordini" />
 		</h:panelGroup>
 		
+		<div>
 		<h:panelGroup
 			rendered="#{not empty loginCliente.clienteLoggato.email}">
 			<h:commandLink action="formCreaIndirizzo.xhtml?faces-redirect=true"
 				value="Aggiungi indirizzo di residenza" />
 		</h:panelGroup>
+		</div>
 
 		<div>
 			<h:commandLink action="#{loginCliente.logOut}" value="Logout"

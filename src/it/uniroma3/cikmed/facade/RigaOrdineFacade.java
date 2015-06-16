@@ -106,4 +106,12 @@ public class RigaOrdineFacade {
 		em.remove(ro);
 	}
 	
+	public void deleteRigheOrdine (Ordine o) {
+		List<RigaOrdine> righeOrdine = this.getRigheOrdineByOrdine(o);
+
+		for (RigaOrdine ro: righeOrdine) {
+			em.remove(ro);
+		}
+	}
+	
 }

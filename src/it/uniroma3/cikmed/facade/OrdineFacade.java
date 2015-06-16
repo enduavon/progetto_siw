@@ -61,7 +61,7 @@ public class OrdineFacade {
 
 	} 
 	
-	//non funziona questo o il passaggio di parametri di #loginCliente.clienteLoggato?
+	
 	public List<Ordine> getOrdiniCliente (Cliente cliente) {
 		
 		try {
@@ -112,22 +112,19 @@ public class OrdineFacade {
 		}
 	}
 	
-	public boolean checkOrdineChiuso (Ordine ordine, String stato) {
-		
-		try {
-			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.stato = :stato", Ordine.class);
-			q.setParameter("stato", stato);
-			if (q.getResultList().contains(ordine)) { 
-				return true;
-			}
+	public Ordine checkStatoOrdine (long id, String stato) {
 
-			return false;
+		try { 
+			TypedQuery<Ordine> q = em.createQuery("SELECT ord FROM Ordine ord WHERE ord.id = :id AND ord.stato = :stato", Ordine.class);
+			q.setParameter("id", id);
+			q.setParameter("stato", stato);
+			return q.getSingleResult();
 
 		} 
 		catch (Exception e) {
-			String q = "L'ordine non è ancora chiuso";
+			String q = "L'ordine " +id+ " non è stato trovato";
 			System.out.println(q);
-			return false;
+			return null;
 		}
 	}
 	
@@ -168,8 +165,10 @@ public class OrdineFacade {
 	}
 	
 	public void deleteOrdiniCliente (Cliente cliente) {
-		Cliente c = em.find(Cliente.class, cliente);
-		List<Ordine> listaOrdini= c.getOrdini();
-		em.remove(listaOrdini);
+		List<Ordine> listaOrdiniCliente= this.getOrdiniCliente(cliente);
+		
+		for (Ordine o: listaOrdiniCliente) {
+			em.remove(o);
+		}
 	}
 }
