@@ -7,24 +7,14 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"></h:outputStylesheet>
 	<title>Login Amministratore</title>
 </h:head>
 <h:body>
-	<div class="container">
-		<div class="navbar navbar-inverse">
-			<div class="navbar-brand">LOGIN AMMINISTRATORE</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12"></div>
-		</div>
-	</div>
-	<h1>Inserisci i seguenti dati per collegarti a Cikmed da
-		amministratore:</h1>
 
 	<h:form styleClass="form-horizontal">
-
+		<h1>Collegati come amministratore:</h1>
 		<div class="form-group">
 			<h:outputLabel for="email" value="Email"
 				styleClass="control-label col-sm-2"></h:outputLabel>
@@ -32,7 +22,7 @@
 				<h:inputText value="#{loginAdmin.email}" styleClass="form-control"
 					required="true" requiredMessage="Email è obbligatoria" id="email" />
 				<h:message for="email" style="color:red" />
-				<p class="help-block">es: paolo.rossi@gmail.com</p>
+				<p class="help-block">es: admin@gmail.com</p>
 			</div>
 		</div>
 
@@ -48,13 +38,18 @@
 		</div>
 
 
-		<div>
-			<h:commandButton action="#{loginAdmin.loginAdmin}"
-				class="btn btn-primary btn-lg" value="Effettua l'accesso"></h:commandButton>
-			<h:outputText value="#{loginAdmin.messaggio}" />
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<h:commandButton action="#{loginAdmin.loginAdmin}"
+					styleClass="btn btn-primary btn-lg" value="Effettua l'accesso"/>
+				<h:outputText value="#{loginAdmin.messaggio}" />
+			</div>
 		</div>
-		<div>
-			<h:outputLink class="btn btn-info btn-sm" value="index.xhtml">Torna alla pagina principale</h:outputLink>
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<h:outputLink class="btn btn-link btn-sm" value="index.xhtml">Torna alla pagina principale</h:outputLink>
+			</div>
 		</div>
 	</h:form>
 </h:body>
