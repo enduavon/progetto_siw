@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Fornitore {
@@ -21,15 +23,15 @@ public class Fornitore {
 	@Column(nullable = false)
 	private String iva;
 
-	@Column(nullable = false)
-	private String indirizzo;
-
 	@Column(nullable = false, length = 10)
 	private int telefono;
 	
 	//unique non accetta doppioni solo su code
 	@Column(unique = true ,nullable = false)
 	private String email;
+	
+	@OneToOne(fetch=FetchType.EAGER)
+	private Indirizzo indirizzo;
 	
 	@ManyToMany
 	private List<Prodotto> prodotti;
@@ -38,9 +40,8 @@ public class Fornitore {
 
 	}
 	
-	public Fornitore(String iva, String indirizzo, int telefono, String email) {
+	public Fornitore(String iva, int telefono, String email) {
 		this.email = email;
-		this.indirizzo = indirizzo;
 		this.telefono = telefono;
 		this.iva = iva;
 		this.prodotti = new ArrayList<Prodotto>();
@@ -89,11 +90,11 @@ public class Fornitore {
 		this.telefono = telefono;
 	}
 
-	public String getIndirizzo() {
+	public Indirizzo getIndirizzo() {
 		return indirizzo;
 	}
 
-	public void setIndirizzo(String ind) {
+	public void setIndirizzo(Indirizzo ind) {
 		this.indirizzo = ind;
 	}
 	

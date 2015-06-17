@@ -77,14 +77,6 @@
 					value="Chiudi ordine" class="btn btn-warning">
 				</h:commandButton>
 			</h:column>
-			<!-- <h:column>
-				<f:facet name="header"></f:facet>
-				<p:commandButton action="#{acme.mostraCarrello}" value="Modifica Ordine"
-					rendered="#{ordine.stato == aperto}">
-					<f:setPropertyActionListener target="#{acme.id}"
-						value="#{ordine.id}" /> 
-				</p:commandButton>
-			</h:column> -->
 		</h:dataTable>
 		<div>
 			<strong><h:outputText value="#{ordineController.errore}"

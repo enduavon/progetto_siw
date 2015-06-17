@@ -18,11 +18,11 @@ da implementare alcune funzionalità aggiuntive sulle pagine .xhtml.
 
 [Descrizione casi d'uso](specifiche.txt)
 
-Diagramma delle classi (UML): 
+[Diagramma delle classi (UML)](https://www.dropbox.com/s/86ab90wmng573bb/11276219_10206723248433464_1939320997_n.jpg?dl=0)
 
 [Schema relazionale](https://www.dropbox.com/s/xva7zobqkc6r902/SCHEMA%20RELAZIONALE%20-%20Cikmed.docx?dl=0)
 
-Backup base di dati: database.txt (aggiungere link)
+[Backup base di dati](https://www.dropbox.com/s/c57ix7lssb4y4gz/databaseCikmed.txt?dl=0)
 
 
 

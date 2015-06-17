@@ -54,7 +54,11 @@ public class RegistraClienteController {
 		return "dettagliCliente";
 	}
 	
-
+	 /*
+	 * GETTERS & SETTERS
+	 */	
+	
+	
 	public String getEmail() {
 		return email;
 	}

@@ -18,7 +18,7 @@ Scenario principale di successo:
 6. Il Sistema registra la riga ordine relativa all'ordine attualmente aperto. Il Sistema, inoltre, aggiorna il costo totale dell'ordine.
 Il Cliente ripete i passi precedenti finchè è necessario.
 7. Il Cliente chiude l'ordine.
-8. Il Sistema registra l'ordine. Da questo momento in poi l'ordine è completato e può essere visualizzato tra gli ordini effettuati del Cliente, 
+8. Il Sistema registra l'ordine e aggiorna la lista degli ordini. Da questo momento in poi l'ordine è completato e può essere visualizzato tra gli ordini effettuati del Cliente, 
    il quale non può più modificare in alcun modo l'ordine appena registrato.
 
 Estensioni:
@@ -84,7 +84,7 @@ Scenario principale di successo:
 4. Il Sistema mostra gli ordini chiusi ma non ancora evasi.
 5. L'Amministratore sceglie un ordine da evadere.
 6. Il Sistema evade l'ordine e aggiorna la quantità dei prodotti in magazzino (sottraendo la quantità dei prodotti
-presenti nell'ordine).
+presenti nell'ordine). Il Sistema aggiorna la pagina degli ordini.
 
 Estensioni: - 
    
@@ -117,7 +117,22 @@ L'Amministratore ripete i passi 3-4 finchè necessario.
 Estensioni: -
 
 
-Caso D'Uso UC9: Creazione indirizzo di residenza - Attore Primario: un Cliente.
+Caso D'Uso UC9: Cancellazione ordine - Attore Primario: Un Cliente.
+Scenario principale di successo:
+1. Il Cliente vuole cancellare un ordine aperto in precedenza ma non ancora chiuso.
+
+2. Il Cliente inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica l'Amministratore.
+3. Il Cliente consulta la sua lista ordini.
+4. Il Cliente sceglie l'ordine da eliminare. 
+Il Cliente ripete i passi 3-4 finchè necessario.
+5. Il Sistema aggiorna la lista.
+
+Estensioni: 
+   4a: Il Cliente tenta di eliminare un ordine non aperto. Il Sistema non permette 
+   la cancellazione dell'ordine, mostrando un messaggio d'errore.
+
+
+Caso D'Uso UC10: Creazione indirizzo di residenza - Attore Primario: un Cliente.
 Scenario principale di successo:
 1. Il Cliente vuole inserire il suo indirizzo di residenza.
 2. Il Cliente inserisce il suo indirizzo di posta elettronica (e la sua password). Il Sistema verifica la correttezza dei dati immessi, e autentica il Cliente.

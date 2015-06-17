@@ -18,7 +18,7 @@ public class ConfirmPasswordValidator implements Validator {
 	  String confermaPassword = value.toString();
  
 	  UIInput uiInputPassword = (UIInput) component.getAttributes().get("password");
-	  String password = uiInputPassword.getSubmittedValue().toString(); 
+	  String password = uiInputPassword.getValue().toString();  
 
 	  //Qua ci pensa il required=true della pagina xhtml
 	  if (password == null || password.isEmpty() || confermaPassword == null

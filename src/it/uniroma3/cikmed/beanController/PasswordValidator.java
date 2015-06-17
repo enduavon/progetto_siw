@@ -17,7 +17,7 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("passwordValidator")
 public class PasswordValidator implements Validator {
 	
-	private static final String PASSWORD_PATTERN = "(/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/)";
+	private static final String PASSWORD_PATTERN = "(/^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,})";
  	
 	private Pattern pattern;
 	private Matcher matcher;
@@ -38,7 +38,7 @@ public class PasswordValidator implements Validator {
 	  if(!matcher.matches()){
 		  
 			FacesMessage msg = 
-				new FacesMessage("Password non valida.");
+				new FacesMessage("Password non validawjwifw.");
 			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 			throw new ValidatorException(msg);
 
