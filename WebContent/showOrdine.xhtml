@@ -16,6 +16,9 @@
 	<c:if test="#{loginCliente.clienteLoggato.email!=null}">
 		<ui:include src="/navbars/navbarCliente.xhtml" />
 	</c:if>
+	<c:if test="#{loginAdmin.admin.email!=null}">
+		<ui:include src="/navbars/navbarAdmin.xhtml" />
+	</c:if>
 	<h2>Ordine n°#{acme.ordine.id}</h2>
 	<h:form>
 		<h3>Dettagli dell'ordine:</h3>

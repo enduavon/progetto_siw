@@ -17,6 +17,9 @@
 	<c:if test="#{loginCliente.clienteLoggato.email!=null}">
 		<ui:include src="/navbars/navbarCliente.xhtml" />
 	</c:if>
+	<c:if test="#{loginAdmin.admin.email!=null}">
+		<ui:include src="/navbars/navbarAdmin.xhtml" />
+	</c:if>
 	<h:form>
 		<h3>Dati del cliente n°#{registraCliente.clienteRegistrato.id}:</h3>
 		<div>
@@ -59,6 +62,13 @@
 			target="#{acme.id}" /> -->
 	</p:commandButton>
 
+	<h:form rendered="#{not empty loginCliente.clienteLoggato.email}">
+		<div>
+			<h:commandLink action="formCreaIndirizzo.xhtml?faces-redirect=true"
+				value="Aggiungi indirizzo di residenza" />
+		</div>
+	</h:form>
+
 	<!-- Finestra di dialogo per l'indirizzo del cliente -->
 	<p:dialog header="Indirizzo di Residenza" widgetVar="indirizzoDialog"
 		modal="true" showEffect="fade" hideEffect="fade" resizable="false">
@@ -84,7 +94,5 @@
 			</p:panelGrid>
 		</p:outputPanel>
 	</p:dialog>
-
-	<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 </h:body>
 </html>

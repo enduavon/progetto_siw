@@ -4,51 +4,68 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Nuovo Prodotto</title>
-</head>
-<body>
-	<f:view> 
-		<h:form>
-			<div>
-				Nome:
-				<h:inputText value="#{acme.nome}" required="true"
-					requiredMessage="Nome obbligatorio" id="nome" />
-				<strong><h:message for="nome" style="color:red" /></strong>
-			</div>
-			<div>
-				Codice:
-				<h:inputText value="#{acme.codice}" required="true"
-					requiredMessage="Codice obbligatorio" id="codice" />
-				<strong><h:message for="codice" style="color:red" /></strong>
-			</div>
-			<div>
-				Prezzo per unità:
-				<h:inputText value="#{acme.prezzo}" required="true"
-					requiredMessage="Prezzo obbligatorio"
-					converterMessage="Il prezzo deve essere un numero!" id="prezzo" />
-				<strong><h:message for="prezzo" style="color:red" /></strong>
-			</div>
-			<div>
-				Descrizione:
-				<h:inputTextarea value="#{acme.descrizione}"
-					required="false" cols="20" rows="5" /> 
-			</div>
-			<div>
-				Quantità: 
-				<h:inputText value="#{acme.quantita}" required="true"
-					requiredMessage="Quantità obbligatoria"
-					converterMessage="La quantità deve essere un numero intero!" id="quantità" />
-				<strong><h:message for="quantità" style="color:red" /></strong>
-			</div>
-			<div>
-				<h:commandButton value="Inserisci"
-					action="#{acme.creaProdotto}" />
-			</div>
-			<strong><h:outputText value="#{acme.errore}" style="color:purple" /></strong>
-		</h:form>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<title>Nuovo Prodotto</title>
+</h:head>
+<h:body>
+	<ui:include src="/navbars/navbarAdmin.xhtml" />
+	<div class="container-fluid">
+		<h:panelGroup class="container">
+			<div class="container-page">
+				<div class="col-md-6">
+					<h3 class="dark-grey">Scrivi le caratteristiche del prodotto da inserire nel catalogo:</h3>
 
-	</f:view>
-</body>
+					<h:form>
+						<div class="form-group col-lg-6">
+							Nome:
+							<h:inputText value="#{acme.nome}" required="true"
+								requiredMessage="Nome obbligatorio" id="nome"
+								class="form-control" />
+							<strong><h:message for="nome" style="color:red" /></strong>
+						</div>
+						<div class="form-group col-lg-6">
+							Codice:
+							<h:inputText value="#{acme.codice}" required="true"
+								requiredMessage="Codice obbligatorio" id="codice"
+								class="form-control" />
+							<strong><h:message for="codice" style="color:red" /></strong>
+						</div>
+						<div class="form-group col-lg-6">
+							Prezzo per unità:
+							<h:inputText value="#{acme.prezzo}" required="true"
+								requiredMessage="Prezzo obbligatorio"
+								converterMessage="Il prezzo deve essere un numero!" id="prezzo"
+								class="form-control" />
+							<strong><h:message for="prezzo" style="color:red" /></strong>
+						</div>
+						<div class="form-group col-lg-6">
+							Descrizione:
+							<h:inputTextarea value="#{acme.descrizione}" required="false"
+								cols="20" rows="5" class="form-control" />
+						</div>
+						<div class="form-group col-lg-6">
+							Quantità:
+							<h:inputText value="#{acme.quantita}" required="true"
+								requiredMessage="Quantità obbligatoria"
+								converterMessage="La quantità deve essere un numero intero!"
+								id="quantità" class="form-control" />
+							<strong><h:message for="quantità" style="color:red" /></strong>
+						</div>
+
+						<div class="col-md-6">
+							<h:commandButton value="Inserisci" action="#{acme.creaProdotto}"
+								class="btn btn-success" />
+						</div>
+						<strong><h:outputText value="#{acme.errore}"
+								style="color:purple" /></strong>
+					</h:form>
+				</div>
+			</div>
+		</h:panelGroup>
+	</div>
+</h:body>
 </html>

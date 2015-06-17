@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+</h:head>
+<h:body>
+
+	<div class="navbar navbar-inverse navbar-static-top">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Cikmed</a>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="index.xhtml" value="Home" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="showProdotti.xhtml" value="Catalogo Prodotti"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="#{ordineController.listaOrdiniChiusi}" value="Ordini Clienti"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="#{ordineController.listaOrdiniEvasi}" value="Ordini Evasi"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-right">
+				<h:commandLink action="#{loginAdmin.logOut}" value="Logout"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-text navbar-right">
+				<a class="navbar-brand" href="#">"Connesso come admin
+					#{loginAdmin.admin.email}"</a>
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>

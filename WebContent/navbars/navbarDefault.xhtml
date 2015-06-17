@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+</h:head>
+<h:body>
+
+	<div class="navbar navbar-default navbar-static-top">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Cikmed</a>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="index.xhtml" value="Home"/>
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="showProdotti.xhtml" value="Catalogo Prodotti"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-right">
+				<h:commandButton action="loginAdmin.xhtml?faces-redirect=true"
+					class="btn btn-primary" value="Login Admin" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-right">
+				<h:commandButton action="loginCliente.xhtml?faces-redirect=true"
+					class="btn btn-primary" value="Login Cliente" />
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>

@@ -13,6 +13,7 @@
 	<title>Ordini chiusi</title>
 </h:head>
 <h:body>
+<ui:include src="/navbars/navbarAdmin.xhtml" />
 	<h2>Ordini di tutti i clienti</h2>
 	<h:outputText value="Non c'è nessun ordine."
 		rendered="#{empty ordineController.ordini}" />
@@ -66,11 +67,6 @@
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<h:outputLink value="areaOrdini.xhtml">Torna all'area Ordini</h:outputLink>
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
 		</div>
 	</div>
 </h:body>

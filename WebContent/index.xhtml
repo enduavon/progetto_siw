@@ -1,87 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"></h:outputStylesheet>
 	<title>Home</title>
 </h:head>
 <h:body>
+	<c:if
+		test="#{loginCliente.clienteLoggato.email==null and loginAdmin.admin.email==null}">
+		<ui:include src="/navbars/navbarDefault.xhtml" />
+	</c:if>
+	<c:if test="#{loginCliente.clienteLoggato.email!=null}">
+		<ui:include src="/navbars/navbarCliente.xhtml" />
+	</c:if>
+	<c:if test="#{loginAdmin.admin.email!=null}">
+		<ui:include src="/navbars/navbarAdmin.xhtml" />
+	</c:if>
 	<h:form>
-		<h:panelGroup class="row"
-			rendered="#{empty loginCliente.clienteLoggato.email and empty loginAdmin.admin.email}">
-			<div class="col-sm-6 col-md-4">
+	<div class="jumbotron">
+			<div class="container">
+				<h1>Benvenuto in Cikmed!</h1>
+				<p>Siamo un semplice sito di e-commerce, realizzato a scopo
+					didattico...ma funziona tutto a meraviglia!</p>
+				<p>
+					<h:commandButton action="registrazioneCliente.xhtml"
+						class="btn btn-primary" rendered="#{loginCliente.clienteLoggato.email==null and loginAdmin.admin.email==null}"
+						 value="Registrati!" />
+				</p>
+			</div>
+		</div>
 
-
-				<div class="caption">
-					<h1>Accedi Come Amministratore</h1>
-					<p>Accedere come amministratore non è per tutti, bisogna avere
-						dei permessi speciali; se non li possiedi accedi nel nostro
-						e-commerce come cliente per acquistare i nostri prodotti!</p>
-					<h:commandButton action="/loginAdmin.xhtml?faces-redirect=true"
-						class="btn btn-primary btn-lg" value="Accedi come amministratore" />
-				</div>
-
-				<div class="caption">
-					<h1>Login Cliente</h1>
-					<p>Effettua il login cliente, per sfruttare tutti i nostri servizi!</p>
-					<h:commandButton action="/loginCliente.xhtml?faces-redirect=true"
-						class="btn btn-primary btn-lg" value="Accedi come cliente" />
-				</div>
-
-				<div class="caption">
-					<h1>Registrati!</h1>
-					<p>Sei nuovo da queste parti? Sei stufo di uscire di casa per
-						comprare l'articolo che cercavi? Niente più di tutto ciò.
-						Iscrivendoti ad Cikmed puoi acquistare i tuoi prodotti
-						direttamente restando seduto in casa tua! Niente più stancanti file
-						nei negozi...con Cikmed, puoi!</p>
-					<h:commandButton
-						action="registrazioneCliente.xhtml?faces-redirect=true"
-						class="btn btn-primary btn-lg" value="Registrati come cliente" />
-				</div>
-				<div class="caption">
-					<h1>Catalogo Prodotti</h1>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<h2>Visualizza Catalogo</h2>
 					<p>Anche se non sei registrato, puoi tranquillamente visionare
 						il nostro catalogo. Tuttavia, ti suggeriamo di farlo se vuoi
 						usufruire di tutti gli altri nostri servizi :)</p>
-					<h:commandButton action="#{prodottoController.listProdotti}"
-						class="btn btn-primary btn-lg" value="Catalogo Prodotti" />
+					<p>
+						<h:commandButton action="#{prodottoController.listProdotti}"
+							class="btn btn-primary" value="Visualizza>>" />
+					</p>
 				</div>
 			</div>
-
-		</h:panelGroup>
-
-
-		<h:panelGroup
-			rendered="#{not empty loginCliente.clienteLoggato.email or not empty loginAdmin.admin.email}">
-			<h:commandLink action="areaOrdini.xhtml?faces-redirect=true"
-				value="Gestione ordini" />
-		</h:panelGroup>
-		
-		<div>
-		<h:panelGroup
-			rendered="#{not empty loginCliente.clienteLoggato.email}">
-			<h:commandLink action="formCreaIndirizzo.xhtml?faces-redirect=true"
-				value="Aggiungi indirizzo di residenza" />
-		</h:panelGroup>
 		</div>
-
-		<div>
-			<h:commandLink action="#{loginCliente.logOut}" value="Logout"
-				rendered="#{not empty loginCliente.clienteLoggato.email}" />
-		</div>
-
-		<div>
-			<h:commandLink action="#{loginAdmin.logOut}" value="Logout"
-				rendered="#{not empty loginAdmin.admin.email}" />
-		</div>
-
 	</h:form>
 </h:body>
 </html>

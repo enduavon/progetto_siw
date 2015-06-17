@@ -12,6 +12,7 @@
 	<title>Ordini evasi</title>
 </h:head>
 <h:body>
+<ui:include src="/navbars/navbarAdmin.xhtml" />
 	<h2>Ordini evasi di tutti i clienti</h2>
 	<h:outputText value="Non c'è nessun ordine evaso."
 		rendered="#{empty ordineController.ordiniEvasi}" />
@@ -57,6 +58,5 @@
 			</h:column>
 		</h:dataTable>
 	</h:form>
-<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 </h:body>
 </html>

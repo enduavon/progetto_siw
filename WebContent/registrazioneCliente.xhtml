@@ -13,6 +13,7 @@
 	<title>Registrazione</title>
 </h:head>
 <h:body>
+	<ui:include src="/navbars/navbarDefault.xhtml" />
 	<div class="container-fluid">
 		<h:panelGroup class="container">
 			<div class="container-page">
@@ -55,7 +56,7 @@
 								<p:watermark for="password"
 									value="min 8 caratteri, almeno una maiuscola e una cifra"
 									id="watermark" />
-							</h:inputSecret> 
+							</h:inputSecret>
 							<h:message for="password" style="color:red" />
 						</div>
 
@@ -74,7 +75,7 @@
 						<div class="form-group col-lg-6">
 							Data di Nascita:* (d-m-yyyy)
 							<h:inputText id="data" value="#{registraCliente.dataDiNascita}"
-								size="20" required="true" requiredMessage="Data obbligatoria" 
+								size="20" required="true" requiredMessage="Data obbligatoria"
 								converterMessage="Formato data errato" class="form-control">
 								<f:convertDateTime pattern="d-M-yyyy" />
 							</h:inputText>
@@ -96,14 +97,18 @@
 							<h:commandButton value="Registrati"
 								action="#{registraCliente.registraCliente}"
 								class="btn btn-primary" />
-							<h:outputText value="#{registraCliente.errore}" style="color:purple" />
+							<h:outputText value="#{registraCliente.errore}"
+								style="color:purple" />
 						</div>
-
-						<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 					</h:form>
 				</div>
 			</div>
 		</h:panelGroup>
 	</div>
+
+	<p>Sei nuovo da queste parti? Sei stufo di uscire di casa per
+		comprare l'articolo che cercavi? Niente più di tutto ciò. Iscrivendoti
+		ad Cikmed puoi acquistare i tuoi prodotti direttamente restando seduto
+		in casa tua! Niente più stancanti file nei negozi...con Cikmed, puoi!</p>
 </h:body>
 </html>

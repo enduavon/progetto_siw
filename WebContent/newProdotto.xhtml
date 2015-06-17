@@ -4,27 +4,27 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<head>
-<title>Prodotto</title>
-</head>
-<body>
-	<f:view>
-		<h1>Perfetto, hai inserito il prodotto
-			"${acme.prodotto.nome}" nel catalogo prodotti.</h1>
-		<h2>Dettagli:</h2>
-		<div>Codice: ${acme.prodotto.codice}</div>
-		<div>Prezzo: ${acme.prodotto.prezzo}</div>
-		<div>Descrizione: ${acme.prodotto.descrizione}</div>
-		<div>Quantità: ${acme.prodotto.quantita}</div>
-		<div>
-			<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true">Vuoi aggiungere un altro prodotto al catalogo?</h:outputLink>
-		</div>
-		<div>
-			<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
-		</div>
-		<div>
-			<h:outputLink value="showProdotti.xhtml?faces-redirect=true">Visualizza il catalogo</h:outputLink>
-		</div>
-	</f:view>
-</body>
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"></h:outputStylesheet>
+	<title>Prodotto</title>
+</h:head>
+<h:body>
+<ui:include src="/navbars/navbarAdmin.xhtml" />
+	<h1>Perfetto, hai inserito il prodotto "${acme.prodotto.nome}" nel
+		catalogo prodotti.</h1>
+	<h2>Dettagli:</h2>
+	<div>Codice: ${acme.prodotto.codice}</div>
+	<div>Prezzo: ${acme.prodotto.prezzo}</div>
+	<div>Descrizione: ${acme.prodotto.descrizione}</div>
+	<div>Quantità: ${acme.prodotto.quantita}</div>
+	<div>
+		<h:outputLink value="formCreaProdotto.xhtml?faces-redirect=true">Vuoi aggiungere un altro prodotto al catalogo?</h:outputLink>
+	</div>
+	<div>
+		<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
+	</div>
+</h:body>
 </html>

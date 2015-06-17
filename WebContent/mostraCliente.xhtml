@@ -2,12 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Dettagli utente</title>
-</head>
-<body>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"></h:outputStylesheet>
+	<title>Dettagli utente</title>
+</h:head>
+<h:body>
+	<ui:include src="/navbars/navbarDefault.xhtml" />
 	<h:form>
 		<h1>Benvenuto, ${registraCliente.nome} ti sei appena registrato
 			con questi dati:</h1>
@@ -43,5 +48,5 @@
 
 		<h:outputLink value="loginCliente.xhtml?faces-redirect=true">Effettua subito il login!</h:outputLink>
 	</h:form>
-</body>
+</h:body>
 </html>
