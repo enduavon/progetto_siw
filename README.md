@@ -25,6 +25,8 @@ da implementare alcune funzionalità aggiuntive sulle pagine .xhtml.
 [Backup base di dati](https://www.dropbox.com/s/c57ix7lssb4y4gz/databaseCikmed.txt?dl=0)
 
 
-
+*malfunzionamenti: 
+- Validazione della password durante la registrazione di un cliente. Ho implementato due Validator, uno per la conferma della password e uno per verificare un determinato pattern, ma non sono riuscito a farli funzionare correttamente assieme;
+- Nei dettagli del cliente non si riesce a risalire ai dettagli del suo indirizzo;
 
 *errata corrige*: nel commit 22 si intendeva "utilizzo di EJB" invece che di JSF
