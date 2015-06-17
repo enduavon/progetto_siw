@@ -4,14 +4,40 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<!-- <f:metadata>
-    <f:viewParam name="id" value="#{ordineController.id}"/>
-</f:metadata> -->
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Dettagli ordine n°#{ordineController.ordine.id} </title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+	<title>Dettagli ordine</title>
 </h:head>
 <h:body>
-<!-- mostrare le righe ordine dell'ordine -->
+<h2>Ordine n°#{acme.ordine.id}</h2>
+	<h:form>
+	<h3>Dettagli dell'ordine:</h3>
+		<h:dataTable id="righeOrdine" value="#{acme.righeOrdine}"
+			var="rigaOrdine"
+			styleClass="table table-striped table-bordered table-condensed">
+			<h:column>
+				<f:facet name="header">ID Prodotto</f:facet>
+				<h:outputText value="#{rigaOrdine.prodotto.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prodotto</f:facet>
+				<h:outputText value="#{rigaOrdine.prodotto.nome}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Prezzo</f:facet>
+				<h:outputText value="#{rigaOrdine.prodotto.prezzo}€" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Quantità ordinata</f:facet>
+				<h:outputText value="#{rigaOrdine.quantita}" /> 
+			</h:column>
+		</h:dataTable>
+		<div>
+			<h:outputLink value="areaOrdini.xhtml?faces-redirect=true">Torna all'area Ordini</h:outputLink>
+		</div>
+	</h:form>
 </h:body>
 </html>

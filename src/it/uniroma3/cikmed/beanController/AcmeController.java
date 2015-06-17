@@ -26,6 +26,8 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class AcmeController {
 	
+	private long id;
+	
 	private Prodotto prodotto;
 	private String codice;
 	private String nome;
@@ -35,6 +37,7 @@ public class AcmeController {
 	
 	private String descrizione;
 	
+	Ordine ordine;
 	RigaOrdine rigaOrdine;
 	List<RigaOrdine> righeOrdine;
 	
@@ -94,6 +97,12 @@ public class AcmeController {
 		}
 	}
 	
+	public void dettagliIndirizzo(Cliente cliente) {
+		Indirizzo i = cFacade.getClienteByID(cliente.getId()).getIndirizzo();
+		System.out.println(""+i.getId()+ "");
+		indirizzo = indFacade.getIndirizzoByID(i.getId());
+	}
+	
 	
 	public String aggiungiRigaOrdine() {
 
@@ -122,7 +131,13 @@ public class AcmeController {
 		}  //mostro i dettagli del prodotto che ho aggiunto, con la quantità da me scelta
 	}
 	
-	
+
+	public String dettagliOrdine() {
+		ordine = oFacade.getOrdineByID(id);
+		righeOrdine = roFacade.getRigheOrdineByOrdine(ordine);
+		return "showOrdine";
+	}
+
 	
 	public String evadeOrdine(Ordine o) { 
 
@@ -143,6 +158,13 @@ public class AcmeController {
 	 * GETTERS & SETTERS
 	 */	
 
+	public long getId() {
+		return id;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}	
 	
 	public Prodotto getProdotto() {
 		return prodotto;
@@ -192,7 +214,17 @@ public class AcmeController {
 		this.quantita = quantita;
 	}
 	
-	
+		
+	public Ordine getOrdine() {
+		return ordine;
+	}
+
+
+	public void setOrdine(Ordine ordine) {
+		this.ordine = ordine;
+	}
+
+
 	public RigaOrdine getRigaOrdine() {
 		return rigaOrdine;
 	}

@@ -15,8 +15,11 @@
 <h:message for="cliente" />
 
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Ordini</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
+	<title>Ordini</title>
 </h:head>
 <h:body>
 	<h2>I tuoi ordini</h2>
@@ -25,12 +28,12 @@
 		rendered="#{empty ordineController.ordiniCliente}" />
 	<h:form rendered="#{not empty ordineController.ordiniCliente}">
 		<h:dataTable id="lista" value="#{ordineController.ordiniCliente}"
-			var="ordine">
+			var="ordine" styleClass="table table-striped">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
-				<h:commandLink action="#{ordineController.findOrdine}"
-					value="#{ordine.id}" style="color: orange">
-					<f:setPropertyActionListener target="#{ordineController.id}"
+				<h:commandLink action="#{acme.dettagliOrdine}" value="#{ordine.id}"
+					style="color: orange">
+					<f:setPropertyActionListener target="#{acme.id}"
 						value="#{ordine.id}" />
 				</h:commandLink>
 			</h:column>
@@ -57,6 +60,10 @@
 				</h:outputText>
 			</h:column>
 			<h:column>
+				<f:facet name="header">Costo</f:facet>
+				<h:outputText value="#{ordine.prezzoTotale}€" />
+			</h:column>
+			<h:column>
 				<f:facet name="header"></f:facet>
 				<p:commandButton
 					actionListener="#{ordineController.deleteOrdine(ordine)}"
@@ -65,15 +72,26 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
-				<h:commandButton action="#{ordineController.closeOrdine}"
+				<p:commandButton action="#{ordineController.closeOrdine}"
 					value="Chiudi ordine">
 					<f:setPropertyActionListener target="#{ordineController.id}"
 						value="#{ordine.id}" />
-				</h:commandButton>
+				</p:commandButton>
 			</h:column>
+			<!-- <h:column>
+				<f:facet name="header"></f:facet>
+				<p:commandButton action="#{acme.mostraCarrello}" value="Modifica Ordine"
+					rendered="#{ordine.stato == aperto}">
+					<f:setPropertyActionListener target="#{acme.id}"
+						value="#{ordine.id}" /> 
+				</p:commandButton>
+			</h:column> -->
 		</h:dataTable>
 		<strong><h:outputText value="#{ordineController.errore}"
 				style="color:purple" /></strong>
 	</h:form>
+	<div>
+		<h:outputLink value="areaOrdini.xhtml?faces-redirect=true">Torna all'area Ordini</h:outputLink>
+	</div>
 </h:body>
 </html>

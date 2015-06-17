@@ -28,7 +28,6 @@ public class OrdineController implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	//	@ManagedProperty(value="#{param.id}")
 	private Long id;
 	
 	private String stato;
@@ -48,7 +47,6 @@ public class OrdineController implements Serializable {
 	
 	private String errore;
 	
-//	@ManagedProperty(value="#{loginCliente.clienteLoggato}") //giusto
 	private Cliente clienteCorrente;
 	
 	@EJB (beanName="ordFacade")
@@ -104,11 +102,6 @@ public class OrdineController implements Serializable {
 //		return "showOrdiniCliente"; 
 	}
 	
-	//mettere dettagli sulle righe ordine (carrello?)
-	public String findOrdine() {
-		this.ordine = oFacade.getOrdineByID(id);
-		return "showOrdine";
-	}
 	
 	public String deleteOrdine(Ordine o) {  
 		

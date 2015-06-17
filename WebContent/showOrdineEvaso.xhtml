@@ -7,13 +7,14 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css" />
 	<title>Evasione Ordine</title>
 </h:head>
 <h:body>
 	<h2>Hai effettuato con successo l'evasione dell'ordine!</h2>
 	<h:form>
+	<h3>Dettagli dell'ordine:</h3>
 		<h:dataTable id="righeOrdineEvaso" value="#{acme.righeOrdine}"
 			var="rigaOrdine"
 			styleClass="table table-striped table-bordered table-condensed">
@@ -36,7 +37,7 @@
 		</h:dataTable>
 		<h:outputText
 				value="L'ordine è relativo al cliente #{rigaOrdine.ordine.cliente.id}, il quale ha acquistato tutti i precedenti
-		prodotti per un totale di #{rigaOrdine.ordine.prezzoTotale}" />
+		prodotti per un totale di #{rigaOrdine.ordine.prezzoTotale}€" />
 		<div>
 			<h:outputLink value="areaOrdini.xhtml?faces-redirect=true">Torna all'area Ordini</h:outputLink>
 		</div>

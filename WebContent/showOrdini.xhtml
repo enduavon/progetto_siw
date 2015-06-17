@@ -6,8 +6,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Ordini chiusi</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<title>Ordini chiusi</title>
 </h:head>
 <h:body>
 	<h2>Ordini di tutti i clienti</h2>
@@ -15,12 +18,12 @@
 		rendered="#{empty ordineController.ordini}" />
 	<h:form rendered="#{not empty ordineController.ordini}">
 		<h:dataTable id="listaChiusi" value="#{ordineController.ordini}"
-			var="ordine">
+			var="ordine" styleClass="table table-striped">
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
-				<h:commandLink action="#{ordineController.findOrdine}"
+				<h:commandLink action="#{acme.dettagliOrdine}"
 					value="#{ordine.id}" style="color: orange">
-					<f:setPropertyActionListener target="#{ordineController.id}"
+					<f:setPropertyActionListener target="#{acme.id}"
 						value="#{ordine.id}" />
 				</h:commandLink>
 			</h:column>
@@ -50,12 +53,25 @@
 			<h:column>
 				<f:facet name="header"></f:facet>
 				<h:commandButton action="#{acme.evadeOrdine(ordine)}"
-					value="Evadi ordine">		
+					value="Evadi ordine">
 				</h:commandButton>
 			</h:column>
 		</h:dataTable>
 		<strong><h:outputText value="#{ordineController.errore}"
 				style="color:purple" /></strong>
 	</h:form>
+	<h:outputText
+				value="Gli ordini chiusi sono quelli già confermati dai vari clienti: 
+				sta a te amministratore decidere se e quando effettuare l'evasione dell'ordine." />
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<h:outputLink value="areaOrdini.xhtml">Torna all'area Ordini</h:outputLink>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<h:outputLink value="index.xhtml">Torna alla pagina principale</h:outputLink>
+		</div>
+	</div>
 </h:body>
 </html>
