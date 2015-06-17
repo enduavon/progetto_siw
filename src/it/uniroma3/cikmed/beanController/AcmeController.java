@@ -136,9 +136,11 @@ public class AcmeController {
 		if (quantita==0)
 		    return setErrore("Non puoi aggiungere zero prodotti all'ordine.");
 
+		if (oFacade.getOrdineApertoByCliente("aperto", clienteCorrente)==null)
+			return setErrore("Non hai ancora aperto un ordine, vai a crearne uno!");
+		
 		Ordine ordineCorrente = oFacade.getOrdineApertoByCliente("aperto", clienteCorrente);
 
-		//problema da risolvere: dà sempre null come risultato perchè non trova l'ordine della riga ordine
 		if (roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordineCorrente)!=null) { //cioè esiste già una riga ordine per quel prodotto	
 			rigaOrdine = roFacade.getRigaOrdineProdottoByOrdine(prodottoCorrente, ordineCorrente);
 			roFacade.increaseQuantitaRigaOrdine(rigaOrdine, quantita);

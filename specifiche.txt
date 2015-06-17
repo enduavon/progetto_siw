@@ -28,6 +28,9 @@ Estensioni:
    l'aggiunta del prodotto all'ordine, mostrando un messaggio d'errore.
    6a: Nel caso sia già presente una riga ordine relativa al prodotto scelto e all'ordine corrente, il Sistema non
    crea una nuova riga, ma aggiorna quella attualmente presente.
+Eccezioni:
+   L'Utente salta il passo 3 e prova ad ordinare un prodotto. Il Sistema non permette 
+   l'ordinazione di tale prodotto, mostrando un messaggio d'errore.
 
 Osservazione: per Cliente si intende Utente registrato 
 
