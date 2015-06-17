@@ -1,6 +1,8 @@
 package it.uniroma3.cikmed.beanController;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import it.uniroma3.cikmed.facade.ClienteFacade;
 import it.uniroma3.cikmed.facade.IndirizzoFacade;
@@ -73,6 +75,26 @@ public class AcmeController {
 		catch (Exception e) {
 			errore="Prodotto già esistente sul database. Per favore inserisci un prodotto con codice differente";
 			return errore; 
+		}
+	}
+	
+	public String creaOrdine(Cliente clienteCorrente) {
+
+		if (oFacade.getOrdineApertoByCliente("aperto", clienteCorrente)!=null)
+			return setErrore("Hai già un ordine attualmente aperto. Appena chiudi e confermi"
+					+ " l'ordine attuale, allora potrai fare un altro ordine.");
+
+		else {
+			try {
+				this.ordine = oFacade.creaOrdine(Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome")), clienteCorrente);
+				oFacade.updateOrdine(ordine);
+				System.out.println("" +ordine.getCliente().getId()+ "");				
+				return "newOrdine"; 
+			}
+
+			catch (Exception e) {
+				return "error"; 
+			}
 		}
 	}
 	

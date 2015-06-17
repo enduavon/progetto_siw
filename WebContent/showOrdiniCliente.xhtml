@@ -22,9 +22,10 @@
 	<title>Ordini</title>
 </h:head>
 <h:body>
+	<ui:include src="/navbars/navbarCliente.xhtml" />
 	<h2>I tuoi ordini</h2>
 	<h:outputText
-		value="Non c'è nessun ordine per il cliente #{ordineController.clienteCorrente}."
+		value="Non hai effettuato alcun ordine."
 		rendered="#{empty ordineController.ordiniCliente}" />
 	<h:form rendered="#{not empty ordineController.ordiniCliente}">
 		<h:dataTable id="lista" value="#{ordineController.ordiniCliente}"
@@ -44,19 +45,19 @@
 			<h:column>
 				<f:facet name="header">Data Apertura</f:facet>
 				<h:outputText value="#{ordine.dataApertura.time}">
-					<f:convertDateTime datestyle="full" type="both" />
+					<f:convertDateTime timeZone="Europe/Rome" type="both" />
 				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Data Chiusura</f:facet>
 				<h:outputText value="#{ordine.dataChiusura.time}">
-					<f:convertDateTime datestyle="full" type="both" />
+					<f:convertDateTime timeZone="Europe/Rome" type="both" />
 				</h:outputText>
 			</h:column>
 			<h:column>
 				<f:facet name="header">Data Evasione</f:facet>
 				<h:outputText value="#{ordine.dataEvasione.time}">
-					<f:convertDateTime datestyle="full" type="both" />
+					<f:convertDateTime timeZone="Europe/Rome" type="both" />
 				</h:outputText>
 			</h:column>
 			<h:column>
@@ -65,18 +66,16 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
-				<p:commandButton
+				<h:commandButton
 					actionListener="#{ordineController.deleteOrdine(ordine)}"
-					value="Elimina ordine" icon="ui-icon-close"
-					onclick="return confirm('Vuoi davvero cancellare l'ordine n°#{ordine.id}?');" />
+					value="Elimina ordine" class="btn btn-danger">
+				</h:commandButton>
 			</h:column>
 			<h:column>
 				<f:facet name="header"></f:facet>
-				<p:commandButton action="#{ordineController.closeOrdine}"
-					value="Chiudi ordine">
-					<f:setPropertyActionListener target="#{ordineController.id}"
-						value="#{ordine.id}" />
-				</p:commandButton>
+				<h:commandButton action="#{ordineController.closeOrdine(ordine)}"
+					value="Chiudi ordine" class="btn btn-warning">
+				</h:commandButton>
 			</h:column>
 			<!-- <h:column>
 				<f:facet name="header"></f:facet>
@@ -87,11 +86,13 @@
 				</p:commandButton>
 			</h:column> -->
 		</h:dataTable>
-		<strong><h:outputText value="#{ordineController.errore}"
-				style="color:purple" /></strong>
+		<div>
+			<strong><h:outputText value="#{ordineController.errore}"
+					style="color:purple" /></strong>
+		</div>
 	</h:form>
 	<div>
-		<h:outputLink value="areaOrdini.xhtml?faces-redirect=true">Torna all'area Ordini</h:outputLink>
+		<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 	</div>
 </h:body>
 </html>

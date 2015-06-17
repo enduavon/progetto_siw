@@ -122,7 +122,7 @@ public class OrdineFacade {
 
 		} 
 		catch (Exception e) {
-			String q = "L'ordine " +id+ " non è stato trovato";
+			String q = "L'ordine " +id+ " non si trova nello stato" +stato+ "";
 			System.out.println(q);
 			return null;
 		}

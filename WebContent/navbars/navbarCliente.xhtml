@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<h:outputStylesheet library="bootstrap" name="css/custom.css" />
+</h:head>
+<h:body>
+	<!-- Per aggiungere la navbar in una delle pagine xhtml, basta includere la seguente riga
+<ui:include src="/navbars/navbarCliente.xhtml"/> 
+all'inizio del body -->
+
+	<div class="navbar navbar-custom">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Cikmed</a>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink action="showProdotti.xhtml" value="Catalogo Prodotti"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:link outcome="showOrdiniCliente.xhtml" value="I miei ordini"
+					class="btn btn-default">
+					<f:param name="id_clienteLoggato"
+						value="#{loginCliente.clienteLoggato.id}" />
+				</h:link>
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-left">
+				<h:commandLink
+					action="#{acme.creaOrdine(loginCliente.clienteLoggato)}"
+					value="Crea un nuovo ordine" class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-form navbar-right">
+				<h:commandLink action="#{loginCliente.logOut}" value="Logout"
+					class="btn btn-default" />
+			</h:form>
+		</div>
+		<div>
+			<h:form class="navbar-text navbar-right">
+				<h:commandLink styleClass="navbar-link"
+					value="Connesso come #{loginCliente.clienteLoggato.nome}"
+					action="#{registraCliente.dettagliCliente}">
+					<f:setPropertyActionListener target="#{registraCliente.email}"
+						value="#{loginCliente.clienteLoggato.email}" />
+				</h:commandLink>
+			</h:form>
+		</div>
+	</div>
+	<strong><h:outputText value="#{acme.errore}"
+			style="color:purple" /></strong>
+</h:body>
+</html>

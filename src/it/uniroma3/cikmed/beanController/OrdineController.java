@@ -29,6 +29,7 @@ public class OrdineController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	private long idOrdine;
 	
 	private String stato;
 	private Calendar dataApertura;
@@ -66,26 +67,6 @@ public class OrdineController implements Serializable {
 	} 
 	
 	
-	public String creaOrdine(Cliente clienteCorrente) {
-		
-		if (oFacade.getOrdineApertoByCliente("aperto", clienteCorrente)!=null)
-			return setErrore("Hai già un ordine attualmente aperto. Appena chiudi e confermi"
-					+ " l'ordine attuale, allora potrai fare un altro ordine.");
-		
-		else {
-			try {
-				this.ordine = oFacade.creaOrdine(Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome")), clienteCorrente);
-				oFacade.updateOrdine(ordine);
-				System.out.println("" +ordine.getCliente().getId()+ "");				
-				return "newOrdine"; 
-			}
-
-			catch (Exception e) {
-				return "error"; 
-			}
-		}
-	}
-	
 	public String listaOrdiniChiusi() {
 		this.ordini = oFacade.getListaOrdiniByStato("chiuso");
 		return "showOrdini"; 
@@ -103,23 +84,24 @@ public class OrdineController implements Serializable {
 	}
 	
 	
-	public String deleteOrdine(Ordine o) {  
+	public void deleteOrdine(Ordine o) {  //OK 
 		
 		if (oFacade.checkStatoOrdine(o.getId(), "aperto")!=null) { 
 		    roFacade.deleteRigheOrdine(o);
 			oFacade.deleteOrdine(o); 
-			return "showOrdiniCliente";
+			listaOrdiniCliente();
 		}
 
 		else {
-			return setErrore("Non puoi più cancellare questo ordine.");
+			setErrore("Non puoi più cancellare questo ordine.");
 		}
 	}	
 	
-	public void closeOrdine() { 
+	public void closeOrdine(Ordine o) { //OK
 
-		if (oFacade.checkStatoOrdine(id, "aperto")!=null) {
-			oFacade.closeOrdineByID(id);
+		if (oFacade.checkStatoOrdine(o.getId(), "aperto")!=null) {
+			oFacade.closeOrdineByID(o.getId());
+			listaOrdiniCliente();
 		}
 
 		else {
@@ -140,6 +122,16 @@ public class OrdineController implements Serializable {
 		this.id = id;
 	}
 	
+	public long getIdOrdine() {
+		return idOrdine;
+	}
+
+
+	public void setIdOrdine(long idOrdine) {
+		this.idOrdine = idOrdine;
+	}
+
+
 	public String getStato() {
 		return stato;
 	}

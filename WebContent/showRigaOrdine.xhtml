@@ -9,13 +9,14 @@
 <title>Prodotto ordine</title>
 </h:head>
 <h:body> 
+<ui:include src="/navbars/navbarCliente.xhtml"/> 
 <h1>Dettagli prodotto aggiunto all'ordine n°#{acme.rigaOrdine.ordine.id}:</h1>
 		<div>Codice:  <h:outputText value="#{acme.codice}"/> </div>
 		<div>Prezzo:  <h:outputText value="#{acme.rigaOrdine.prodotto.prezzo}"/>  </div>
 		<div>Quantità da comprare: <h:outputText value="#{acme.quantita}" /></div> 
 		<div>Descrizione: <h:outputText value="#{acme.rigaOrdine.prodotto.descrizione}"/></div>
 		<div>
-			<h:outputLink value="showProdotti.xhtml?faces-redirect=true">Torna indietro al catalogo</h:outputLink>
+			<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
 		</div>
 </h:body>
 </html>

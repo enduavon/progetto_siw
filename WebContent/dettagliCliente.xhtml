@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Dettagli utente n°#{registraCliente.clienteRegistrato.id}</title>
-</head>
-<body>
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"></h:outputStylesheet>
+	<title>Dettagli cliente</title>
+</h:head>
+<h:body>
+	<c:if test="#{loginCliente.clienteLoggato.email!=null}">
+		<ui:include src="/navbars/navbarCliente.xhtml" />
+	</c:if>
 	<h:form>
-		<h3>Dati dell'utente selezionato:</h3>
+		<h3>Dati del cliente n°#{registraCliente.clienteRegistrato.id}:</h3>
 		<div>
 			Nome:
 			<h:outputText value="#{registraCliente.clienteRegistrato.nome}" />
@@ -37,10 +46,45 @@
 			Data registrazione:
 			<h:outputText
 				value="#{registraCliente.clienteRegistrato.dataDiRegistrazione.time}">
-				<f:convertDateTime datestyle="full" type="both" />
+				<f:convertDateTime timeZone="Europe/Rome" type="both" />
 			</h:outputText>
 		</div>
-		<h:outputLink value="showOrdini.xhtml?faces-redirect=true">Torna indietro alla lista ordini</h:outputLink>
 	</h:form>
-</body>
+
+	<p:commandButton
+		action="#{acme.dettagliIndirizzo(registraCliente.clienteRegistrato)}"
+		value="mostra indirizzo" update=":dettaglioIndirizzo"
+		icon="ui-icon-search" oncomplete="PF('indirizzoDialog').show();">
+		<!-- 	<f:setPropertyActionListener value="#{registraCliente.clienteRegistrato.id}"
+			target="#{acme.id}" /> -->
+	</p:commandButton>
+
+	<!-- Finestra di dialogo per l'indirizzo del cliente -->
+	<p:dialog header="Indirizzo di Residenza" widgetVar="indirizzoDialog"
+		modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+		<p:outputPanel id="dettaglioIndirizzo" style="text-align:center;">
+			<p:panelGrid columns="2">
+				<f:facet name="header">
+				</f:facet>
+
+				<h:outputText value="Via:" />
+				<h:outputText value="#{acme.indirizzo.via}" />
+
+				<h:outputText value="Città" />
+				<h:outputText value="#{acme.indirizzo.citta}" />
+
+				<h:outputText value="Codice Postale:" />
+				<h:outputText value="#{acme.indirizzo.codicePostale}" />
+
+				<h:outputText value="Nazione" />
+				<h:outputText value="#{acme.indirizzo.nazione}" />
+
+				<h:outputText value="Stato" />
+				<h:outputText value="#{acme.indirizzo.stato}" />
+			</p:panelGrid>
+		</p:outputPanel>
+	</p:dialog>
+
+	<h:outputLink value="index.xhtml?faces-redirect=true">Torna alla pagina principale</h:outputLink>
+</h:body>
 </html>

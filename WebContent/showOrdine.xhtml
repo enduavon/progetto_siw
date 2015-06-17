@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
@@ -12,9 +13,12 @@
 	<title>Dettagli ordine</title>
 </h:head>
 <h:body>
-<h2>Ordine n°#{acme.ordine.id}</h2>
+	<c:if test="#{loginCliente.clienteLoggato.email!=null}">
+		<ui:include src="/navbars/navbarCliente.xhtml" />
+	</c:if>
+	<h2>Ordine n°#{acme.ordine.id}</h2>
 	<h:form>
-	<h3>Dettagli dell'ordine:</h3>
+		<h3>Dettagli dell'ordine:</h3>
 		<h:dataTable id="righeOrdine" value="#{acme.righeOrdine}"
 			var="rigaOrdine"
 			styleClass="table table-striped table-bordered table-condensed">
@@ -32,7 +36,7 @@
 			</h:column>
 			<h:column>
 				<f:facet name="header">Quantità ordinata</f:facet>
-				<h:outputText value="#{rigaOrdine.quantita}" /> 
+				<h:outputText value="#{rigaOrdine.quantita}" />
 			</h:column>
 		</h:dataTable>
 		<div>
