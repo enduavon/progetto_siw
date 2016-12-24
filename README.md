@@ -1,12 +1,7 @@
 # Cikmed - Progetto SIW 2015
 ===================================
 
-ad opera di
-
-- Andrea 
-- Stefano
-
-con l'utilizzo del framework JSF per il pattern MVC, e l'uso di Bootstrap per la parte grafica.
+E' stato utilizzato il framework JSF per il pattern MVC, e Bootstrap per la parte grafica.
 E' stata inoltre usata (molto parzialmente) una libreria di componenti per JSF, ovvero PrimeFaces, in modo
 da implementare alcune funzionalità aggiuntive sulle pagine .xhtml.
 
